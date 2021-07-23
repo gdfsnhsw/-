@@ -201,6 +201,7 @@ async function dealReturn(type, res) {
                     $.secretpInfo[$.UserName] = true
                     if($.index < 6){
                         if($.homeData.result.groupInfoVO.groupInviteId){
+                            console.log("助力码为：" + $.homeData.result.groupInfoVO.groupInviteId)
                             $.groupInviteIds.push({
                                 'ues': $.UserName,
                                 'inviteId': $.homeData.result.groupInfoVO.groupInviteId,
