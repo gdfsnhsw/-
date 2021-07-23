@@ -63,7 +63,6 @@ function randomString(e) {
             $.joyytoken = ''
             joyytoken_count = 1
             console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-            console.log(`\n如有未完成的任务，请多执行几次\n`);
             await movement()
             await $.wait(2000);
         }
