@@ -113,7 +113,6 @@ async function movement() {
         $.shopSign = ``;
         $.userInfo = ''
         await takePostRequest('olympicgames_home');
-        if(!$.hotFlag) await takePostRequest('olympicgames_getTaskDetail');
     } catch (e) {
         $.logErr(e)
     }
@@ -126,10 +125,6 @@ async function takePostRequest(type) {
         case 'olympicgames_home':
             body = `functionId=olympicgames_home&body={}&client=wh5&clientVersion=1.0.0&appid=${$.appid}`;
             myRequest = await getPostRequest(`olympicgames_home`, body);
-            break;
-        case 'olympicgames_getTaskDetail':
-            body = `functionId=${type}&body={"taskId":"","appSign":"1"}&client=wh5&clientVersion=1.0.0&appid=${$.appid}`;
-            myRequest = await getPostRequest(`olympicgames_getTaskDetail`, body);
             break;
         case 'groupHelp':
             body = await getPostBody(type);
@@ -214,26 +209,6 @@ async function dealReturn(type, res) {
                         }
                     }
                 }
-            } else if (data.data && data.data.bizMsg) {
-                console.log(data.data.bizMsg);
-            } else {
-                console.log(res);
-            }
-            break;
-        case 'olympicgames_getTaskDetail':
-            if (data.data && data.data.bizCode === 0) {
-                console.log(`互助码：${data.data.result && data.data.result.inviteId || '助力已满，获取助力码失败'}\n`);
-                if (data.data.result && data.data.result.inviteId) {
-                    if($.index < 6){
-                        $.inviteList.push({
-                            'ues': $.UserName,
-                            // 'secretp': $.secretp,
-                            'inviteId': data.data.result.inviteId,
-                            'max': false
-                        });
-                    }
-                }
-                $.taskList = data.data.result && data.data.result.taskVos || [];
             } else if (data.data && data.data.bizMsg) {
                 console.log(data.data.bizMsg);
             } else {
