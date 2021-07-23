@@ -131,7 +131,8 @@ async function takePostRequest(type) {
             break;
         case 'groupHelp':
             body = await getPostBody(type);
-            myRequest = await getPostRequest(`zoo_collectScore`, body);
+            body = body.replace("confirm","2")
+            myRequest = await getPostRequest(`olympicgames_assist`, body);
             break;
         default:
             console.log(`错误${type}`);
