@@ -65,6 +65,7 @@ function randomString(e) {
             console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
             console.log(`\n如有未完成的任务，请多执行几次\n`);
             await movement()
+            await $.wait(2000);
         }
     }
     // 助力
@@ -75,7 +76,6 @@ function randomString(e) {
         if (!$.secretpInfo[$.UserName]) {
             continue;
         }
-        // $.secretp = $.secretpInfo[$.UserName];
         $.index = i + 1;
         if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
         for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
