@@ -127,6 +127,10 @@ async function takePostRequest(type) {
             body = `functionId=${type}&body={"taskId":"","appSign":"1"}&client=wh5&clientVersion=1.0.0&appid=${$.appid}`;
             myRequest = await getPostRequest(`olympicgames_getTaskDetail`, body);
             break;
+        case 'help':
+            body = await getPostBody(type);
+            myRequest = await getPostRequest(`zoo_collectScore`, body);
+            break;
         default:
             console.log(`错误${type}`);
     }
@@ -146,6 +150,46 @@ async function takePostRequest(type) {
     }
 }
 
+async function getPostBody(type) {
+    return new Promise(async resolve => {
+        let taskBody = '';
+        try {
+            var random = Math.floor(1e+6 * Math.random()).toString().padEnd(8, '8');
+            //random = "21350544";
+            var senddata = {
+                data: {
+                    random
+                }
+            };
+            var retn = await smashUtils.get_risk_result(senddata, "50085", UA);
+            var log = JSON.stringify({
+                extraData: {
+                    log: retn.log,
+                    sceneid: "OY217hPageh5"
+                },
+                random
+            });
+            var uuid = `&uuid=${UUID}`;
+            if (type === 'help' || type === 'shHelp') {
+                taskBody = `functionId=olympicgames_assist&body=${JSON.stringify({"inviteId":$.inviteId,"type": "confirm","ss" :log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
+            } else if (type === 'olympicgames_collectCurrency') {
+                taskBody = `functionId=olympicgames_collectCurrency&body=${JSON.stringify({"type":$.collectId,"ss" : log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`;
+            } else if (type === 'olympicgames_startTraining' || type === 'olympicgames_speedTraining') {
+                taskBody = `functionId=${type}&body=${JSON.stringify({"ss" : log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`;
+            } else if(type === 'add_car'){
+                taskBody = `functionId=olympicgames_doTaskDetail&body=${JSON.stringify({"taskId": $.taskId,"taskToken":$.taskToken,"ss" : log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
+            }else{
+                let actionType = 0
+                if([1, 3, 5, 6, 8, 9, 14, 22, 23, 24, 25, 26].includes($.oneTask.taskId)) actionType = 1
+                taskBody = `functionId=${type}&body=${JSON.stringify({"taskId": $.oneTask.taskId,"taskToken" : $.oneActivityInfo.taskToken,"ss" : log,"shopSign":$.shopSign,"actionType":actionType,"showErrorToast":false})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
+            }
+        } catch (e) {
+            $.logErr(e)
+        } finally {
+            resolve(taskBody);
+        }
+    })
+}
 
 async function dealReturn(type, res) {
     try {
@@ -182,6 +226,20 @@ async function dealReturn(type, res) {
                 }
                 $.taskList = data.data.result && data.data.result.taskVos || [];
             } else if (data.data && data.data.bizMsg) {
+                console.log(data.data.bizMsg);
+            } else {
+                console.log(res);
+            }
+            break;
+        case 'help':
+            if (data.data && data.data.bizCode === 0) {
+                let cash = ''
+                if (data.data.result.hongBaoVO && data.data.result.hongBaoVO.withdrawCash) cash = `，并获得${Number(data.data.result.hongBaoVO.withdrawCash)}红包`
+                console.log(`助力成功${cash}`);
+            } else if (data.data && data.data.bizMsg) {
+                if (data.data.bizMsg.indexOf('今天用完所有') > -1) {
+                    $.canHelp = false;
+                }
                 console.log(data.data.bizMsg);
             } else {
                 console.log(res);
