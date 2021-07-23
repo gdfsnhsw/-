@@ -64,8 +64,10 @@ function randomString(e) {
             $.joyytoken = ''
             joyytoken_count = 1
             console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-            await movement()
-            await $.wait(2000);
+            if($.index < 6){
+                await movement()
+                await $.wait(2000);
+            }
         }
     }
     // 助力
@@ -199,15 +201,13 @@ async function dealReturn(type, res) {
                 if (data.data['bizCode'] === 0) {
                     $.homeData = data.data;
                     $.secretpInfo[$.UserName] = true
-                    if($.index < 6){
-                        if($.homeData.result.groupInfoVO.groupInviteId){
-                            console.log("助力码为：" + $.homeData.result.groupInfoVO.groupInviteId)
-                            $.groupInviteIds.push({
-                                'ues': $.UserName,
-                                'inviteId': $.homeData.result.groupInfoVO.groupInviteId,
-                                'max': false
-                            });
-                        }
+                    if($.homeData.result.groupInfoVO.groupInviteId){
+                        console.log("助力码为：" + $.homeData.result.groupInfoVO.groupInviteId)
+                        $.groupInviteIds.push({
+                            'ues': $.UserName,
+                            'inviteId': $.homeData.result.groupInfoVO.groupInviteId,
+                            'max': false
+                        });
                     }
                 }
             } else if (data.data && data.data.bizMsg) {
