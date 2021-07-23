@@ -74,6 +74,8 @@ function randomString(e) {
     for (let i = 0; i < cookiesArr.length; i++) {
         UA = `jdapp;android;10.0.2;9;${randomString(28)}-73D2164353034363465693662666;network/wifi;model/MI 8;addressid/138087843;aid/0a4fc8ec9548a7f9;oaid/3ac46dd4d42fa41c;osVer/28;appBuild/88569;partner/jingdong;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 9; MI 8 Build/PKQ1.180729.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045715 Mobile Safari/537.36;`
         UUID = UA.split(';') && UA.split(';')[4] || ''
+        $.joyytoken = ''
+        joyytoken_count = 1
 
         $.cookie = cookiesArr[i];
         $.canHelp = true;
@@ -254,30 +256,6 @@ async function getPostRequest(type, body) {
     };
     return {url: url, method: method, headers: headers, body: body};
 }
-
-// 随机数
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
-
-// 计算时间
-function timeFn(dateBegin) {
-    //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
-    var dateEnd = new Date(0);//获取当前时间
-    var dateDiff = dateBegin - dateEnd.getTime();//时间差的毫秒数
-    var leave1 = dateDiff % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
-    var hours = Math.floor(leave1 / (3600 * 1000))//计算出小时数
-    //计算相差分钟数
-    var leave2 = leave1 % (3600 * 1000)    //计算小时数后剩余的毫秒数
-    var minutes = Math.floor(leave2 / (60 * 1000))//计算相差分钟数
-    //计算相差秒数
-    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
-    var seconds = Math.round(leave3 / 1000)
-
-    var timeFn = hours + ":" + minutes + ":" + seconds;
-    return timeFn;
-}
-
 
 function jsonParse(str) {
     if (typeof str == "string") {
