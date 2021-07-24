@@ -12,14 +12,7 @@
 
 import {format} from 'date-fns';
 import axios from 'axios';
-import USER_AGENT, {
-  requireConfig,
-  TotalBean,
-  getBeanShareCode,
-  getFarmShareCode,
-  getRandomNumberByRange,
-  wait
-} from './TS_USER_AGENTS';
+import USER_AGENT, {requireConfig, TotalBean, getBeanShareCode, getFarmShareCode, getRandomNumberByRange, wait} from './TS_USER_AGENTS';
 import {Md5} from 'ts-md5'
 import * as dotenv from 'dotenv';
 
@@ -65,7 +58,10 @@ interface Params {
   strBT?: string,
   dwCurStageEndCnt?: number,
   dwRewardType?: number,
-  dwRubbishId?: number
+  dwRubbishId?: number,
+  strPgtimestamp?: number,
+  strPhoneID?: string,
+  strPgUUNum?: string
 }
 
 let UserName: string, index: number;
@@ -88,6 +84,21 @@ let UserName: string, index: number;
     } catch (e) {
       console.log(e)
     }
+    let token: any = getJxToken(cookie)
+
+    // 离线
+    res = await api('user/QueryUserInfo',
+        '_cfd_t,bizCode,ddwTaskId,dwEnv,ptag,source,strMarkList,strPgUUNum,strPgtimestamp,strPhoneID,strShareId,strZone',
+        {
+          ddwTaskId: '',
+          strShareId: '',
+          strMarkList: 'guider_step,collect_coin_auth,guider_medal,guider_over_flag,build_food_full,build_sea_full,build_shop_full,build_fun_full,medal_guider_show,guide_guider_show,guide_receive_vistor,daily_task,guider_daily_task',
+          strPgtimestamp: token.strPgtimestamp,
+          strPhoneID: token.strPhoneID,
+          strPgUUNum: token.strPgUUNum
+        })
+    console.log('离线收益：', res.Business.ddwCoin)
+    await wait(2000)
 
     // 珍珠
     res = await api('user/ComposeGameState', '', {dwFirst: 1})
@@ -109,6 +120,8 @@ let UserName: string, index: number;
       console.log('游戏完成，等待3s')
       await wait(3000)
     }
+    await wait(2000)
+
     // 珍珠领奖
     res = await api('user/ComposeGameState', '', {dwFirst: 1})
     for (let stage of res.stagelist) {
@@ -117,11 +130,11 @@ let UserName: string, index: number;
           __t: Date.now(),
           dwCurStageEndCnt: stage.dwCurStageEndCnt
         })
-        console.log(awardRes)
         console.log('珍珠领奖：', awardRes.ddwCoin, awardRes.addMonety)
         await wait(3000)
       }
     }
+    await wait(2000)
 
     // 签到 助力奖励
     res = await api('story/GetTakeAggrPage', '_cfd_t,bizCode,dwEnv,ptag,source,strZone')
@@ -152,6 +165,7 @@ let UserName: string, index: number;
         }
       }
     }
+    await wait(2000)
 
     // 船来了
     res = await api('user/QueryUserInfo', '_cfd_t,bizCode,ddwTaskId,dwEnv,ptag,source,strShareId,strZone', {
@@ -160,7 +174,6 @@ let UserName: string, index: number;
       strMarkList: 'undefined'
     })
     if (res.StoryInfo.StoryList) {
-      console.log(JSON.stringify(res))
       if (res.StoryInfo.StoryList[0].Special) {
         console.log(`船来了，乘客是${res.StoryInfo.StoryList[0].Special.strName}`)
         let shipRes: any = await api('story/SpecialUserOper', '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType', {
@@ -169,7 +182,6 @@ let UserName: string, index: number;
           triggerType: 0,
           ddwTriggerDay: res.StoryInfo.StoryList[0].ddwTriggerDay
         })
-        console.log(shipRes)
         console.log('正在下船，等待30s')
         await wait(30000)
         shipRes = await api('story/SpecialUserOper', '_cfd_t,bizCode,ddwTriggerDay,dwEnv,dwType,ptag,source,strStoryId,strZone,triggerType', {
@@ -193,7 +205,9 @@ let UserName: string, index: number;
         // isCollector = true
       }
     }
+    await wait(2000)
 
+    /*
     // 清空背包
     res = await api('story/querystorageroom', '_cfd_t,bizCode,dwEnv,ptag,source,strZone')
     let bags: number[] = []
@@ -211,9 +225,11 @@ let UserName: string, index: number;
     }
     if (bags.length !== 0) {
       res = await api('story/sellgoods', '_cfd_t,bizCode,dwEnv,dwSceneId,ptag,source,strTypeCnt,strZone',
-          {dwSceneId: isCollector ? '2' : '1', strTypeCnt: strTypeCnt})
+        {dwSceneId: isCollector ? '2' : '1', strTypeCnt: strTypeCnt})
       console.log('卖贝壳收入:', res.Data.ddwCoin, res.Data.ddwMoney)
     }
+     */
+    await wait(2000)
 
     // 垃圾🚮
     res = await api('story/QueryRubbishInfo', '_cfd_t,bizCode,dwEnv,ptag,source,strZone')
@@ -230,10 +246,12 @@ let UserName: string, index: number;
           dwRewardType: 0,
           dwRubbishId: j
         })
-        console.log('垃圾分类：', res.Data.RubbishGame.AllRubbish.ddwCoin)
+        console.log(res.Data)
+        // console.log('垃圾分类：', res.Data.RubbishGame.AllRubbish.ddwCoin)
         await wait(1500)
       }
     }
+    await wait(2000)
 
     // 任务➡️
     let tasks: any
@@ -247,6 +265,7 @@ let UserName: string, index: number;
         await wait(1000)
       }
     }
+    await wait(2000)
 
     // 导游
     res = await api('user/EmployTourGuideInfo', '_cfd_t,bizCode,dwEnv,ptag,source,strZone')
@@ -265,6 +284,7 @@ let UserName: string, index: number;
         }
       }
     }
+    await wait(2000)
 
     // 任务⬇️
     tasks = await mainTask('GetUserTaskStatusList', '_cfd_t,bizCode,dwEnv,ptag,source,strZone,taskId', {taskId: 0});
@@ -290,6 +310,7 @@ let UserName: string, index: number;
         }
       }
     }
+    await wait(2000)
 
     for (let b of ['food', 'fun', 'shop', 'sea']) {
       res = await api('user/GetBuildInfo', '_cfd_t,bizCode,dwEnv,dwType,ptag,source,strBuildIndex,strZone', {strBuildIndex: b})
@@ -478,4 +499,31 @@ function getQueryString(url: string, name: string) {
   let r = url.split('?')[1].match(reg);
   if (r != null) return unescape(r[2]);
   return '';
+}
+
+function getJxToken(cookie: string) {
+  function generateStr(input: number) {
+    let src = 'abcdefghijklmnopqrstuvwxyz1234567890';
+    let res = '';
+    for (let i = 0; i < input; i++) {
+      res += src[Math.floor(src.length * Math.random())];
+    }
+    return res;
+  }
+
+  return new Promise(resolve => {
+    let phoneId = generateStr(40);
+    let timestamp = Date.now().toString();
+    if (!cookie['match'](/pt_pin=([^; ]+)(?=;?)/)) {
+      console.log('此账号cookie填写不规范,你的pt_pin=xxx后面没分号(;)\n');
+      resolve({});
+    }
+    let nickname = cookie.match(/pt_pin=([^;]*)/)![1];
+    let jstoken = Md5.hashStr('' + decodeURIComponent(nickname) + timestamp + phoneId + 'tPOamqCuk9NLgVPAljUyIHcPRmKlVxDy');
+    resolve({
+      'strPgtimestamp': timestamp,
+      'strPhoneID': phoneId,
+      'strPgUUNum': jstoken
+    })
+  });
 }
