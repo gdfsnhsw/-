@@ -822,7 +822,7 @@ async function getPostRequest(type, body) {
         "sec-fetch-site": "same-site",
         'Cookie': $.cookie + $.joyytoken,
         "Origin": "https://wbbny.m.jd.com",
-        "Referer": "https://wbbny.m.jd.com/",
+        "Referer": "https://wbbny.m.jd.com/babelDiy/Zeus/2rtpffK8wqNyPBH6wyUDuBKoAbCt/index.html?babelChannel=fc&lng=113.298659&lat=23.335004&sid=4663c35044ca350035524f7f3102f30w&un_area=19_1601_50258_50374\n",
         "User-Agent": UA,
 
     };
