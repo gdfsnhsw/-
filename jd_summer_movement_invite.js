@@ -85,9 +85,6 @@ getUA()
     }
     // 助力
     for (let i = 0; i < cookiesArr.length; i++) {
-        if (!$.secretpInfo[$.UserName]) {
-            continue;
-        }
         $.index = i + 1;
         let out = false
         for(let c of outuserIdArr){
