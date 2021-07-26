@@ -46,14 +46,15 @@ getUA()
 
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
-            $.index = i + 1;
-            $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
-            $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-            $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
-            $.isLogin = true;
-            $.nickName = $.UserName;
+
             if($.index < 6){
-                $.hotFlag = false; //是否火爆
+                $.index = i + 1;
+                $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+                $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+                $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+                $.isLogin = true;
+                $.nickName = $.UserName;
+
                 $.joyytoken = ''
                 joyytoken_count = 1
                 getUA()
@@ -73,7 +74,6 @@ getUA()
         }
         $.index = i + 1;
         $.canHelp = true;
-        $.hotFlag = false;
         $.index = i + 1;
         $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -84,9 +84,6 @@ getUA()
         getUA()
         if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
         for (let j = 0; j < $.inviteList.length; j++) {
-            if($.hotFlag){
-               continue;
-            }
             $.oneInviteInfo = $.inviteList[j];
             if ($.oneInviteInfo.ues === $.UserName || $.oneInviteInfo.max) {
                 continue;
@@ -132,7 +129,7 @@ async function movement() {
         $.shopSign = ``;
         $.userInfo = ''
         await takePostRequest('olympicgames_home');
-        if(!$.hotFlag) await takePostRequest('olympicgames_getTaskDetail');
+        await takePostRequest('olympicgames_getTaskDetail');
     } catch (e) {
         $.logErr(e)
     }
