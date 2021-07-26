@@ -46,11 +46,10 @@ getUA()
 
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
-
+            $.index = i + 1;
             if($.index < 6){
-                $.index = i + 1;
                 $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
-                $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+                $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie     .match(/pt_pin=([^; ]+)(?=;?)/)[1]);
                 $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
                 $.isLogin = true;
                 $.nickName = $.UserName;
@@ -73,7 +72,7 @@ getUA()
         $.index = i + 1;
         $.canHelp = true;
         $.index = i + 1;
-        $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+        $.cookie = cookiesArr[i];
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
         $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
         $.nickName = $.UserName;
