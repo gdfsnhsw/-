@@ -65,19 +65,22 @@ getUA()
                 }
             }
             if(out) continue
-            $.cookie = cookiesArr[i];
-            $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-            $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
-            $.isLogin = true;
-            $.nickName = $.UserName;
-            $.hotFlag = false; //是否火爆
-            $.joyytoken = ''
-            joyytoken_count = 1
-            getUA()
-            console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-            console.log(`\n如有未完成的任务，请多执行几次\n`);
-            await movement()
-            if($.hotFlag)$.secretpInfo[$.UserName] = false;//火爆账号不执行助力
+
+            if($.index < 6){
+                $.cookie = cookiesArr[i];
+                $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+                $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+                $.isLogin = true;
+                $.nickName = $.UserName;
+                $.hotFlag = false; //是否火爆
+                $.joyytoken = ''
+                joyytoken_count = 1
+                getUA()
+                console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
+                console.log(`\n如有未完成的任务，请多执行几次\n`);
+                await movement()
+                if($.hotFlag)$.secretpInfo[$.UserName] = false;//火爆账号不执行助力
+            }
         }
     }
     // 助力
@@ -208,14 +211,12 @@ async function dealReturn(type, res) {
             if (data.data && data.data.bizCode === 0) {
                 console.log(`互助码：${data.data.result && data.data.result.inviteId || '助力已满，获取助力码失败'}\n`);
                 if (data.data.result && data.data.result.inviteId) {
-                    if($.index < 6){
-                        $.inviteList.push({
-                            'ues': $.UserName,
-                            // 'secretp': $.secretp,
-                            'inviteId': data.data.result.inviteId,
-                            'max': false
-                        });
-                    }
+                    $.inviteList.push({
+                        'ues': $.UserName,
+                        // 'secretp': $.secretp,
+                        'inviteId': data.data.result.inviteId,
+                        'max': false
+                    });
                 }
                 $.taskList = data.data.result && data.data.result.taskVos || [];
             } else if (data.data && data.data.bizMsg) {
