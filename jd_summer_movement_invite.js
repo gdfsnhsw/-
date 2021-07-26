@@ -38,6 +38,15 @@ let UANumber = 'f'
 let UUID = ''
 getUA()
 
+let outuserIdArr = [];
+let outuserID = '';// 屏蔽账号 2,5,7
+if ($.isNode() && process.env.summer_movement_outuserID) {
+    outuserID = process.env.summer_movement_outuserID;
+}
+for(let i of outuserID && outuserID.split(',')){
+    outuserIdArr.push(i)
+}
+
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', { "open-url": "https://bean.m.jd.com/bean/signIndex.action" });
@@ -47,8 +56,18 @@ getUA()
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             $.index = i + 1;
+
+            let out = false
+            for(let c of outuserIdArr){
+                if(c == $.index) {
+                    out = true
+                    break
+                }
+            }
+            if(out) continue
+
             if($.index < 6){
-                $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+                $.cookie = cookiesArr[i];
                 $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie     .match(/pt_pin=([^; ]+)(?=;?)/)[1]);
                 $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
                 $.isLogin = true;
@@ -69,9 +88,18 @@ getUA()
     console.log("准备开始助力")
     for (let i = 0; i < cookiesArr.length; i++) {
        
-        $.index = i + 1;
         $.canHelp = true;
         $.index = i + 1;
+
+        let out = false
+        for(let c of outuserIdArr){
+            if(c == $.index) {
+                out = true
+                break
+            }
+        }
+        if(out) continue
+
         $.cookie = cookiesArr[i];
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
         $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
