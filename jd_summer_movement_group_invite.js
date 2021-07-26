@@ -88,9 +88,6 @@ for(let i of outuserID && outuserID.split(',')){
     // 助力
     console.log("开始助力")
     for (let i = 0; i < cookiesArr.length; i++) {
-        if (!$.secretpInfo[$.UserName]) {
-            continue;
-        }
         $.index = i + 1;
 
         let out = false
