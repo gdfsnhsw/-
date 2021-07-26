@@ -52,19 +52,21 @@ getUA()
             $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
             $.isLogin = true;
             $.nickName = $.UserName;
-            $.hotFlag = false; //是否火爆
-            $.joyytoken = ''
-            joyytoken_count = 1
-            getUA()
-            console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
-            console.log(`\n如有未完成的任务，请多执行几次\n`);
             if($.index < 6){
+                $.hotFlag = false; //是否火爆
+                $.joyytoken = ''
+                joyytoken_count = 1
+                getUA()
+                console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
+                console.log(`\n如有未完成的任务，请多执行几次\n`);
+
                 await movement()
                 await $.wait(2000);
             }
         }
     }
     // 助力
+    console.log("准备开始助力")
     for (let i = 0; i < cookiesArr.length; i++) {
         if (!$.secretpInfo[$.UserName]) {
             continue;
@@ -80,7 +82,6 @@ getUA()
         $.joyytoken = ''
         joyytoken_count = 1
         getUA()
-        // $.secretp = $.secretpInfo[$.UserName];
         if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
         for (let j = 0; j < $.inviteList.length; j++) {
             if($.hotFlag){
