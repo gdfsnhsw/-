@@ -80,7 +80,10 @@ getUA()
         getUA()
         // $.secretp = $.secretpInfo[$.UserName];
         if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
-        for (let j = 0; j < $.inviteList.length && $.canHelp && !$.hotFlag; j++) {
+        for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
+            if($.hotFlag){
+               continue;
+            }
             $.oneInviteInfo = $.inviteList[j];
             if ($.oneInviteInfo.ues === $.UserName || $.oneInviteInfo.max) {
                 continue;
