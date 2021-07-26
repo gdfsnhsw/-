@@ -5,7 +5,7 @@
  *  百元守卫战,先脚本内互助，多的助力会助力作者
  *  部分解密参考了@zhangyun173
  * */
-const $ = new Env('燃动夏季');
+const $ = new Env('燃动夏季助力');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 $.inviteList = [];
