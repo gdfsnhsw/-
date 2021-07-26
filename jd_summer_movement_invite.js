@@ -47,14 +47,6 @@ getUA()
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             $.index = i + 1;
-            let out = false
-            for(let c of outuserIdArr){
-                if(c == $.index) {
-                    out = true
-                    break
-                }
-            }
-            if(out) continue
             $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
             $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
             $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
