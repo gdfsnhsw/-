@@ -123,7 +123,6 @@ async function takePostRequest(type) {
             break;
         case 'groupHelp':
             body = await getPostBody(type);
-            body = body.replace("confirm","2")
             myRequest = await getPostRequest(`olympicgames_assist`, body);
             break;
         default:
@@ -248,7 +247,7 @@ async function getPostBody(type) {
                 random
             });
             var uuid = `&uuid=${UUID}`;
-            if (type === 'help' || type === 'shHelp') {
+            if (type === 'help' || type === 'groupHelp') {
                 taskBody = `functionId=olympicgames_assist&body=${JSON.stringify({"inviteId":$.inviteId,"type": "confirm","ss" :log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
             } else if (type === 'olympicgames_startTraining' || type === 'olympicgames_speedTraining') {
                 taskBody = `functionId=${type}&body=${JSON.stringify({"ss" : log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`;
