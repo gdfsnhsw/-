@@ -69,9 +69,7 @@ getUA()
     // 助力
     console.log("准备开始助力")
     for (let i = 0; i < cookiesArr.length; i++) {
-        if (!$.secretpInfo[$.UserName]) {
-            continue;
-        }
+       
         $.index = i + 1;
         $.canHelp = true;
         $.index = i + 1;
