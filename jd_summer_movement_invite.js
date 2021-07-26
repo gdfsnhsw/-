@@ -99,8 +99,7 @@ getUA()
         if(out) continue
         $.canHelp = true;
         $.hotFlag = false;
-        $.index = i + 1;
-        $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+        $.cookie = cookiesArr[i];
         $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
         $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
         $.nickName = $.UserName;
@@ -109,7 +108,7 @@ getUA()
         getUA()
         // $.secretp = $.secretpInfo[$.UserName];
         if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
-        for (let j = 0; j < $.inviteList.length && $.canHelp && !$.hotFlag; j++) {
+        for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
             $.oneInviteInfo = $.inviteList[j];
             if ($.oneInviteInfo.ues === $.UserName || $.oneInviteInfo.max) {
                 continue;
