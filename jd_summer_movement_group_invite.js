@@ -67,6 +67,7 @@ getUA()
     }
 
     // 助力
+    console.log("开始助力")
     for (let i = 0; i < cookiesArr.length; i++) {
         if (!$.secretpInfo[$.UserName]) {
             continue;
@@ -84,6 +85,9 @@ getUA()
         getUA()
         if ($.groupInviteIds && $.groupInviteIds.length) console.log(`\n******开始内部京东账号【邀请好友一起运动】*********\n`);
         for (let j = 0; j < $.groupInviteIds.length && $.canHelp; j++) {
+            if($.hotFlag){
+                continue
+            }
             $.oneGroupInviteId = $.groupInviteIds[j];
             if ($.oneGroupInviteId.ues === $.UserName || $.oneGroupInviteId.max) {
                 continue;
