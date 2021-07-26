@@ -175,7 +175,7 @@ async function main(){
         $.userInfo =$.homeData.result.userActBaseInfo
         console.log(`\n待兑换金额：${Number($.userInfo.poolMoney)} 当前等级:${$.userInfo.medalLevel} \n`);
         console.log(`团队运动互助码：${$.homeData.result && $.homeData.result.groupInfoVO.groupInviteId || '助力已满，获取助力码失败'}\n`);
-        if ($.homeData.result && $.homeData.result.groupInfoVO.groupInviteId) {
+        if ($.homeData.result && $.homeData.result.groupInfoVO.groupInviteId && $.index < 3) {
             $.groupInviteIdList.push({
                 'ues': $.UserName,
                 'groupInviteId': $.homeData.result.groupInfoVO.groupInviteId,
