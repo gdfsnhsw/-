@@ -58,8 +58,10 @@ getUA()
             getUA()
             console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
             console.log(`\n如有未完成的任务，请多执行几次\n`);
-            await movement()
-            await $.wait(2000);
+            if($.index < 6){
+                await movement()
+                await $.wait(2000);
+            }
         }
     }
     // 助力
@@ -80,7 +82,7 @@ getUA()
         getUA()
         // $.secretp = $.secretpInfo[$.UserName];
         if ($.inviteList && $.inviteList.length) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
-        for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
+        for (let j = 0; j < $.inviteList.length; j++) {
             if($.hotFlag){
                continue;
             }
@@ -235,14 +237,12 @@ async function dealReturn(type, res) {
             if (data.data && data.data.bizCode === 0) {
                 console.log(`互助码：${data.data.result && data.data.result.inviteId || '助力已满，获取助力码失败'}\n`);
                 if (data.data.result && data.data.result.inviteId) {
-                    if($.index < 6){
-                        $.inviteList.push({
-                            'ues': $.UserName,
-                            // 'secretp': $.secretp,
-                            'inviteId': data.data.result.inviteId,
-                            'max': false
-                        });
-                    }
+                    $.inviteList.push({
+                        'ues': $.UserName,
+                        // 'secretp': $.secretp,
+                        'inviteId': data.data.result.inviteId,
+                        'max': false
+                    });
                 }
                 $.taskList = data.data.result && data.data.result.taskVos || [];
             } else if (data.data && data.data.bizMsg) {
