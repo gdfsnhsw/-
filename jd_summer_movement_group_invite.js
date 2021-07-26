@@ -58,6 +58,7 @@ for(let i of outuserID && outuserID.split(',')){
         if (cookiesArr[i]) {
             $.index = i + 1;
 
+            let out = false
             for(let c of outuserIdArr){
                 if(c == $.index) {
                     out = true
@@ -92,6 +93,7 @@ for(let i of outuserID && outuserID.split(',')){
         }
         $.index = i + 1;
 
+        let out = false
         for(let c of outuserIdArr){
             if(c == $.index) {
                 out = true
