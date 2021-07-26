@@ -8,17 +8,18 @@ cron 14,41 7-14 * * * https://raw.githubusercontent.com/smiek2221/scripts/master
 
 
 const $ = new Env('燃动夏季_邀请运动');
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 $.joyytoken = "";
 let joyytoken_count = 1
 
+$.groupInviteIds = [];
+
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [];
 $.cookie = '';
-$.inviteList = [];
-$.groupInviteIds = [];
 $.secretpInfo = {};
 $.ShInviteList = [];
 $.innerShInviteList = [
@@ -47,35 +48,40 @@ getUA()
     for (let i = 0; i < cookiesArr.length; i++) {
         if (cookiesArr[i]) {
             $.index = i + 1;
-            $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
-            $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-            $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
-            $.isLogin = true;
-            $.nickName = $.UserName;
-            $.hotFlag = false; //是否火爆
-            $.joyytoken = ''
-            joyytoken_count = 1
-            getUA()
-            console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
             if($.index < 6){
+                $.cookie = cookiesArr[i];
+                $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+                $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+                $.isLogin = true;
+                $.nickName = $.UserName;
+                $.hotFlag = false; //是否火爆
+                $.joyytoken = ''
+                joyytoken_count = 1
+                getUA()
+                console.log(`\n*****开始【京东账号${$.index}】${$.nickName || $.UserName}*****\n`);
+                console.log(`\n如有未完成的任务，请多执行几次\n`);
                 await movement()
                 await $.wait(2000);
             }
         }
     }
+
     // 助力
     for (let i = 0; i < cookiesArr.length; i++) {
-        getUA()
-        $.joyytoken = ''
-        joyytoken_count = 1
-
-        $.cookie = cookiesArr[i];
-        $.canHelp = true;
-        $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
         if (!$.secretpInfo[$.UserName]) {
             continue;
         }
         $.index = i + 1;
+        $.canHelp = true;
+        $.hotFlag = false;
+        $.index = i + 1;
+        $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+        $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+        $.cookie = $.cookie + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
+        $.nickName = $.UserName;
+        $.joyytoken = ''
+        joyytoken_count = 1
+        getUA()
         if ($.groupInviteIds && $.groupInviteIds.length) console.log(`\n******开始内部京东账号【邀请好友一起运动】*********\n`);
         for (let j = 0; j < $.groupInviteIds.length && $.canHelp; j++) {
             $.oneGroupInviteId = $.groupInviteIds[j];
@@ -107,7 +113,12 @@ async function movement() {
         $.taskList = [];
         $.shopSign = ``;
         $.userInfo = ''
+        $.hundred = false
+
+        console.log('\n一起运动')
         await takePostRequest('olympicgames_home');
+        await $.wait(2000);
+
     } catch (e) {
         $.logErr(e)
     }
@@ -123,7 +134,7 @@ async function takePostRequest(type) {
             break;
         case 'groupHelp':
             body = await getPostBody(type);
-            myRequest = await getPostRequest(`olympicgames_assist`, body);
+            myRequest = await getPostRequest(`zoo_collectScore`, body);
             break;
         default:
             console.log(`错误${type}`);
@@ -144,42 +155,6 @@ async function takePostRequest(type) {
     }
 }
 
-async function getPostBody(type) {
-    return new Promise(async resolve => {
-        let taskBody = '';
-        try {
-            var random = Math.floor(1e+6 * Math.random()).toString().padEnd(8, '8');
-            //random = "21350544";
-            var senddata = {
-                data: {
-                    random
-                }
-            };
-            var retn = await smashUtils.get_risk_result(senddata, "50085", UA);
-            var log = JSON.stringify({
-                extraData: {
-                    log: retn.log,
-                    sceneid: "OY217hPageh5"
-                },
-                random
-            });
-            var uuid = `&uuid=${UUID}`;
-            if (type === 'groupHelp') {
-                taskBody = `functionId=olympicgames_assist&body=${JSON.stringify({"inviteId":$.inviteId,"type": "confirm","ss" :log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
-            } else if (type === 'olympicgames_collectCurrency') {
-                taskBody = `functionId=olympicgames_collectCurrency&body=${JSON.stringify({"type":$.collectId,"ss" : log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`;
-            } else{
-                let actionType = 0
-                if([1, 3, 5, 6, 8, 9, 14, 22, 23, 24, 25, 26].includes($.oneTask.taskId)) actionType = 1
-                taskBody = `functionId=${type}&body=${JSON.stringify({"taskId": $.oneTask.taskId,"taskToken" : $.oneActivityInfo.taskToken,"ss" : log,"shopSign":$.shopSign,"actionType":actionType,"showErrorToast":false})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
-            }
-        } catch (e) {
-            $.logErr(e)
-        } finally {
-            resolve(taskBody);
-        }
-    })
-}
 
 async function dealReturn(type, res) {
     try {
@@ -247,7 +222,7 @@ async function getPostBody(type) {
                 random
             });
             var uuid = `&uuid=${UUID}`;
-            if (type === 'help' || type === 'groupHelp') {
+            if (type === 'groupHelp') {
                 taskBody = `functionId=olympicgames_assist&body=${JSON.stringify({"inviteId":$.inviteId,"type": "confirm","ss" :log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`
             } else if (type === 'olympicgames_startTraining' || type === 'olympicgames_speedTraining') {
                 taskBody = `functionId=${type}&body=${JSON.stringify({"ss" : log})}&client=wh5&clientVersion=1.0.0${uuid}&appid=${$.appid}`;
@@ -280,25 +255,6 @@ async function getPostRequest(type, body) {
     return {url: url, method: method, headers: headers, body: body};
 }
 
-
-
-/**
- * 随机从一数组里面取
- * @param arr
- * @param count
- * @returns {Buffer}
- */
-function getRandomArrayElements(arr, count) {
-    var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
-    while (i-- > min) {
-        index = Math.floor((i + 1) * Math.random());
-        temp = shuffled[index];
-        shuffled[index] = shuffled[i];
-        shuffled[i] = temp;
-    }
-    return shuffled.slice(min);
-}
-
 function getUA(){
     UANumber = randomString(5)
     UA = `jdapp;android;10.0.2;9;${randomString(28)}-${randomString(2)}D2164353034363465693662666;network/wifi;model/MI 8;addressid/138087843;aid/0a4fc8ec9548a7f9;oaid/3ac46dd4d42fa41c;osVer/28;appBuild/${UANumber};partner/jingdong;eufv/1;jdSupportDarkMode/0;Mozilla/5.0 (Linux; Android 9; MI 8 Build/PKQ1.180729.001; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/77.0.3865.120 MQQBrowser/6.2 TBS/045715 Mobile Safari/537.36`
@@ -314,30 +270,6 @@ function randomString(e) {
         n += t.charAt(Math.floor(Math.random() * a));
     return n
 }
-
-// 随机数
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
-
-// 计算时间
-function timeFn(dateBegin) {
-    //如果时间格式是正确的，那下面这一步转化时间格式就可以不用了
-    var dateEnd = new Date(0);//获取当前时间
-    var dateDiff = dateBegin - dateEnd.getTime();//时间差的毫秒数
-    var leave1 = dateDiff % (24 * 3600 * 1000)    //计算天数后剩余的毫秒数
-    var hours = Math.floor(leave1 / (3600 * 1000))//计算出小时数
-    //计算相差分钟数
-    var leave2 = leave1 % (3600 * 1000)    //计算小时数后剩余的毫秒数
-    var minutes = Math.floor(leave2 / (60 * 1000))//计算相差分钟数
-    //计算相差秒数
-    var leave3 = leave2 % (60 * 1000)      //计算分钟数后剩余的毫秒数
-    var seconds = Math.round(leave3 / 1000)
-
-    var timeFn = hours + ":" + minutes + ":" + seconds;
-    return timeFn;
-}
-
 
 function jsonParse(str) {
     if (typeof str == "string") {
