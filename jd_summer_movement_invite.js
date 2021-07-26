@@ -210,6 +210,8 @@ async function takePostRequest(type) {
     }
     if( type === 'help' ||  type === 'byHelp'){
         myRequest['url'] = `https://api.m.jd.com/client.action?advId=olympicgames_assist`;
+    }else{
+        myRequest['url'] = `https://api.m.jd.com/client.action?advId=${type}`;
     }
     return new Promise(async resolve => {
         $.post(myRequest, (err, resp, data) => {
