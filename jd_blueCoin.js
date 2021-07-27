@@ -129,7 +129,7 @@ async function PrizeIndex() {
 
               //兑换京豆
               if ($.totalBlue > $.blueCost) {
-                smtg_obtainPrize(item.prizeId);
+                await smtg_obtainPrize(item.prizeId);
               } else {
                 console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
                 $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
