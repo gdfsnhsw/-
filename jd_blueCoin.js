@@ -105,7 +105,7 @@ async function PrizeIndex() {
 
     for (const item of prizeList) {
       //已经兑换过，跳过
-      if(item.finished){
+      if(item.finished == item.limit){
         console.log(`你已经兑换过${item.name}，跳过当前兑换，准备下一级别兑换`)
         continue;
       }
@@ -129,15 +129,12 @@ async function PrizeIndex() {
 
               //兑换京豆
               if ($.totalBlue > $.blueCost) {
-                await smtg_obtainPrize(item.prizeId);
+                smtg_obtainPrize(item.prizeId);
               } else {
                 console.log(`兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`);
                 $.beanerr = `兑换失败,您目前蓝币${$.totalBlue}个,不足以兑换${$.title}所需的${$.blueCost}个`;
               }
             }else{
-              // console.log(`查询换1000京豆ID失败`)
-              // $.beanerr = `东哥今天不给换`;
-              // return ;
             }
           }
         }
