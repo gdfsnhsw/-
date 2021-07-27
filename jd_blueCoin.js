@@ -48,6 +48,7 @@ const JD_API_HOST = `https://api.m.jd.com/api?appid=jdsupermarket`;
     cookie = cookiesArr[i];
     if (cookie) {
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      $.cookie = cookiesArr[i] + "pwdt_id:" + encodeURIComponent($.UserName) + ";";
       $.index = i + 1;
       $.data = {};
       $.coincount = 0;
@@ -119,7 +120,9 @@ async function PrizeIndex() {
         //能兑换的次数
         var limit = item.limit;
         if(limit){
+          $.notEnough = false;
           for(var i = 0;i<limit;i++){
+            if($.notEnough) continue
             if(item.type === 3){
               console.log(`查询换${item.name}ID成功，ID:${item.prizeId}`)
               if (item.inStock === 506) {
@@ -271,6 +274,12 @@ function smtg_obtainPrize(prizeId, timeout = 0, functionId = 'smt_exchangePrize'
           if (safeGet(data)) {
             data = JSON.parse(data);
             $.data = data;
+
+            if($.data.data.bizCode === 505){
+              console.log("奖品库存不足,跳过当前兑换")
+              $.notEnough = true;
+              return
+            }
             if ($.data.data.bizCode !== 0 && $.data.data.bizCode !== 400) {
               $.beanerr = `${$.data.data.bizMsg}`;
               //console.log(`【京东账号${$.index}】${$.nickName} 换取京豆失败：${$.data.data.bizMsg}`)
