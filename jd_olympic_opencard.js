@@ -1,5 +1,8 @@
 /*
+
+env OLYMPIC_START_DRAW = true 就是开启ck1抽奖 (!!!抽奖时间可能很长，慢慢抽吧!!!)
 一起奔跑 为奥运加油!!! 第一个账号助力我 其他依次助力CK1
+第一个CK失效应该全都会助力我，亲注意一下
 26.0复制整段话 Https:/JljqXwTTAJ9r7A 一起奔跑 为奥运加油 分千万京豆万元大奖#J4EIQ3zFEa@☆しāī京岽逛逛☆
 
 更新地址：https://github.com/Tsukasa007/my_script
@@ -26,6 +29,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [],
     cookie = '';
+let OLYMPIC_START_DRAW_FLAG = process.env.OLYMPIC_START_DRAW === 'true'
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
@@ -47,7 +51,6 @@ message = ""
     return;
   }
   $.shareUuid = '01cad7678ffa449cb2eb3e961db515ce'
-    
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
@@ -77,7 +80,6 @@ message = ""
       await getHtml();
       await adLog();
       $.actorUuid = await getActorUuid();
-      console.log("助力码为：" + $.actorUuid)
 
       let checkOpenCardData = await checkOpenCard();
       // if (false) {
@@ -100,18 +102,19 @@ message = ""
       await followShop();
       await saveTask();
       await saveTask();
-      // while (checkOpenCardData.nowScore >= 50) {
-      //   $.log('nowScore: ' + checkOpenCardData.nowScore)
-      //   await $.wait(2000)
-      //   await startDraw();
-      //   await $.wait(1000)
-      //   checkOpenCardData = await checkOpenCard();
-      // }
+      while (checkOpenCardData.nowScore >= 50 && OLYMPIC_START_DRAW_FLAG) {
+        $.log('nowScore: ' + checkOpenCardData.nowScore)
+        await $.wait(2000)
+        await startDraw();
+        await $.wait(2000)
+        checkOpenCardData = await checkOpenCard();
+      }
       await getDrawRecordHasCoupon()
       await openCardStartDraw(1)
       await openCardStartDraw(2)
       await getActorUuid()
       await checkOpenCard();
+      $.log($.shareUuid)
       if (i === 0 && $.actorUuid) {
         $.shareUuid = $.actorUuid;
       }
@@ -150,7 +153,6 @@ function getDrawRecordHasCoupon() {
         } else {
           data = JSON.parse(data)
           $.log("================== 你邀请了： " + data.data.length + " 个")
-          debugger
         }
       } catch (e) {
         $.logErr(e, resp)
