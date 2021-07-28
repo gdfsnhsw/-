@@ -80,6 +80,7 @@ message = ""
       await getHtml();
       await adLog();
       $.actorUuid = await getActorUuid();
+      console.log("助力码为：" + $.actorUuid)
 
       let checkOpenCardData = await checkOpenCard();
       // if (false) {
