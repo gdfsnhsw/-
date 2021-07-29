@@ -41,7 +41,7 @@ if ($.isNode()) {
 
 $.invitePinTaskList = []
 
-const JD_API_HOST = `https://api.m.jd.com/client.action`;
+const activityId = `dz210768869311`;
 message = ""
 !(async () => {
   if (!cookiesArr[0]) {
@@ -127,7 +127,7 @@ message = ""
 
 function openCardStartDraw(type) {
   return new Promise(resolve => {
-    let body = `activityId=dz210768869311&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&type=${type}`
+    let body = `activityId=${activityId}&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&type=${type}`
     $.post(taskPostUrl('/dingzhi/aoyun/moreshop/openCardStartDraw', body), async (err, resp, data) => {
       try {
         if (err) {
@@ -146,7 +146,7 @@ function openCardStartDraw(type) {
 
 function getDrawRecordHasCoupon() {
   return new Promise(resolve => {
-    let body = `activityId=dz210768869311&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&change=0`
+    let body = `activityId=${activityId}&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&change=0`
     $.post(taskPostUrl('/dingzhi/taskact/common/getDrawRecordHasCoupon', body), async (err, resp, data) => {
       try {
         if (err) {
@@ -166,7 +166,7 @@ function getDrawRecordHasCoupon() {
 
 function startDraw() {
   return new Promise(resolve => {
-    let body = `pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=dz210768869311&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&change=3`
+    let body = `pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=${activityId}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&change=3`
     $.post(taskPostUrl('/dingzhi/aoyun/moreshop/startDraw', body), async (err, resp, data) => {
       try {
         if (err) {
@@ -185,7 +185,7 @@ function startDraw() {
 
 function followShop() {
   return new Promise(resolve => {
-    let body = `pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=dz210768869311&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&taskType=23&taskValue=10`
+    let body = `pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=${activityId}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&taskType=23&taskValue=10`
     $.post(taskPostUrl('/dingzhi/aoyun/moreshop/followShop', body), async (err, resp, data) => {
       try {
         if (err) {
@@ -204,7 +204,7 @@ function followShop() {
 
 function saveTask() {
   return new Promise(resolve => {
-    let body = `activityId=dz210768869311&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&taskType=23&taskValue=10`
+    let body = `activityId=${activityId}&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&taskType=23&taskValue=10`
     $.post(taskPostUrl('/dingzhi/aoyun/moreshop/saveTask', body), async (err, resp, data) => {
       try {
         if (err) {
@@ -223,7 +223,7 @@ function saveTask() {
 
 function checkOpenCard() {
   return new Promise(resolve => {
-    let body = `activityId=dz210768869311&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}`
+    let body = `activityId=${activityId}&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}`
     $.post(taskPostUrl('/dingzhi/aoyun/moreshop/checkOpenCard', body), async (err, resp, data) => {
       try {
         if (err) {
@@ -371,7 +371,7 @@ function getHtml() {
   //await $.wait(20)
   return new Promise(resolve => {
     $.get({
-      url: `https://lzdz1-isv.isvjcloud.com/dingzhi/aoyun/moreshop/activity/6070986?activityId=dz210768869311&shareUuid=${$.shareUuid}&adsource=null&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000001934&lng=114.062541&lat=29.541254&sid=4f8db9736ce13a1eb2564c91b22e3f9w&un_area=4_48201_54794_0 HTTP/1.1`,
+      url: `https://lzdz1-isv.isvjcloud.com/dingzhi/aoyun/moreshop/activity/6070986?activityId=${activityId}&shareUuid=${$.shareUuid}&adsource=null&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000001934&lng=114.062541&lat=29.541254&sid=4f8db9736ce13a1eb2564c91b22e3f9w&un_area=4_48201_54794_0 HTTP/1.1`,
       headers: {
         'User-Agent': UA,
         'Host':'lzdz1-isv.isvjcloud.com',
@@ -399,7 +399,7 @@ function adLog() {
   return new Promise(resolve => {
     $.post({
       url: `https://lzdz1-isv.isvjcloud.com/common/accessLogWithAD`,
-      body: `venderId=1000001934&code=99&pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=dz210768869311&pageUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/aoyun/moreshop/activity/6070986?activityId=dz210768869311&shareUuid=${$.shareUuid}&adsource=null&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000001934&lng=114.062541&lat=29.541254&sid=4f8db9736ce13a1eb2564c91b22e3f9w&un_area=4_48201_54794_0&subType=APP&adSource=LH`,
+      body: `venderId=1000001934&code=99&pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=${activityId}&pageUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/aoyun/moreshop/activity/6070986?activityId=${activityId}&shareUuid=${$.shareUuid}&adsource=null&shareuserid4minipg=u/cWHIy7/x3Ij+HjfbnnePkaL5GGqMTUc8u/otw2E+a7Ak3lgFoFQlZmf45w8Jzw&shopid=1000001934&lng=114.062541&lat=29.541254&sid=4f8db9736ce13a1eb2564c91b22e3f9w&un_area=4_48201_54794_0&subType=APP&adSource=LH`,
       headers: {
         'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
         'Host':'lzdz1-isv.isvjcloud.com',
@@ -437,7 +437,7 @@ function getActorUuid() {
   return new Promise(resolve => {
     $.post({
       url: `https://lzdz1-isv.isvjcloud.com/dingzhi/aoyun/moreshop/activityContent`,
-      body: `activityId=dz210768869311&pin=${encodeURIComponent($.myPingData.secretPin)}&pinImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F7020%2F27%2F13511%2F6142%2F5c5138d8E4df2e764%2F5a1216a3a5043c5d.png&nick=${encodeURIComponent($.myPingData.nickname)}&shareUuid=${$.shareUuid}`,
+      body: `activityId=${activityId}&pin=${encodeURIComponent($.myPingData.secretPin)}&pinImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F7020%2F27%2F13511%2F6142%2F5c5138d8E4df2e764%2F5a1216a3a5043c5d.png&nick=${encodeURIComponent($.myPingData.nickname)}&shareUuid=${$.shareUuid}`,
       headers: {
         'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
         'Host':'lzdz1-isv.isvjcloud.com',
@@ -476,7 +476,7 @@ function taskPostUrl(url, body) {
       "Content-Type": "application/x-www-form-urlencoded",
       "Origin": "https://lzdz1-isv.isvjcloud.com",
       "Connection": "keep-alive",
-      "Referer": `https://lzdz1-isv.isvjcloud.com/dingzhi/personal/care/activity/6685289?activityId=dz2107100000366301&shareUuid=${$.shareUuid}&adsource=null&shareuserid4minipg=DQCK/ksVMxxhAtP2wbQfI07oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w==&shopid=1000003663&lng=113.388015&lat=22.512769&sid=f9dd95649c5d4f0c0d31876c606b6cew&un_area=19_1657_52093_0`,
+      "Referer": `https://lzdz1-isv.isvjcloud.com/dingzhi/personal/care/activity/6685289?activityId=${activityId}&shareUuid=${$.shareUuid}&adsource=null&shareuserid4minipg=DQCK/ksVMxxhAtP2wbQfI07oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w==&shopid=1000003663&lng=113.388015&lat=22.512769&sid=f9dd95649c5d4f0c0d31876c606b6cew&un_area=19_1657_52093_0`,
       "User-Agent": "Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1 " ,
       'Cookie': `${cookie} LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.myPingData.secretPin}; ${$.lz_jdpin_token}`,
     }
