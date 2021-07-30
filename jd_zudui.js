@@ -240,7 +240,7 @@ function queryActivityInfo(item) {
                             $.isContinue = true
                         }
                         //不是京豆
-                        if(active.actName != "组队瓜分京豆"){
+                        if(active.actName.indexOf("豆") != -1){
                             $.isContinue = true
                         }
                         //TODO 已做完
