@@ -232,6 +232,10 @@ function queryActivityInfo(item) {
                         if(active.startTime > new Date().getTime() || active.endTime < new Date().getTime()){
                             $.isContinue = true
                         }
+                        //不是京豆
+                        if(active.actName != "组队瓜分京豆"){
+                            $.isContinue = true
+                        }
                         //TODO 已做完
 
                     }
