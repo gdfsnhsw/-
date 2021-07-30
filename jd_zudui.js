@@ -21,7 +21,6 @@ if ($.isNode()) {
         });
         return;
     }
-    $.shareUuid = '64638023bf0f4f21bc39bee440670ca6'
     $.taskList = []
     $.needDoTask = []
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -303,12 +302,16 @@ function getSignId(item) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
+                    if(data && dta.data && data.data.signUuid){
+                        console.log("signUuid为：" + data.data.signUuid)
+                        $.signId = data.data.signUuid
+                    }
                     if(data && data.data && data.data.joinMap && data.data.joinMap.memberList){
                         for(let i = 0;i < data.data.joinMap.memberList.length;i++){
                             let members = data.data.joinMap.memberList[i]
                             if(members.activityId == item.activityId){
-                                $.signId = members.signUuid
                                 if($.index == 1){
+                                    console.log("第一个账号signUuid为：" + members.signUuid)
                                     $.firstSign = members.signUuid
                                 }
                             }
