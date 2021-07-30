@@ -113,10 +113,8 @@ if ($.isNode()) {
                     $.firstSign = ""
                     console.log(`\n******正在做第个${i+1}任务，任务名为：${item.shopName}*********\n`);
                     $.venderId = ""
-                    if($.index == 1){
-                        $.venderId = item.venderId
-                        await getSignId(item);
-                    }
+                    $.venderId = item.venderId
+                    await getSignId(item);
                     await getSignId(item);
                     $.signId = $.signId == "" ? $.firstSign : $.signId;
 
