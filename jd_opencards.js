@@ -14,6 +14,12 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
+if (!process.env.TXH_OPENCARD_ACTIVITY_ID) {
+}else {
+    activityId = Number(process.env.TXH_OPENCARD_ACTIVITY_ID)
+}
+$.log(`活动id为 ${activityId}`)
+
 !(async () => {
     if (!cookiesArr[0]) {
         $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -21,7 +27,7 @@ if ($.isNode()) {
         });
         return;
     }
-    $.shareUuid = '6b17aaa793eb4791b2f83ebe225c05f1'
+    $.shareUuid = '64638023bf0f4f21bc39bee440670ca6'
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
