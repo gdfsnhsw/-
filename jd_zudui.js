@@ -33,7 +33,6 @@ if ($.isNode()) {
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
-            console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
             if (!$.isLogin) {
                 $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
                     "open-url": "https://bean.m.jd.com/bean/signIndex.action"
@@ -86,6 +85,7 @@ if ($.isNode()) {
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
+            console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
@@ -302,7 +302,7 @@ function getSignId(item) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if(data && dta.data && data.data.signUuid){
+                    if(data && data.data && data.data.signUuid){
                         console.log("signUuid为：" + data.data.signUuid)
                         $.signId = data.data.signUuid
                     }
