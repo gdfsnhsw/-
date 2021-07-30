@@ -118,6 +118,12 @@ if ($.isNode()) {
                         await getSignId(item);
                     }
                     await getSignId(item);
+                    $.signId = $.signId == "" ? $.firstSign : $.signId;
+
+                    console.log("第一个账号signUuid为：" + members.signUuid)
+                    console.log("signUuid为：" + data.data.signUuid)
+                    console.log("venderId为：" + $.venderId)
+
                     await getActMemberInfo(item);
                     await saveMember(item);
                     console.log(item)
@@ -190,7 +196,8 @@ function getActMemberInfo(item) {
                 } else {
                     data = JSON.parse(data);
                     if(data && data.data){
-                        console.log("未完")
+                        //TODO
+                        console.log("")
 
                     }
                 }
@@ -309,7 +316,6 @@ function getSignId(item) {
                 } else {
                     data = JSON.parse(data);
                     if(data && data.data && data.data.signUuid){
-                        console.log("signUuid为：" + data.data.signUuid)
                         $.signId = data.data.signUuid
                     }
                     if(data && data.data && data.data.joinMap && data.data.joinMap.memberList){
@@ -317,7 +323,6 @@ function getSignId(item) {
                             let members = data.data.joinMap.memberList[i]
                             if(members.activityId == item.activityId){
                                 if($.index == 1){
-                                    console.log("第一个账号signUuid为：" + members.signUuid)
                                     $.firstSign = members.signUuid
                                 }
                             }
