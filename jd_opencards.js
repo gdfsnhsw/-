@@ -21,7 +21,7 @@ if ($.isNode()) {
         });
         return;
     }
-    $.shareUuid = '64638023bf0f4f21bc39bee440670ca6'
+    $.shareUuid = '6b17aaa793eb4791b2f83ebe225c05f1'
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
