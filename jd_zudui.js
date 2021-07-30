@@ -120,8 +120,8 @@ if ($.isNode()) {
                     await getSignId(item);
                     $.signId = $.signId == "" ? $.firstSign : $.signId;
 
-                    console.log("第一个账号signUuid为：" + members.signUuid)
-                    console.log("signUuid为：" + data.data.signUuid)
+                    console.log("第一个账号signUuid为：" + $.signId)
+                    console.log("signUuid为：" + $.firstSign)
                     console.log("venderId为：" + $.venderId)
 
                     await getActMemberInfo(item);
