@@ -111,10 +111,12 @@ if ($.isNode()) {
                 for(let i = 0;i < $.needDoTask.length;i++){
                     let item = $.needDoTask[i]
                     $.signId = ""
+                    $.firstSign = ""
                     console.log(`\n******正在做第个${i+1}任务，任务名为：${item.shopName}*********\n`);
                     if($.index == 1){
                         await getSignId(item);
                     }
+                    await getSignId(item);
                     await getActMemberInfo(item);
                     await saveMember(item);
                     console.log(item)
@@ -282,7 +284,7 @@ function getSignId(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=`,
+            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=${$.firstSign}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -306,6 +308,9 @@ function getSignId(item) {
                             let members = data.data.joinMap.memberList[i]
                             if(members.activityId == item.activityId){
                                 $.signId = members.signUuid
+                                if($.index == 1){
+                                    $.firstSign = members.signUuid
+                                }
                             }
                         }
                     }
@@ -332,7 +337,7 @@ function getMyPing() {
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
                 'Referer':'https://lzkjdz-isv.isvjd.com/wxAssemblePage/activity/?activityId=67dfd244aacb438893a73a03785a48c7',
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken};`,
             }
         }
         $.post(options, async (err, resp, data) => {
