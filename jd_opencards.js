@@ -56,6 +56,7 @@ if ($.isNode()) {
             console.log("邀请码为：" + $.actorUuid)
 
             let checkOpenCardData = await checkOpenCard();
+
             await followShop()
             await saveTask()
             await startDraw(1)
@@ -67,10 +68,12 @@ if ($.isNode()) {
                     await $.wait(1000)
                     await join(cardList1Element.value)
                 }
-                for (let cardList1Element of checkOpenCardData.cardList2) {
-                    $.log('入会: ' + cardList1Element.name)
-                    await $.wait(1000)
-                    await join(cardList1Element.value)
+                if(checkOpenCardData.cardList2){
+                    for (let cardList1Element of checkOpenCardData.cardList2) {
+                        $.log('入会: ' + cardList1Element.name)
+                        await $.wait(1000)
+                        await join(cardList1Element.value)
+                    }
                 }
             }else{
                 $.log("是否全部入会" + checkOpenCardData.allOpenCard)
