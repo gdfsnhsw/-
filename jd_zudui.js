@@ -112,7 +112,7 @@ if ($.isNode()) {
                 for(let i = 0;i < $.needDoTask.length;i++){
                     let item = $.needDoTask[i]
                     $.signId = ""
-                    // await getSignId(item);
+                    await getSignId(item);
                     await getActMemberInfo(item);
                     await saveMember(item);
                     console.log(item)
@@ -128,7 +128,7 @@ function saveMember(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/saveMember`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=0ebe029def2742f48ef94512e8adadba&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
+            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=${$.signId}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -136,7 +136,7 @@ function saveMember(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${item.venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${item.venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -173,7 +173,7 @@ function getActMemberInfo(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${item.venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${item.venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -299,8 +299,14 @@ function getSignId(item) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    $.secretPin = data.data.secretPin
-                    $.lz_jdpin_token = resp['headers']['set-cookie'].filter(row => row.indexOf("lz_jdpin_token") !== -1)[0]
+                    if(data.data.joinMap.memberList){
+                        for(let i = 0;i < data.data.joinMap.memberList.length;i++){
+                            let members = data.data.joinMap.memberList[i]
+                            if(members.activityId == item.activityId){
+                                $.signId = members.signUuid
+                            }
+                        }
+                    }
                 }
             } catch (e) {
                 $.logErr(e, resp)
