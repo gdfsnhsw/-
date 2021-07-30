@@ -74,7 +74,6 @@ if ($.isNode()) {
                     if(!$.isContinue){
                         $.needDoTask.push($.taskList[i])
                     }
-                    console.log()
                 }
             }
             console.log(`\n******正在进行的活动数目为：${$.needDoTask.length}*********\n`);
@@ -112,7 +111,10 @@ if ($.isNode()) {
                 for(let i = 0;i < $.needDoTask.length;i++){
                     let item = $.needDoTask[i]
                     $.signId = ""
-                    await getSignId(item);
+                    console.log(`\n******正在做第个${i+1}任务，任务名为：${item.shopName}*********\n`);
+                    if($.index == 1){
+                        await getSignId(item);
+                    }
                     await getActMemberInfo(item);
                     await saveMember(item);
                     console.log(item)
@@ -299,7 +301,7 @@ function getSignId(item) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if(data.data.joinMap.memberList){
+                    if(data && data.data && data.data.joinMap && data.data.joinMap.memberList){
                         for(let i = 0;i < data.data.joinMap.memberList.length;i++){
                             let members = data.data.joinMap.memberList[i]
                             if(members.activityId == item.activityId){
