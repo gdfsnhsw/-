@@ -132,8 +132,9 @@ if ($.isNode()) {
                     if($.firstSign == ""){
                         continue
                     }
-                    //await getSignId(item);
-                    $.signId = $.signIds.get(item.activityId);
+                    $.signId = ""
+                    await getSignId(item);
+                    $.signId = $.signId == "" ? $.firstSign : $.signId;
 
                     console.log("signUuid为：" + $.signId)
                     console.log("venderId为：" + $.venderIds.get(item.activityId))
