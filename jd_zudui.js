@@ -462,7 +462,7 @@ function queryActivityInfo(item) {
                     if(data && data.data){
                         let active = data.data.active
                         //不是京豆
-                        if(active.actName.indexOf("豆") == -1){
+                        if(active.prizeType != 6){
                             $.isContinue = true
                         }
                         //已结束 或来早了
