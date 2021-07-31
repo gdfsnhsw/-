@@ -129,7 +129,8 @@ if ($.isNode()) {
                     }
 
                     $.firstSign = $.signIds.get(item.activityId);
-                    if($.firstSign == ""){
+                    if(!$.firstSign || $.firstSign == ""){
+                        console.log("sigin为空，跳过")
                         continue
                     }
                     $.signId = ""
