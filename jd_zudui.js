@@ -302,7 +302,7 @@ function accessLogWithAD(item) {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
 
                     }
                     console.log("accessLogWithAD",data)
@@ -341,7 +341,7 @@ function shopInfo(item) {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
 
                     }
                 }
@@ -379,7 +379,7 @@ function getActMemberInfo(item) {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
 
                     }
                     data = JSON.parse(data);
@@ -615,7 +615,7 @@ function getCommonInfoToken() {
                 if(resp.statusCode == 200){
                     let cookies = resp.headers['set-cookie']
                     $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                    $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+                    $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
 
                 }
             } catch (e) {
