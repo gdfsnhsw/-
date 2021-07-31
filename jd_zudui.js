@@ -80,6 +80,7 @@ if ($.isNode()) {
     console.log(`\n******开始助力*********\n`);
     $.venderIds = new Map()
     $.signIds = new Map()
+    $.firstSecretPin = ""
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -106,6 +107,10 @@ if ($.isNode()) {
                 $.log("黑号!")
                 await $.wait(5000)
                 continue
+            }
+
+            if($.index == 1){
+                $.firstSecretPin = $.secretPin
             }
 
             if($.needDoTask){
@@ -205,7 +210,7 @@ function saveMember(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds.get(item.activityId)}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -242,7 +247,7 @@ function getActMemberInfo(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds.get(item.activityId)}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -361,7 +366,7 @@ function getSignId(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds.get(item.activityId)}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
