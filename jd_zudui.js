@@ -111,9 +111,9 @@ if ($.isNode()) {
             $.index = i + 1;
             $.isLogin = true;
             $.nickName = '';
-            console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 
             if($.needDoTask){
+                console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
                 for(let j = 0;j < $.needDoTask.length;j++){
                     let item = $.needDoTask[j]
 
