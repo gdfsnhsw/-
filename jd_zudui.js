@@ -120,10 +120,16 @@ if ($.isNode()) {
 
                         $.firstSign = ""
                         await getSignId(item);
+                        if($.firstSign == ""){
+                            continue
+                        }
                         $.signIds.set(item.activityId,$.firstSign)
                     }
 
                     $.firstSign = $.signIds.get(item.activityId);
+                    if($.firstSign == ""){
+                        continue
+                    }
                     //await getSignId(item);
                     $.signId = $.signIds.get(item.activityId);
 
@@ -242,7 +248,7 @@ function queryActivityInfo(item) {
                     if(data && data.data){
                         let active = data.data.active
                         //已结束 或来早了
-                        if(active.startTime > new Date().getTime() || active.endTime < new Date().getTime()){
+                        if(active.startTime && (active.startTime > new Date().getTime() || active.endTime < new Date().getTime())){
                             $.isContinue = true
                         }
                         //不是京豆
@@ -321,6 +327,10 @@ function getSignId(item) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
+                    if(!data.result){
+                        console.log(data.errorMessage)
+                        return
+                    }
                     if(data && data.data && data.data.signUuid){
                         $.signId = data.data.signUuid
                     }
