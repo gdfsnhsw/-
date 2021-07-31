@@ -116,6 +116,8 @@ if ($.isNode()) {
 
                     $.signId = ""
                     if($.index == 1){
+                        await saveCaptain(item);
+
                         $.venderIds.set(item.activityId,item.venderId)
 
                         $.firstSign = ""
@@ -146,6 +148,44 @@ if ($.isNode()) {
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
+
+function saveCaptain(item) {
+
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/saveCaptain`,
+            body: `activityId=${item.activityId}&pin=${$.secretPin}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjd.com',
+                'Origin':'https://lzkjdz-isv.isvjd.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    if(!data.result){
+                        console.log(data.errorMessage)
+                        return
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
 
 function saveMember(item) {
     return new Promise(resolve => {
