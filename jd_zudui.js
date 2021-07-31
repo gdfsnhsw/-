@@ -298,12 +298,7 @@ function accessLogWithAD(item) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    data = JSON.parse(data);
-                    if(data && data.data){
-                        //TODO
-                        console.log("")
-
-                    }
+                    console.log("accessLogWithAD",data)
                 }
             } catch (e) {
                 $.logErr(e, resp)
