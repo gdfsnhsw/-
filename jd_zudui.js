@@ -92,7 +92,9 @@ if ($.isNode()) {
                             if($.firstSign == ""){
                                 continue
                             }
-                            $.signIds.set(item.activityId,$.firstSign)
+                            $.signId = ""
+                            await getSignId(item);
+                            $.signIds.set(item.activityId,$.signId)
                         }
                         $.needDoTask.push(item)
                     }
@@ -128,6 +130,7 @@ if ($.isNode()) {
                     await getSimpleActInfoVo(item);
 
                     $.lz_jdpin_token = ""
+                    $.AUTH_C_USER = ""
                     $.secretPin = ""
                     await getMyPing()
 
@@ -139,14 +142,7 @@ if ($.isNode()) {
                         continue
                     }
 
-                    $.firstSign = $.signIds.get(item.activityId);
-                    if(!$.firstSign || $.firstSign == ""){
-                        console.log("sigin为空，跳过")
-                        continue
-                    }
-                    $.signId = ""
-                    // await getSignId(item);
-                    $.signId = $.firstSign
+                    $.signId = $.signIds.get(item.activityId)
                     if(!$.signId || $.signId == ""){
                         console.log("sigin为空，跳过")
                         continue
@@ -175,7 +171,7 @@ function saveCaptain(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/saveCaptain`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -212,7 +208,7 @@ function saveMember(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/saveMember`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=${$.signId}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}&pinImg=${encodeURIComponent("http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg")}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -221,7 +217,7 @@ function saveMember(item) {
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
                 'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -231,9 +227,8 @@ function saveMember(item) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if(data && data.data){
+                    if(data){
                         console.log("加入队伍信息：",data.errorMessage)
-
                     }
                 }
             } catch (e) {
@@ -283,7 +278,7 @@ function activityContent(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=${$.signId}`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -319,9 +314,10 @@ function activityContent(item) {
 
 function accessLogWithAD(item) {
     return new Promise(resolve => {
+        let pageUrl = `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${item.activityId}&signUuid=${$.signId}`
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/common/accessLogWithAD`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&subType=app&code=46&venderId=${$.venderIds.get(item.activityId)}&pageUrl=https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=58838ece47064af1a45d3fcb29c37d31&signUuid=b43c2879d37747f8b6349c639641a483&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=46&venderId=${$.venderIds.get(item.activityId)}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -330,7 +326,7 @@ function accessLogWithAD(item) {
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
                 'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -368,7 +364,7 @@ function shopInfo(item) {
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
                 'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -397,7 +393,7 @@ function getActMemberInfo(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxCommonInfo/getActMemberInfo`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&venderId=${$.venderIds.get(item.activityId)}`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&venderId=${$.venderIds.get(item.activityId)}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -406,7 +402,7 @@ function getActMemberInfo(item) {
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
                 'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -441,7 +437,7 @@ function queryActivityInfo(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -486,7 +482,7 @@ function getAllActivitys() {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxAssemblePage/getTopAndNewActInfo`,
-            body: `pin=${$.secretPin}&aggrateActType=11&topNewType=1&pageNo=1&pageSize=200`,
+            body: `pin=${encodeURIComponent($.secretPin)}&aggrateActType=11&topNewType=1&pageNo=1&pageSize=200`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -522,7 +518,7 @@ function getSignId(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=${$.firstSign}`,
+            body: `activityId=${item.activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.firstSign}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -632,11 +628,12 @@ function getMyPing() {
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
                         $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.AUTH_C_USER = cookies[2].substring(cookies[2].indexOf("=") + 1, cookies[2].indexOf(";"))
+                        $.lz_jdpin_token = cookies[3].substring(cookies[3].indexOf("=") + 1, cookies[3].indexOf(";"))
 
                     }
                     data = JSON.parse(data);
                     $.secretPin = data.data.secretPin
-                    $.lz_jdpin_token = resp['headers']['set-cookie'].filter(row => row.indexOf("lz_jdpin_token") !== -1)[0]
                 }
             } catch (e) {
                 $.logErr(e, resp)
