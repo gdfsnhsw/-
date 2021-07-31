@@ -78,7 +78,7 @@ if ($.isNode()) {
         }
     }
     console.log(`\n******开始助力*********\n`);
-    $.venderIds = {}
+    $.venderIds = new Map()
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -124,7 +124,7 @@ if ($.isNode()) {
 
                     console.log("第一个账号signUuid为：" + $.signId)
                     console.log("signUuid为：" + $.firstSign)
-                    console.log("venderId为：" + $.venderIds[item.activityId])
+                    console.log("venderId为：" + $.venderIds.get(item.activityId))
 
                     await getActMemberInfo(item);
                     await saveMember(item);
@@ -149,7 +149,7 @@ function saveMember(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds[item.activityId]}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -178,7 +178,7 @@ function getActMemberInfo(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxCommonInfo/getActMemberInfo`,
-            body: `activityId=${item.activityId}&pin=${$.secretPin}&venderId=${$.venderIds[item.activityId]}`,
+            body: `activityId=${item.activityId}&pin=${$.secretPin}&venderId=${$.venderIds.get(item.activityId)}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -186,7 +186,7 @@ function getActMemberInfo(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds[item.activityId]}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -306,7 +306,7 @@ function getSignId(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds[item.activityId]}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=GWtbuB1q4sddiPhrT54Wa%2FkaL5GGqMTUc8u%2Fotw2E%2Ba7Ak3lgFoFQlZmf45w8Jzw&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
