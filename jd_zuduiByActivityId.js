@@ -16,8 +16,10 @@ if ($.isNode()) {
 
 let activityId = "968bed4962af4216b86f9e8dc562d83d"
 let venderId = ""
+let sid = ""
 if(process.env.ZUDUI_ACTIVITY_ID){
     activityId = process.env.ZUDUI_ACTIVITY_ID
+    sid = process.env.ZUDUI_SID
 }
 
 !(async () => {
@@ -78,7 +80,12 @@ if(process.env.ZUDUI_ACTIVITY_ID){
 
             $.signId = ""
             if($.index == 1){
-                await shopInfo();
+                if(!sid){
+                    await shopInfo();
+                }else {
+                    venderId = sid
+                }
+
                 await getSignId();
                 $.signIds.set(activityId,$.signId)
             }
