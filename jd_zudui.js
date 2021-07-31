@@ -110,6 +110,7 @@ if ($.isNode()) {
             }
 
             if($.index == 1){
+                console.log("firstSecretPin:" + $.secretPin)
                 $.firstSecretPin = $.secretPin
             }
 
