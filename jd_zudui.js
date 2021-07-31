@@ -116,7 +116,7 @@ if ($.isNode()) {
                     let item = $.needDoTask[j]
 
                     console.log(`\n******正在做第个${j+1}任务，任务名为：${item.shopName}*********\n`);
-                    console.log("item信息："+item)
+                    console.log("item信息：",item)
 
                     $.LZ_TOKEN_KEY = "";
                     $.LZ_TOKEN_VALUE = "";
@@ -159,6 +159,7 @@ if ($.isNode()) {
                     // await activityContent(item);
                     await shopInfo(item);
                     await getActMemberInfo(item);
+                    console.log("开始加入队伍")
                     await saveMember(item);
 
                 }
