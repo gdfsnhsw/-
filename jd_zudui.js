@@ -66,11 +66,11 @@ if ($.isNode()) {
             await $.wait(2000)
             console.log(`\n******开始筛选正在进行的活动*********\n`);
             if($.taskList){
-                for(let i =0;i < $.taskList.length;i++){
+                for(let j =0;j < $.taskList.length;j++){
                     $.isContinue = false
-                    await queryActivityInfo($.taskList[i]);
+                    await queryActivityInfo($.taskList[j]);
                     if(!$.isContinue){
-                        $.needDoTask.push($.taskList[i])
+                        $.needDoTask.push($.taskList[j])
                     }
                 }
             }
@@ -109,10 +109,10 @@ if ($.isNode()) {
             }
 
             if($.needDoTask){
-                for(let i = 0;i < $.needDoTask.length;i++){
-                    let item = $.needDoTask[i]
+                for(let j = 0;j < $.needDoTask.length;j++){
+                    let item = $.needDoTask[j]
 
-                    console.log(`\n******正在做第个${i+1}任务，任务名为：${item.shopName}*********\n`);
+                    console.log(`\n******正在做第个${j+1}任务，任务名为：${item.shopName}*********\n`);
 
                     $.signId = ""
                     if($.index == 1){
