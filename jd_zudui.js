@@ -135,6 +135,7 @@ if ($.isNode()) {
                     }
                     $.signId = ""
                     await getSignId(item);
+                    $.signId = $.firstSign
                     if(!$.signId || $.signId == ""){
                         console.log("sigin为空，跳过")
                         continue
