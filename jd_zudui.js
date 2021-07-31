@@ -150,6 +150,8 @@ if ($.isNode()) {
                     console.log("signUuid为：" + $.signId)
                     console.log("venderId为：" + $.venderIds.get(item.activityId))
 
+                    await accessLogWithAD(item);
+                    await activityContent(item);
                     await getActMemberInfo(item);
                     await saveMember(item);
                     console.log(item)
@@ -224,6 +226,82 @@ function saveMember(item) {
                     data = JSON.parse(data);
                     if(data && data.data){
                         console.log("组队成功，队长名：" + data.data[0].nickName)
+
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
+
+function activityContent() {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
+            body: `activityId=${item.activityId}&pin=${$.secretPin}&signUuid=${$.signId}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjd.com',
+                'Origin':'https://lzkjdz-isv.isvjd.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    if(data && data.data){
+                        //TODO
+                        console.log("")
+
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
+
+function accessLogWithAD() {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/common/accessLogWithAD`,
+            body: `activityId=${item.activityId}&pin=${$.secretPin}&subType=app&code=46&venderId=${$.venderIds.get(item.activityId)}&pageUrl=https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=58838ece47064af1a45d3fcb29c37d31&signUuid=b43c2879d37747f8b6349c639641a483&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjd.com',
+                'Origin':'https://lzkjdz-isv.isvjd.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    if(data && data.data){
+                        //TODO
+                        console.log("")
 
                     }
                 }
