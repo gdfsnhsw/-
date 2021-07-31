@@ -152,6 +152,7 @@ if ($.isNode()) {
 
                     await accessLogWithAD(item);
                     await activityContent(item);
+                    await shopInfo(item);
                     await getActMemberInfo(item);
                     await saveMember(item);
                     console.log(item)
@@ -298,7 +299,51 @@ function accessLogWithAD(item) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+
+                    }
                     console.log("accessLogWithAD",data)
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
+
+function shopInfo(item) {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/shopInfo`,
+            body: `activityId=${item.activityId}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjd.com',
+                'Origin':'https://lzkjdz-isv.isvjd.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+
+                    }
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -331,6 +376,12 @@ function getActMemberInfo(item) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+
+                    }
                     data = JSON.parse(data);
                     if(data && data.data){
                         //TODO
