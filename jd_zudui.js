@@ -135,7 +135,10 @@ if ($.isNode()) {
                     }
                     $.signId = ""
                     await getSignId(item);
-                    $.signId = $.signId == "" ? $.firstSign : $.signId;
+                    if(!$.signId || $.signId == ""){
+                        console.log("sigin为空，跳过")
+                        continue
+                    }
 
                     console.log("signUuid为：" + $.signId)
                     console.log("venderId为：" + $.venderIds.get(item.activityId))
