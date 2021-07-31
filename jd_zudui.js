@@ -232,7 +232,7 @@ function saveMember(item) {
                 } else {
                     data = JSON.parse(data);
                     if(data && data.data){
-                        console.log(data.errorMessage)
+                        console.log("加入队伍信息：",data.errorMessage)
 
                     }
                 }
