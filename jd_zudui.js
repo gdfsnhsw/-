@@ -79,6 +79,7 @@ if ($.isNode()) {
     }
     console.log(`\n******开始助力*********\n`);
     $.venderIds = new Map()
+    $.signIds = new Map()
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -110,20 +111,23 @@ if ($.isNode()) {
             if($.needDoTask){
                 for(let i = 0;i < $.needDoTask.length;i++){
                     let item = $.needDoTask[i]
-                    $.signId = ""
-                    $.firstSign = ""
+
                     console.log(`\n******正在做第个${i+1}任务，任务名为：${item.shopName}*********\n`);
 
+                    $.signId = ""
                     if($.index == 1){
                         $.venderIds.set(item.activityId,item.venderId)
+
+                        $.firstSign = ""
+                        await getSignId(item);
+                        $.signIds.set(item.activityId,$.firstSign)
                     }
 
-                    await getSignId(item);
-                    await getSignId(item);
-                    $.signId = $.signId == "" ? $.firstSign : $.signId;
+                    $.firstSign = $.signIds.get(item.activityId);
+                    //await getSignId(item);
+                    $.signId = $.signIds.get(item.activityId);
 
-                    console.log("第一个账号signUuid为：" + $.signId)
-                    console.log("signUuid为：" + $.firstSign)
+                    console.log("signUuid为：" + $.signId)
                     console.log("venderId为：" + $.venderIds.get(item.activityId))
 
                     await getActMemberInfo(item);
