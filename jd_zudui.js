@@ -230,6 +230,9 @@ function saveMember(item) {
                     if(data){
                         console.log("加入队伍信息：",data.errorMessage)
                     }
+                    if(data && data.data && data.data.length > 0){
+                        console.log("加入队伍成功")
+                    }
                 }
             } catch (e) {
                 $.logErr(e, resp)
