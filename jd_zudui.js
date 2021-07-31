@@ -116,6 +116,7 @@ if ($.isNode()) {
                     let item = $.needDoTask[j]
 
                     console.log(`\n******正在做第个${j+1}任务，任务名为：${item.shopName}*********\n`);
+                    console.log("item信息："+item)
 
                     $.LZ_TOKEN_KEY = "";
                     $.LZ_TOKEN_VALUE = "";
@@ -159,7 +160,7 @@ if ($.isNode()) {
                     await shopInfo(item);
                     await getActMemberInfo(item);
                     await saveMember(item);
-                    console.log(item)
+
                 }
             }
         }
@@ -230,7 +231,7 @@ function saveMember(item) {
                 } else {
                     data = JSON.parse(data);
                     if(data && data.data){
-                        console.log("组队成功，队长名：" + data.data[0].nickName)
+                        console.log(data.errorMessage)
 
                     }
                 }
@@ -343,7 +344,6 @@ function accessLogWithAD(item) {
                         $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
 
                     }
-                    console.log("accessLogWithAD",data)
                 }
             } catch (e) {
                 $.logErr(e, resp)
