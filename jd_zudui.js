@@ -124,6 +124,8 @@ if ($.isNode()) {
                     $.isvObfuscatorToken = ""
                     await getIsvObfuscatorToken();
 
+                    await getSimpleActInfoVo(item);
+
                     $.lz_jdpin_token = ""
                     $.secretPin = ""
                     await getMyPing()
@@ -153,7 +155,7 @@ if ($.isNode()) {
                     console.log("venderId为：" + $.venderIds.get(item.activityId))
 
                     await accessLogWithAD(item);
-                    await activityContent(item);
+                    // await activityContent(item);
                     await shopInfo(item);
                     await getActMemberInfo(item);
                     await saveMember(item);
@@ -565,6 +567,44 @@ function getSignId(item) {
     })
 }
 
+function getSimpleActInfoVo(item) {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/customer/getSimpleActInfoVo`,
+            body: `activityId=${item.activityId}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjd.com',
+                'Origin':'https://lzkjdz-isv.isvjd.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken};`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
+
 function getMyPing() {
     return new Promise(resolve => {
         let options = {
@@ -587,6 +627,12 @@ function getMyPing() {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+
+                    }
                     data = JSON.parse(data);
                     $.secretPin = data.data.secretPin
                     $.lz_jdpin_token = resp['headers']['set-cookie'].filter(row => row.indexOf("lz_jdpin_token") !== -1)[0]
