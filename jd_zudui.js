@@ -140,15 +140,6 @@ if ($.isNode()) {
                     }
 
                     console.log(`\n******正在做第个${j+1}任务，任务名为：${item.shopName}*********\n`);
-                    let activityInfo = await queryActivityInfo(item);
-                    let maxGroup = activityInfo.active.maxGroup
-                    let successCount = activityInfo.successRetList.length
-                    if(successCount < maxGroup){
-                        console.log(`\n******任务名为：${item.shopName}共可以组队${maxGroup}次,开始第${successCount + 1}次组队*********\n`)
-                    }else{
-                        console.log(`\n******任务名为：${item.shopName}共可以组队${maxGroup}次,已达到最大组队次数，跳过当前任务*********\n`)
-                        continue
-                    }
 
                     $.signId = $.signIds.get(item.activityId)
                     if(!$.signId || $.signId == ""){
