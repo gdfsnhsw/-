@@ -83,7 +83,7 @@ if ($.isNode()) {
 
                         $.signId = ""
                         if($.index == 1){
-                            await saveCaptain(item);
+                            // await saveCaptain(item);
 
                             $.venderIds.set(item.activityId,item.venderId)
 
@@ -529,7 +529,7 @@ function getSignId(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=0ebe029def2742f48ef94512e8adadba&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${item.activityId}&signUuid=${$.firstSign}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.venderIds.get(item.activityId)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
