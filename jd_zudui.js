@@ -23,6 +23,10 @@ if ($.isNode()) {
     }
     $.taskList = []
     $.needDoTask = []
+    $.venderIds = new Map()
+    $.signIds = new Map()
+    $.firstSecretPin = ""
+
     for (let i = 0; i < cookiesArr.length; i++) {
         if(i > 0){
             break
@@ -60,6 +64,7 @@ if ($.isNode()) {
                 await $.wait(5000)
                 continue
             }
+
             console.log(`\n******开始查询所有活动*********\n`);
             await getAllActivitys();
             console.log(`\n******活动数目为：${$.taskList.length}*********\n`);
@@ -67,10 +72,29 @@ if ($.isNode()) {
             console.log(`\n******开始筛选正在进行的活动*********\n`);
             if($.taskList){
                 for(let j =0;j < $.taskList.length;j++){
+                    let item = $.taskList[j]
                     $.isContinue = false
-                    await queryActivityInfo($.taskList[j]);
+                    await queryActivityInfo(item);
                     if(!$.isContinue){
-                        $.needDoTask.push($.taskList[j])
+                        if($.index == 1){
+                            console.log("firstSecretPin:" + $.secretPin)
+                            $.firstSecretPin = $.secretPin
+                        }
+
+                        $.signId = ""
+                        if($.index == 1){
+                            await saveCaptain(item);
+
+                            $.venderIds.set(item.activityId,item.venderId)
+
+                            $.firstSign = ""
+                            await getSignId(item);
+                            if($.firstSign == ""){
+                                continue
+                            }
+                            $.signIds.set(item.activityId,$.firstSign)
+                        }
+                        $.needDoTask.push(item)
                     }
                 }
             }
@@ -78,9 +102,6 @@ if ($.isNode()) {
         }
     }
     console.log(`\n******开始助力*********\n`);
-    $.venderIds = new Map()
-    $.signIds = new Map()
-    $.firstSecretPin = ""
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -90,48 +111,29 @@ if ($.isNode()) {
             $.nickName = '';
             console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 
-            $.LZ_TOKEN_KEY = "";
-            $.LZ_TOKEN_VALUE = "";
-            await getCommonInfoToken();
-
-            $.isvObfuscatorToken = ""
-            await getIsvObfuscatorToken();
-
-            $.lz_jdpin_token = ""
-            $.secretPin = ""
-            await getMyPing()
-
-            await $.wait(1000)
-
-            if (!$.secretPin) {
-                $.log("黑号!")
-                await $.wait(5000)
-                continue
-            }
-
-            if($.index == 1){
-                console.log("firstSecretPin:" + $.secretPin)
-                $.firstSecretPin = $.secretPin
-            }
-
             if($.needDoTask){
                 for(let j = 0;j < $.needDoTask.length;j++){
                     let item = $.needDoTask[j]
 
                     console.log(`\n******正在做第个${j+1}任务，任务名为：${item.shopName}*********\n`);
 
-                    $.signId = ""
-                    if($.index == 1){
-                        await saveCaptain(item);
+                    $.LZ_TOKEN_KEY = "";
+                    $.LZ_TOKEN_VALUE = "";
+                    await accessActivity(item);
 
-                        $.venderIds.set(item.activityId,item.venderId)
+                    $.isvObfuscatorToken = ""
+                    await getIsvObfuscatorToken();
 
-                        $.firstSign = ""
-                        await getSignId(item);
-                        if($.firstSign == ""){
-                            continue
-                        }
-                        $.signIds.set(item.activityId,$.firstSign)
+                    $.lz_jdpin_token = ""
+                    $.secretPin = ""
+                    await getMyPing()
+
+                    await $.wait(1000)
+
+                    if (!$.secretPin) {
+                        $.log("黑号!")
+                        await $.wait(5000)
+                        continue
                     }
 
                     $.firstSign = $.signIds.get(item.activityId);
@@ -227,6 +229,40 @@ function saveMember(item) {
                     data = JSON.parse(data);
                     if(data && data.data){
                         console.log("组队成功，队长名：" + data.data[0].nickName)
+
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
+
+function accessActivity(item) {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${item.activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.venderIds.get(item.activityId)}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjd.com',
+            }
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
 
                     }
                 }
