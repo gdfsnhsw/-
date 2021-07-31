@@ -287,15 +287,14 @@ function queryActivityInfo(item) {
                     data = JSON.parse(data);
                     if(data && data.data){
                         let active = data.data.active
-                        //已结束 或来早了
-                        if(active.startTime && (active.startTime > new Date().getTime() || active.endTime < new Date().getTime())){
-                            $.isContinue = true
-                        }
                         //不是京豆
                         if(active.actName.indexOf("豆") != -1){
                             $.isContinue = true
                         }
-                        //TODO 已做完
+                        //已结束 或来早了
+                        if(active.startTime && (active.startTime > new Date().getTime() || active.endTime < new Date().getTime())){
+                            $.isContinue = true
+                        }
 
                     }
                 }
