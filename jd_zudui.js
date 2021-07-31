@@ -238,7 +238,7 @@ function saveMember(item) {
     })
 }
 
-function activityContent() {
+function activityContent(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
@@ -276,7 +276,7 @@ function activityContent() {
     })
 }
 
-function accessLogWithAD() {
+function accessLogWithAD(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/common/accessLogWithAD`,
