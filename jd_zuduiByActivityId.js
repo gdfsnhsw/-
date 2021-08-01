@@ -16,9 +16,11 @@ if ($.isNode()) {
 
 let activityId = "968bed4962af4216b86f9e8dc562d83d"
 let venderId = ""
-let sid = ""
+let sid = "1000014486"
 if(process.env.ZUDUI_ACTIVITY_ID){
     activityId = process.env.ZUDUI_ACTIVITY_ID
+}
+if(process.env.ZUDUI_SID){
     sid = process.env.ZUDUI_SID
 }
 
