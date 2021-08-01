@@ -19,9 +19,11 @@ let venderId = ""
 let sid = "1000014486"
 if(process.env.ZUDUI_ACTIVITY_ID){
     activityId = process.env.ZUDUI_ACTIVITY_ID
+    console.log("配置的activityId为：" + activityId)
 }
 if(process.env.ZUDUI_SID){
     sid = process.env.ZUDUI_SID
+    console.log("配置的sid为：" + sid)
 }
 
 !(async () => {
