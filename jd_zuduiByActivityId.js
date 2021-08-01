@@ -14,9 +14,9 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let activityId = "9cabcf8b578343ef9ad7130ec9e2250a"
+let activityId = "968bed4962af4216b86f9e8dc562d83d"
 let venderId = ""
-let sid = "1000014486"
+let sid = ""
 let sidUuid=""
 if(process.env.ZUDUI_ACTIVITY_ID){
     activityId = process.env.ZUDUI_ACTIVITY_ID
