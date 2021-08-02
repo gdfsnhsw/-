@@ -174,7 +174,7 @@ function saveMember() {
     return new Promise(resolve => {
         let options = {
             url: `https://cjhydz-isv.isvjcloud.com/wxTeam/saveMember`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.firstSecretPin)}&signUuid=${$.signUuid}`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signUuid}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
