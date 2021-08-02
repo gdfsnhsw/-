@@ -101,24 +101,14 @@ if ($.isNode()) {
         if ($.shareCodes && $.shareCodes.length) {
           console.log(`\n开始内部互助\n`)
           for (let j = 0; j < $.shareCodes.length; j++) {
-            if ($.shareCodes[j].num == $.domax) {
-              $.shareCodes.splice(j, 1)
-              j--
-              continue
-            }
             if ($.shareCodes[j].use === $.UserName) {
               console.log(`不能助力自己`)
               continue
             }
             console.log(`账号 ${$.UserName} 去助力 ${$.shareCodes[j].use} 的互助码 ${$.shareCodes[j].smp}`)
-            if ($.shareCodes[j].max) {
-              console.log(`您的好友助力已满`)
-              continue
-            }
             await helpSignhb($.shareCodes[j].smp)
             await $.wait(3000)
-            if (!$.black){
-              $.shareCodes[j].num++
+            if ($.black){
               break
             }
           }
