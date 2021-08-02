@@ -136,7 +136,7 @@ if ($.isNode()) {
         }
         await doubleSign()
       } else {
-        console.log(`此账号已黑`)
+        console.log(`跳过`)
       }
     }
   }
