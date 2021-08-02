@@ -66,8 +66,10 @@ if ($.isNode()) {
         continue
       }
       if (i === 0) console.log(`\n正在收集助力码请等待\n`)
-      await signhb(1)
-      await $.wait(3000)
+      if($.index < 6){
+        await signhb(1)
+        await $.wait(3000)
+      }
     }
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -91,8 +93,10 @@ if ($.isNode()) {
         }
         continue
       }
-      await signhb(2)
-      await $.wait(3000)
+      if($.index < 6){
+        await signhb(2)
+        await $.wait(3000)
+      }
       if ($.canHelp) {
         if ($.shareCodes && $.shareCodes.length) {
           console.log(`\n开始内部互助\n`)
@@ -168,14 +172,12 @@ function signhb(type = 1) {
               if (status === 1) {
                 let max = false
                 if (helpNum == domax) max = true
-                if($.index < 6){
-                  $.shareCodes.push({
-                    'use': $.UserName,
-                    'smp': smp,
-                    'num': helpNum || 0,
-                    'max': max
-                  })
-                }
+                $.shareCodes.push({
+                  'use': $.UserName,
+                  'smp': smp,
+                  'num': helpNum || 0,
+                  'max': max
+                })
               }
               break
             case 2:
