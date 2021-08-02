@@ -59,6 +59,7 @@ if ($.isNode()) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      $.index = i + 1;
       $.isLogin = true;
       await TotalBean()
       if (!$.isLogin) {
@@ -119,7 +120,7 @@ if ($.isNode()) {
       } else {
         console.log(`今日已签到，无法助力好友啦~`)
       }
-      if (!$.black) {
+      if ($.index < 6 && !$.black) {
         if ($.commonlist && $.commonlist.length) {
           console.log("开始做红包任务")
           for (let j = 0; j < $.commonlist.length; j++) {
@@ -167,12 +168,14 @@ function signhb(type = 1) {
               if (status === 1) {
                 let max = false
                 if (helpNum == domax) max = true
-                $.shareCodes.push({
-                  'use': $.UserName,
-                  'smp': smp,
-                  'num': helpNum || 0,
-                  'max': max
-                })
+                if($.index < 6){
+                  $.shareCodes.push({
+                    'use': $.UserName,
+                    'smp': smp,
+                    'num': helpNum || 0,
+                    'max': max
+                  })
+                }
               }
               break
             case 2:
