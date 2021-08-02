@@ -14,21 +14,14 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let activityId = "968bed4962af4216b86f9e8dc562d83d"
+let activityUrl = "https://lzkjdz-isv.isvjcloud.com/pool/captain/3152451?activityId=9cabcf8b578343ef9ad7130ec9e2250a&signUuid=fc83b76e95014f5c9be8a716f08ee493&shareuserid4minipg=iA9%2BsAwyKXfRnuZ1HXpv0E7oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=1000014486"
+let activityId = ""
 let venderId = ""
 let sid = ""
 let sidUuid=""
-if(process.env.ZUDUI_ACTIVITY_ID){
-    activityId = process.env.ZUDUI_ACTIVITY_ID
-    console.log("配置的activityId为：" + activityId)
-}
-if(process.env.ZUDUI_SID){
-    sid = process.env.ZUDUI_SID
-    console.log("配置的sid为：" + sid)
-}
-if(process.env.ZUDUI_SID_UUID){
-    sidUuid = process.env.ZUDUI_SID_UUID
-    console.log("配置的sidUuid为：" + sidUuid)
+if(process.env.ZUDUI_ACTIVITY_URL1){
+    activityUrl = process.env.ZUDUI_ACTIVITY_URL1
+    console.log("配置的activityUrl为：" + activityUrl)
 }
 
 !(async () => {
@@ -63,9 +56,16 @@ if(process.env.ZUDUI_SID_UUID){
                 }
                 continue
             }
+
+            activityId = activityUrl.substring(activityUrl.indexOf("activityId=") + "activityId=".length)
+            activityId = activityId.substring(0,activityId.indexOf("&"))
+
+            $.signId = activityUrl.substring(activityUrl.indexOf("signUuid=") + "signUuid=".length)
+            $.signId = $.signId.substring(0,$.signId.indexOf("&"))
+
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
-            await getCommonInfoToken();
+            await accessActivity();
 
             $.isvObfuscatorToken = ""
             await getIsvObfuscatorToken();
@@ -87,16 +87,21 @@ if(process.env.ZUDUI_SID_UUID){
                 $.firstSecretPin = $.secretPin
             }
 
-            $.signId = ""
             if($.index == 1){
                 if(!sid){
-                    await shopInfo();
+                    await shopInfo("wxTeam");
                 }else {
                     venderId = sid
                 }
+                if(!venderId){
+                    await shopInfo("pool");
+                }
 
                 if(!sidUuid){
-                    await getSignId();
+                    await getSignId("wxTeam");
+                    if(!sidUuid){
+                        await getSignId("pool");
+                    }
                     $.signIds.set(activityId,$.signId)
                 }else{
                     $.signIds.set(activityId,sidUuid)
@@ -256,45 +261,7 @@ function accessActivity() {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
-
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function activityContent(item) {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if(data && data.data){
-                        //TODO
-                        console.log("")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                     }
                 }
@@ -333,7 +300,7 @@ function accessLogWithAD(item) {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                     }
                 }
@@ -346,10 +313,10 @@ function accessLogWithAD(item) {
     })
 }
 
-function shopInfo() {
+function shopInfo(type) {
     return new Promise(resolve => {
         let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/shopInfo`,
+            url: `https://lzkjdz-isv.isvjcloud.com/${type}/shopInfo`,
             body: `activityId=${activityId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
@@ -369,12 +336,12 @@ function shopInfo() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    venderId = data.data.sid
-                    if(!venderId){
-                        if(resp.statusCode == 200){
+                    if(data && data.data && data.data.sid){
+                        venderId = data.data.sid
+                        if(venderId && resp.statusCode == 200){
                             let cookies = resp.headers['set-cookie']
                             $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                         }
                     }
@@ -413,7 +380,7 @@ function getActMemberInfo(item) {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                     }
                     data = JSON.parse(data);
@@ -432,91 +399,10 @@ function getActMemberInfo(item) {
     })
 }
 
-function queryActivityInfo(item) {
+function getSignId(type) {
     return new Promise(resolve => {
         let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/${activityId}?activityId=${activityId}&adsource=cjhdc`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if(data && data.data){
-                        let active = data.data.active
-                        //不是京豆
-                        if(active.prizeType != 6){
-                            $.isContinue = true
-                        }
-                        //已结束 或来早了
-                        if(active.startTime && (active.startTime > new Date().getTime() || active.endTime < new Date().getTime())){
-                            $.isContinue = true
-                        }
-
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function getAllActivitys() {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxAssemblePage/getTopAndNewActInfo`,
-            body: `pin=${encodeURIComponent($.secretPin)}&aggrateActType=11&topNewType=1&pageNo=1&pageSize=200`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':'https://lzkjdz-isv.isvjcloud.com/wxAssemblePage/activity/?activityId=67dfd244aacb438893a73a03785a48c7',
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if(data && data.data){
-                        $.taskList = data.data.homeInfoResultVOList
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function getSignId() {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
+            url: `https://lzkjdz-isv.isvjcloud.com/${type}/activityContent`,
             body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
@@ -536,7 +422,7 @@ function getSignId() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if(!data.result){
+                    if(!data.result && data.errorMessage){
                         console.log(data.errorMessage)
                         return
                     }
@@ -553,7 +439,7 @@ function getSignId() {
     })
 }
 
-function getSimpleActInfoVo(item) {
+function getSimpleActInfoVo() {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/customer/getSimpleActInfoVo`,
@@ -578,7 +464,7 @@ function getSimpleActInfoVo(item) {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                     }
                 }
@@ -617,7 +503,7 @@ function getMyPing() {
                         let cookies = resp.headers['set-cookie']
                         if(cookies[2]){
                             $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
                             $.AUTH_C_USER = cookies[2].substring(cookies[2].indexOf("=") + 1, cookies[2].indexOf(";"))
                             $.lz_jdpin_token = cookies[3].substring(cookies[3].indexOf("=") + 1, cookies[3].indexOf(";"))
                         }
@@ -685,7 +571,7 @@ function getCommonInfoToken() {
                 if(resp.statusCode == 200){
                     let cookies = resp.headers['set-cookie']
                     $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                    $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                    $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                 }
             } catch (e) {
