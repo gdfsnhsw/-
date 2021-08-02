@@ -14,8 +14,6 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-//&signUuid=45966b47d93e49d1a599d47237cf228c&shareuserid4minipg=ioJDwrMhal%2F1FZnI6XJ1YPL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt&shopid=1000330405&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374
-
 let activityId = "a9a571fa693c4c308ea9812faa1dc63c"
 let activityUrl = "https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=a9a571fa693c4c308ea9812faa1dc63c&signUuid=45966b47d93e49d1a599d47237cf228c&shareuserid4minipg=ioJDwrMhal%2F1FZnI6XJ1YPL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt&shopid=1000330405&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374"
 if(process.env.ZUDUI_ACTIVITY_URL){
@@ -87,7 +85,8 @@ if(process.env.ZUDUI_ACTIVITY_URL){
 
             await activityContent();
             await saveCaptain();
-            console.log()
+
+            $.shareuserid4minipg = $.firstSecretPin
         }
     }
     console.log(`\n******开始助力*********\n`);
@@ -138,7 +137,7 @@ function saveCaptain() {
     return new Promise(resolve => {
         let options = {
             url: `https://cjhydz-isv.isvjcloud.com/wxTeam/saveCaptain`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -146,8 +145,8 @@ function saveCaptain() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'https://cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${$.shareuserid4minipg}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};IsvToken=${$.isvObfuscatorToken};APP_ABBR=${$.APP_ABBR};AUTH_C_USER=${$.secretPin}`,
+                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.shareuserid4minipg)}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};IsvToken=${$.isvObfuscatorToken};APP_ABBR=${$.APP_ABBR};AUTH_C_USER=${$.firstSecretPin}`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -175,7 +174,7 @@ function saveMember() {
     return new Promise(resolve => {
         let options = {
             url: `https://cjhydz-isv.isvjcloud.com/wxTeam/saveMember`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signUuid}&pinImg=${encodeURIComponent("http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg")}`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.firstSecretPin)}&signUuid=${$.signUuid}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -184,7 +183,7 @@ function saveMember() {
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'https://cjhydz-isv.isvjcloud.com',
                 'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.shopid}&lng=113.260753&lat=23.174864&sid=f7c805bc22421be06bfbf217b17a1d2w&un_area=19_1601_50258_50374`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};APP_ABBR=${$.APP_ABBR};`,
+                'Cookie': `IsvToken=${$.isvObfuscatorToken};LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};APP_ABBR=${$.APP_ABBR};AUTH_C_USER=${$.secretPin}`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -211,7 +210,6 @@ function saveMember() {
 }
 
 function accessActivity() {
-
     return new Promise(resolve => {
         let options = {
             url: `${activityUrl}`,
@@ -221,7 +219,7 @@ function accessActivity() {
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
-                'Cookie':`AUTH_C_USER=${$.shareuserid4minipg}`
+                'Cookie':`AUTH_C_USER=${encodeURIComponent($.shareuserid4minipg)}`
             }
         }
         $.get(options, async (err, resp, data) => {
@@ -233,7 +231,7 @@ function accessActivity() {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                     }
                 }
@@ -258,7 +256,7 @@ function activityContent() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'https://cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${$.shareuserid4minipg}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
+                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.shareuserid4minipg)}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};IsvToken=${$.isvObfuscatorToken};APP_ABBR=${$.APP_ABBR}`,
             }
         }
@@ -271,92 +269,11 @@ function activityContent() {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
                     }
                     if($.index == 1){
                         data = JSON.parse(data);
                         $.signUuid = data.data.signUuid
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function accessLogWithAD(item) {
-    return new Promise(resolve => {
-        let pageUrl = `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}`
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/common/accessLogWithAD`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=46&venderId=${venderId}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    if(resp.statusCode == 200){
-                        let cookies = resp.headers['set-cookie']
-                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
-
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function shopInfo() {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://cjhydz-isv.isvjcloud.com/wxTeam/shopInfo`,
-            body: `activityId=${activityId}`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'cjhydz-isv.isvjcloud.com',
-                'Origin':'https://cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};IsvToken=${$.isvObfuscatorToken};APP_ABBR=${$.APP_ABBR};`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    venderId = data.data.sid
-                    if(!venderId){
-                        if(resp.statusCode == 200){
-                            let cookies = resp.headers['set-cookie']
-                            $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
-
-                        }
                     }
                 }
             } catch (e) {
@@ -381,7 +298,7 @@ function findSkus() {
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'cjhydz-isv.isvjcloud.com',
                 'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.shopid}&lng=113.260753&lat=23.174864&sid=f7c805bc22421be06bfbf217b17a1d2w&un_area=19_1601_50258_50374`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};APP_ABBR=${$.APP_ABBR};`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.firstSecretPin};APP_ABBR=${$.APP_ABBR};`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -393,7 +310,7 @@ function findSkus() {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
                     }
                     data = JSON.parse(data);
@@ -412,170 +329,11 @@ function findSkus() {
     })
 }
 
-function queryActivityInfo(item) {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/${activityId}?activityId=${activityId}&adsource=cjhdc`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if(data && data.data){
-                        let active = data.data.active
-                        //不是京豆
-                        if(active.prizeType != 6){
-                            $.isContinue = true
-                        }
-                        //已结束 或来早了
-                        if(active.startTime && (active.startTime > new Date().getTime() || active.endTime < new Date().getTime())){
-                            $.isContinue = true
-                        }
-
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function getAllActivitys() {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxAssemblePage/getTopAndNewActInfo`,
-            body: `pin=${encodeURIComponent($.secretPin)}&aggrateActType=11&topNewType=1&pageNo=1&pageSize=200`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':'https://lzkjdz-isv.isvjcloud.com/wxAssemblePage/activity/?activityId=67dfd244aacb438893a73a03785a48c7',
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if(data && data.data){
-                        $.taskList = data.data.homeInfoResultVOList
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function getSignId() {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    data = JSON.parse(data);
-                    if(!data.result){
-                        console.log(data.errorMessage)
-                        return
-                    }
-                    if(data && data.data && data.data.signUuid){
-                        $.signId = data.data.signUuid
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
-function getSimpleActInfoVo(item) {
-    return new Promise(resolve => {
-        let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/customer/getSimpleActInfoVo`,
-            body: `activityId=${activityId}`,
-            headers: {
-                'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
-                'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken};`,
-            }
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    if(resp.statusCode == 200){
-                        let cookies = resp.headers['set-cookie']
-                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
-
-                    }
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data.data);
-            }
-        })
-    })
-}
-
 function getMyPing() {
     return new Promise(resolve => {
         let options = {
             url: `https://cjhydz-isv.isvjcloud.com/customer/getMyPing`,
-            body: `userId=${$.shopid}&token=${$.isvObfuscatorToken}&fromType=APP`,
+            body: `userId=${$.shopid}&token=${encodeURIComponent($.isvObfuscatorToken)}&fromType=APP&riskType=1`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -583,8 +341,8 @@ function getMyPing() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'https://cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${$.shareuserid4minipg}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
-                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken};`,
+                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.shareuserid4minipg)}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}`,
             }
         }
         $.post(options, async (err, resp, data) => {
@@ -597,7 +355,7 @@ function getMyPing() {
                         let cookies = resp.headers['set-cookie']
                         if(cookies[2]){
                             $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                            $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
                             $.APP_ABBR = cookies[2].substring(cookies[2].indexOf("=") + 1, cookies[2].indexOf(";"))
                             $.AUTH_C_USER = cookies[3].substring(cookies[3].indexOf("=") + 1, cookies[3].indexOf(";"))
                         }
@@ -640,38 +398,6 @@ function getIsvObfuscatorToken() {
                 $.logErr(e, resp)
             } finally {
                 resolve(data.token);
-            }
-        })
-    })
-}
-
-function getCommonInfoToken() {
-    return new Promise(resolve => {
-        let options = {
-            "url": `https://lzkjdz-isv.isvjd.com/wxAssemblePage/activity/?activityId=67dfd244aacb438893a73a03785a48c7`,
-            "headers": {
-                "Host": "lzkjdz-isv.isvjd.com",
-                "Cookie": cookie,
-                "Connection": "keep-alive",
-                "Accept": "application/json, text/plain, */*",
-                "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-                "Accept-Language": "zh-cn",
-                "Referer": "https://lzkj-isv.isvjd.com/",
-                "Accept-Encoding": "gzip, deflate, br",
-            }
-        };
-        $.get(options, async (err, resp, data) => {
-            try {
-                if(resp.statusCode == 200){
-                    let cookies = resp.headers['set-cookie']
-                    $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                    $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
-
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data);
             }
         })
     })
