@@ -183,7 +183,7 @@ function saveMember() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'https://cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.shopid}&lng=113.260753&lat=23.174864&sid=f7c805bc22421be06bfbf217b17a1d2w&un_area=19_1601_50258_50374`,
+                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.shopid}&lng=113.260753&lat=23.174864&sid=f7c805bc22421be06bfbf217b17a1d2w&un_area=19_1601_50258_50374`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};APP_ABBR=${$.APP_ABBR};`,
             }
         }
@@ -292,7 +292,7 @@ function accessLogWithAD(item) {
         let pageUrl = `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}`
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/common/accessLogWithAD`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=46&venderId=${venderId}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=46&venderId=${venderId}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -300,7 +300,7 @@ function accessLogWithAD(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -338,7 +338,7 @@ function shopInfo() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'https://cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
+                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};IsvToken=${$.isvObfuscatorToken};APP_ABBR=${$.APP_ABBR};`,
             }
         }
@@ -380,7 +380,7 @@ function findSkus() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'cjhydz-isv.isvjcloud.com',
                 'Origin':'cjhydz-isv.isvjcloud.com',
-                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${$.firstSecretPin}&shopid=${$.shopid}&lng=113.260753&lat=23.174864&sid=f7c805bc22421be06bfbf217b17a1d2w&un_area=19_1601_50258_50374`,
+                'Referer':`https://cjhydz-isv.isvjcloud.com/wxTeam/activity?activityId=${activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${$.shopid}&lng=113.260753&lat=23.174864&sid=f7c805bc22421be06bfbf217b17a1d2w&un_area=19_1601_50258_50374`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};APP_ABBR=${$.APP_ABBR};`,
             }
         }
