@@ -205,7 +205,7 @@ function shopInfo() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if(data && data.data && data.data.sid){
+                    if(data && data.data && data.data.myUuid){
                         myUuid = data.data.myUuid
                     }
                 }
