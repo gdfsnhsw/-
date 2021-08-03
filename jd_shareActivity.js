@@ -105,12 +105,49 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
             await accessActivity();
+            await getFloatIconStatus();
         }
     }
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 
+function getFloatIconStatus() {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxAssemblePage/getFloatIconStatus`,
+            body: `activityId=${activityId}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjcloud.com',
+                'Origin':'https://lzkjdz-isv.isvjcloud.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/5920757?activityId=${activityId}&shopid=${$.shopid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
 
 function accessActivity() {
     return new Promise(resolve => {
