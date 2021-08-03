@@ -14,7 +14,7 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let activityUrl = "https://lzkjdz-isv.isvjcloud.com/pool/captain/3152451?activityId=9cabcf8b578343ef9ad7130ec9e2250a&signUuid=fc83b76e95014f5c9be8a716f08ee493&shareuserid4minipg=iA9%2BsAwyKXfRnuZ1HXpv0E7oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=1000014486"
+let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/4207179?activityId=bb72886887764e7d8bcb14ba05d8452b&signUuid=57593580e09b4a6a80c562e144ccab70&shareuserid4minipg=wL1GFYiFmVU3KttngoTUgGwklxRrP5C78lmKjh9Mn4avAmNuF4i+OHS9NlRdtagP&shopid=1000332227"
 let activityId = ""
 let venderId = ""
 let sid = ""
@@ -106,6 +106,7 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
                 }else{
                     $.signIds.set(activityId,sidUuid)
                 }
+                await saveCaptain();
             }
         }
     }
@@ -163,7 +164,7 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 
-function saveCaptain(item) {
+function saveCaptain() {
 
     return new Promise(resolve => {
         let options = {
@@ -176,7 +177,7 @@ function saveCaptain(item) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/941462?activityId=${activityId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/4207179?activityId=${activityId}&signUuid=${sidUuid}&shareuserid4minipg=${$.secretPin}&shopid=${$.shopid}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
