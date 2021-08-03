@@ -193,6 +193,7 @@ function saveCaptain() {
                         return
                     }
                     if(data && data.data && data.data.signUuid){
+                        console.log("重置signUuid为：" + data.data.signUuid+"，原signUuid为：" + $.signUuid)
                         $.signUuid = data.data.signUuid
                     }
                 }
