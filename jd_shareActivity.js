@@ -124,7 +124,7 @@ function getFloatIconStatus() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjcloud.com',
                 'Origin':'https://lzkjdz-isv.isvjcloud.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/5920757?activityId=${activityId}&shopid=${$.shopid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/7093781?activityId=${activityId}&friendUuid=${myUuid}&shopid=${$.shopid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
