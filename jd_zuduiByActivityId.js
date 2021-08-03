@@ -192,6 +192,9 @@ function saveCaptain() {
                         console.log(data.errorMessage)
                         return
                     }
+                    if(data && data.data && data.data.signUuid){
+                        $.signUuid = data.data.signUuid
+                    }
                 }
             } catch (e) {
                 $.logErr(e, resp)
