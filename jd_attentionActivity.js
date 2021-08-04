@@ -395,6 +395,8 @@ function queryActivityInfo(item) {
                                 }
                             }
                         }
+                    }else {
+                        $.isContinue = true
                     }
                 }
             } catch (e) {
