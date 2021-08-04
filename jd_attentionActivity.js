@@ -76,6 +76,7 @@ if ($.isNode()) {
                     let item = $.taskList[j]
                     $.isContinue = false
                     await accessLogWithAD(item);
+                    $.userId = ""
                     await queryActivityInfo(item);
                     if(!$.isContinue){
                         $.isContinue = false
@@ -225,7 +226,7 @@ function findSkus(item) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkj-isv.isvjd.com/act/common/findSkus`,
-            body: `actId=${item.activityId}&userId=10559548&type=5`,
+            body: `actId=${item.activityId}&userId=${$.userId}&type=5`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
@@ -377,6 +378,7 @@ function queryActivityInfo(item) {
                     if(data && data != ""){
                         data = JSON.parse(data);
                         if(data.data){
+                            $.userId = data.data.userId
                             let drawContentVOs = data.data.drawContentVOs
                             if(drawContentVOs){
                                 let hasBean = false
