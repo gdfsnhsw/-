@@ -83,7 +83,7 @@ if ($.isNode()) {
 
                         $.signId = ""
                         if($.index == 1){
-                            // await saveCaptain(item);
+                            await saveCaptain(item);
 
                             $.venderIds.set(item.activityId,item.venderId)
 
