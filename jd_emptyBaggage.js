@@ -120,6 +120,7 @@ function GetHomePageInfo() {
 // 丢弃白菜
 function Discard(value) {
     let cnt = value - 9500
+    $.log(`\n准备丢弃${cnt}颗白菜`);
     return new Promise(async (resolve) => {
         $.get(taskUrl2(`operservice/Discard`, `&type=1&cnt=${cnt}`, 'channel,cnt,sceneid,type'), async (err, resp, _data) => {
             try {
