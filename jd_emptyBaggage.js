@@ -52,7 +52,7 @@ if ($.isNode()) {
 
             if(value <= 9500){
                 $.log(`\n白菜已经是小于9500颗，不丢弃`);
-                return
+                continue
             }
             await Discard(value);
 
