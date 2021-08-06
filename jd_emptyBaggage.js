@@ -50,6 +50,10 @@ if ($.isNode()) {
             const info = materialinfo.filter(x => x.type === 1);
             const { value } = info[0];
 
+            if(value <= 9500){
+                $.log(`\n白菜已经是小于9500颗，不丢弃`);
+                return
+            }
             await Discard(value);
 
         }
