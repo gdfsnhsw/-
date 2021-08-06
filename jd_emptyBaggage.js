@@ -31,17 +31,17 @@ if ($.isNode()) {
 }
 
 !(async () => {
-    // if (!getCookies()) return;
     await requestAlgo();
     for (let i = 0; i < cookiesArr.length; i++) {
-        if(i >= 5){
-            break
-        }
         cookie = cookiesArr[i];
-
         if (cookie) {
             $.userName = decodeURIComponent(cookie.match(/pt_pin=(.+?);/) && cookie.match(/pt_pin=(.+?);/)[1]);
             $.index = i + 1;
+
+            if($.index > 5){
+                return
+            }
+
             $.log(`\n开始【京东账号${i + 1}】${$.userName}`);
 
             $.homepageinfo = await GetHomePageInfo();
