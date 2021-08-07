@@ -99,15 +99,19 @@ if ($.isNode()) {
       if (cookiesArr && $.canHelp) {
         console.log(`\n账号${$.UserName} 内部相互进团\n`);
         let i = 1;
-        let tuanIds1 = $.tuanIds.length > 1 ? $.tuanIds[0] : null;
-        let tuanIds2 = $.tuanIds.length > 2 ? $.tuanIds[1] : null;
-        for (let item of $.tuanIds) {
-          if(i < 3 && ((null != tuanIds1 && item == tuanIds1) || (null != tuanIds2 && item == tuanIds2))){
-            console.log(`\n${$.UserName} 去参加团 ${item}`);
-            if (!$.canHelp) break;
-            await JoinTuan(item);
-            await $.wait(1000);
+        let tuanIds1 = $.tuanIds.length >= 1 ? $.tuanIds[0] : null;
+        let tuanIds2 = $.tuanIds.length >= 2 ? $.tuanIds[1] : null;
+
+        if(null != tuanIds1 || null != tuanIds2){
+          if($.firstSurplusOpenTuanNum == 0 && $.firstTuanCom){
+            console.log(`\n${$.UserName} 去参加团 ${tuanIds2}`);
+            await JoinTuan(tuanIds2);
+          }else{
+            console.log(`\n${$.UserName} 去参加团 ${tuanIds1}`);
+            await JoinTuan(tuanIds1);
           }
+
+          await $.wait(1000);
         }
       }
     }
@@ -591,6 +595,9 @@ async function tuanActivity() {
     const { activeId, surplusOpenTuanNum, tuanId } = tuanConfig['data']['userTuanInfo'];
     console.log(`今日剩余开团次数：${surplusOpenTuanNum}次`);
     $.surplusOpenTuanNum = surplusOpenTuanNum;
+    if($.index == 1){
+      $.firstSurplusOpenTuanNum = surplusOpenTuanNum;
+    }
     if (!tuanId && surplusOpenTuanNum > 0) {
       //开团
       $.log(`准备开团`)
@@ -608,6 +615,13 @@ async function tuanActivity() {
           const { realTuanNum, tuanNum, userInfo } = item;
           $.tuanNum = tuanNum || 0;
           $.log(`\n开团情况:${realTuanNum}/${tuanNum}\n`);
+          if($.index == 1){
+            if(realTuanNum == tuanNum){
+              $.firstTuanCom = true
+            }else{
+              $.firstTuanCom = false
+            }
+          }
           if (realTuanNum === tuanNum) {
             for (let user of userInfo) {
               if (user.encryptPin === $.encryptPin) {
