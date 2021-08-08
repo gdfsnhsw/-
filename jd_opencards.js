@@ -198,9 +198,9 @@ function addSku() {
 }
 function followShop() {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&taskType=23&taskValue=1000016162&shareUuid=${$.shareUuid}`
+        let body = `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&taskType=1&taskValue=1&shareUuid=${$.shareUuid}`
         // https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/followShop
-        $.post(taskPostUrl('/dingzhi/shop/league/followShop', body), async (err, resp, data) => {
+        $.post(taskPostUrl('/dingzhi/shop/league/saveTask', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
