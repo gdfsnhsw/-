@@ -63,7 +63,7 @@ message = ""
             await getHtml();
             await adLog();
             await getUserInfo();
-            $.attrTouXiang = 'https://img10.360buyimg.com/imgzone/jfs/t1/7020/27/13511/6142/5c5138d8E4df2e764/5a1216a3a5043c5d.png'
+            $.attrTouXiang = 'http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg'
             $.actorUuid = '';
             $.actorUuid = await getActorUuid();
             if(!$.actorUuid){
@@ -150,7 +150,7 @@ function getDrawRecordHasCoupon() {
 function getShareRecord() {
     return new Promise(resolve => {
         let body = `activityId=dz2108100001616201&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&num=0&sortSuatus=1`
-        $.post(taskPostUrl('/dingzhi/taskact/openCardcommon/getShareRecord', body), async (err, resp, data) => {
+        $.post(taskPostUrl('/dingzhi/taskact/common/getShareRecord', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -524,7 +524,7 @@ function adLog() {
 function drawContent() {
     return new Promise(resolve => {
         $.post({
-            url: `https://lzdz1-isv.isvjcloud.com/dingzhi/taskact/openCardcommon/drawContent`,
+            url: `https://lzdz1-isv.isvjcloud.com/dingzhi/taskact/common/drawContent`,
             body: `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}`,
             headers: {
                 'User-Agent': $.UA,
