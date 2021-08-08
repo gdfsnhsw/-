@@ -166,7 +166,7 @@ function getDrawRecordHasCoupon() {
 
 function startDraw() {
   return new Promise(resolve => {
-    let body = `pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=${activityId}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&change=3`
+    let body = `pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=${activityId}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}&change=0`
     $.post(taskPostUrl('/dingzhi/aoyun/moreshop/startDraw', body), async (err, resp, data) => {
       try {
         if (err) {
