@@ -123,7 +123,7 @@ message = ""
 function getDrawRecordHasCoupon() {
     return new Promise(resolve => {
         let body = `activityId=dz2108100001616201&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}`
-        $.post(taskPostUrl('/dingzhi/taskact/openCardcommon/getDrawRecordHasCoupon', body), async (err, resp, data) => {
+        $.post(taskPostUrl('/dingzhi/taskact/common/getDrawRecordHasCoupon', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
