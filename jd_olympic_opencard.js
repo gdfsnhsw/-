@@ -21,7 +21,7 @@ cron "50 0,6,10 * * *" script-path=jd_olympic_opencard.js,tag=7.26-8.8 全民奔
 ============小火箭=========
 7.26-8.8 全民奔跑 激扬奥运 = type=cron,script-path=jd_olympic_opencard.js, cronexpr="50 0,6,10 * * *", timeout=3600, enable=true
 */
-const $ = new Env('7.26-8.8 全民奔跑 激扬奥运');
+const $ = new Env('奥运夺金挑战赛');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let UA = require('./USER_AGENTS.js').USER_AGENT;
 
@@ -41,7 +41,7 @@ if ($.isNode()) {
 
 $.invitePinTaskList = []
 
-const activityId = `dz210768869311`;
+const activityId = `dz210768869310`;
 message = ""
 !(async () => {
   if (!cookiesArr[0]) {
@@ -50,7 +50,7 @@ message = ""
     });
     return;
   }
-  $.shareUuid = '01cad7678ffa449cb2eb3e961db515ce'
+  $.shareUuid = 'dcbc9492f44f4ce1ba56d13c53a90f6b'
   for (let i = 0; i < cookiesArr.length; i++) {
     cookie = cookiesArr[i];
     if (cookie) {
