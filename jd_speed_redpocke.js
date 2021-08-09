@@ -48,6 +48,7 @@ if ($.isNode()) {
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
+    $.inviter = ["a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU", "Dg3QltyL3rnwfJdrGlA1Vw"][Math.floor((Math.random() * 2))]
     if (cookiesArr[i]) {
       console.log(`\n如提示活动火爆,可再执行一次尝试\n`);
       cookie = cookiesArr[i];
@@ -81,6 +82,12 @@ async function jsRedPacket() {
   try {
     await invite();
     await sign();//极速版签到提现
+    //6点之前，需要助力的账号不跑
+    if(new Date().getHours() < 6){
+      if($.index == 1 || $.index == 2){
+        return
+      }
+    }
     await reward_query();
     for (let i = 0; i < 3; ++i) {
       await redPacket();//开红包
@@ -151,7 +158,7 @@ async function sign() {
 function reward_query() {
   return new Promise(resolve => {
     $.get(taskGetUrl("spring_reward_query", {
-      "inviter": ["a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU", "Dg3QltyL3rnwfJdrGlA1Vw"][Math.floor((Math.random() * 2))],
+      "inviter": $.inviter,
       linkId
     }), async (err, resp, data) => {
       try {
@@ -178,7 +185,7 @@ function reward_query() {
 }
 async function redPacket() {
   return new Promise(resolve => {
-    $.get(taskGetUrl("spring_reward_receive",{"inviter":["a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU", "Dg3QltyL3rnwfJdrGlA1Vw"][Math.floor((Math.random()*2))],linkId}),
+    $.get(taskGetUrl("spring_reward_receive",{"inviter":$.inviter,linkId}),
         async (err, resp, data) => {
           try {
             if (err) {
