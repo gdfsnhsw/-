@@ -65,8 +65,8 @@ async function main() {
     if(JSON.stringify($.useInfo) === `{}`){
         console.log(`获取用户信息失败`);return;
     }
-    console.log(`组队码：${$.useInfo.code}`);
     if($.useInfo.code){
+        console.log(`组队码：${$.useInfo.code}`);
         if($.index == 1){
             $.authorCode = $.useInfo.code
         }
