@@ -48,7 +48,7 @@ if ($.isNode()) {
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
-    $.inviter = ["a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU", "Dg3QltyL3rnwfJdrGlA1Vw"][Math.floor((Math.random() * 2))]
+    $.inviter = "a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU"
     if (cookiesArr[i]) {
       console.log(`\n如提示活动火爆,可再执行一次尝试\n`);
       cookie = cookiesArr[i];
