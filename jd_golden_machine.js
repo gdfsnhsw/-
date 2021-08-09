@@ -66,26 +66,27 @@ async function main() {
         console.log(`获取用户信息失败`);return;
     }
     console.log(`组队码：${$.useInfo.code}`);
-    if($.index == 1){
-        $.authorCode = $.useInfo.code
+    if($.useInfo.code){
+        if($.index == 1){
+            $.authorCode = $.useInfo.code
+        }
+        await $.wait(1000);
+        $.homeInfo = {};
+        await takeGetRequest('get_home_info');
+        if(JSON.stringify($.homeInfo) === `{}`){
+            console.log(`获取活动详情失败`);return;
+        }
+        if($.useInfo.member_team_id === 0 && $.authorCode){
+            console.log(`去参团: ${$.authorCode}`)
+            await takePostRequest('join_team');
+        }else{
+            console.log(`已参团`)
+        }
+        $.needVoteList = $.homeInfo.hard_list;
+        await doVote();
+        $.needVoteList = $.homeInfo.soft_list;
+        await doVote();
     }
-    await $.wait(1000);
-    $.homeInfo = {};
-    await takeGetRequest('get_home_info');
-    if(JSON.stringify($.homeInfo) === `{}`){
-        console.log(`获取活动详情失败`);return;
-    }
-    if($.useInfo.member_team_id === 0 && $.authorCode){
-        console.log(`去参团: ${$.authorCode}`)
-        await takePostRequest('join_team');
-    }else{
-        console.log(`已参团`)
-    }
-    $.needVoteList = $.homeInfo.hard_list;
-    await doVote();
-    $.needVoteList = $.homeInfo.soft_list;
-    await doVote();
-
 }
 
 async function doVote(){
