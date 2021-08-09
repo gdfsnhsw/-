@@ -42,13 +42,22 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
+$.inviter = ""
+if ($.isNode()) {
+  if (process.env.SPEED_RED_POCKES_INVITER){
+    $.inviter = process.env.SPEED_RED_POCKES_INVITER
+  }
+} else {
+  $.inviter = $.getdata('SPEED_RED_POCKES_INVITER')
+}
+console.log("你设置的邀请码为：" + $.inviter)
+
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
-    $.inviter = "a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU"
     if (cookiesArr[i]) {
       console.log(`\n如提示活动火爆,可再执行一次尝试\n`);
       cookie = cookiesArr[i];
@@ -85,6 +94,7 @@ async function jsRedPacket() {
     //6点之前，需要助力的账号不跑
     if(new Date().getHours() < 6){
       if($.index == 1){
+        console.log("6点之前，需要助力的账号不跑")
         return
       }
     }
