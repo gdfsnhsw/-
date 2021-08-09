@@ -162,7 +162,7 @@ function reward_query() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             if (data.code === 0) {
-
+              console.log("助力码为：" + data.data.markedPin)
             } else {
               console.log(data.errMsg)
             }
