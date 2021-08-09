@@ -29,7 +29,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
-const linkId = "AkOULcXbUA_8EAPbYLLMgg";
+const linkId = "9wdf1YTT2L59Vr-meKskLA";
 const signLinkId = '9WA12jYGulArzWS7vcrwhw';
 
 if ($.isNode()) {
@@ -151,7 +151,7 @@ async function sign() {
 function reward_query() {
   return new Promise(resolve => {
     $.get(taskGetUrl("spring_reward_query", {
-      "inviter": ["hJyuwiDvDEc5-jIeec4Iyg", "r3yIDGE86HSsdtyFlrPHJHu_0mNpX_AnBREYO-c3BFY"][Math.floor((Math.random() * 2))],
+      "inviter": ["a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU", "Dg3QltyL3rnwfJdrGlA1Vw"][Math.floor((Math.random() * 2))],
       linkId
     }), async (err, resp, data) => {
       try {
@@ -178,7 +178,7 @@ function reward_query() {
 }
 async function redPacket() {
   return new Promise(resolve => {
-    $.get(taskGetUrl("spring_reward_receive",{"inviter":["hJyuwiDvDEc5-jIeec4Iyg","r3yIDGE86HSsdtyFlrPHJHu_0mNpX_AnBREYO-c3BFY"][Math.floor((Math.random()*2))],linkId}),
+    $.get(taskGetUrl("spring_reward_receive",{"inviter":["a6hhjooCZupCY40vr8-ww-iu7SwR-SR-fDGMuJVfUCU", "Dg3QltyL3rnwfJdrGlA1Vw"][Math.floor((Math.random()*2))],linkId}),
         async (err, resp, data) => {
           try {
             if (err) {
@@ -419,7 +419,7 @@ function taskPostUrl(function_id, body) {
 
 function taskGetUrl(function_id, body) {
   return {
-    url: `https://api.m.jd.com/?appid=activities_platform&functionId=${function_id}&body=${escape(JSON.stringify(body))}&t=${+new Date()}`,
+    url: `https://api.m.jd.com/?appid=activities_platform&functionId=${function_id}&body=${escape(JSON.stringify(body))}&t=${+new Date()}&appid=activities_platform`,
     headers: {
       'Cookie': cookie,
       'Host': 'api.m.jd.com',
