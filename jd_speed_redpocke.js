@@ -84,7 +84,7 @@ async function jsRedPacket() {
     await sign();//极速版签到提现
     //6点之前，需要助力的账号不跑
     if(new Date().getHours() < 6){
-      if($.index == 1 || $.index == 2){
+      if($.index == 1){
         return
       }
     }
