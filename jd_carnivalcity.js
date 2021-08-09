@@ -100,10 +100,6 @@ let nowTime = new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*
           }
         }
       }
-      if ($.canHelp) {
-        console.log(`\n\n如果有剩余助力机会，则给作者以及随机码助力`)
-        await doHelp();
-      }
     }
   }
   // console.log(JSON.stringify($.temp))
@@ -538,21 +534,6 @@ function saveJbean(date) {
       }
     })
   })
-}
-async function doHelp() {
-  console.log(`\n开始助力好友`);
-  for (let i in $.newShareCodes) {
-    let item = $.newShareCodes[i]
-    if (!item) continue;
-    const helpRes = await toHelp(item.trim());
-    if (helpRes.data.status === 5) {
-      console.log(`助力机会已耗尽，跳出助力`);
-      break;
-    }else if (helpRes.data.status === 4){
-      console.log(`该助力码[${item}]已达上限`);
-      $.newShareCodes[i] = ''
-    }
-  }
 }
 //助力API
 function toHelp(code = "") {
