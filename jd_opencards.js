@@ -28,7 +28,7 @@ message = ""
     }
 
 
-    $.shareUuid = 'ef11390484a249048867421cfac6cb18'
+    $.shareUuid = '36b1bcaa8e4445a2b09e57f74309485e'
     console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
@@ -139,7 +139,7 @@ function getDrawRecordHasCoupon() {
                         if(item.drawId == '邀请好友') num++;
                         if(item.drawId != '邀请好友') console.log(`${item.infoType != 10 && item.value +':' || ''}${item.infoName}`)
                     }
-                    if(num > 0) console.log(`邀请好友(${num}):${num*30}京豆`)
+                    if(num > 0) console.log(`邀请好友(${num}):${num*20}京豆`)
                 }
             } catch (e) {
                 $.logErr(e, resp)
