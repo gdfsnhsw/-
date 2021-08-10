@@ -109,6 +109,7 @@ message = ""
             if (i === 0) {
                 if($.actorUuid){
                     $.shareUuid = $.actorUuid;
+                    console.log("设置账号1为助力ck"+$.shareUuid)
                 }else{
                     console.log('账号1获取不到[shareUuid]退出执行，请重新执行')
                     return
