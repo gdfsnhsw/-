@@ -1,7 +1,7 @@
 /*
 
 */
-const $ = new Env('七夕会员福利社');
+const $ = new Env('头号玩家');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -28,8 +28,8 @@ message = ""
     }
 
 
-    $.shareUuid = 'ecddf23b362e40668515f5e5a16f02f5'
-    console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`)
+    $.shareUuid = 'ef11390484a249048867421cfac6cb18'
+    console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -66,6 +66,7 @@ message = ""
             $.attrTouXiang = 'http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg'
             $.actorUuid = '';
             $.actorUuid = await getActorUuid();
+            console.log("邀请码："+$.actorUuid)
             if(!$.actorUuid){
                 console.log('获取不到[actorUuid]退出执行，请重新执行')
                 if (i === 0) {
@@ -79,7 +80,7 @@ message = ""
             $.log("开完卡: " + checkOpenCardData.allOpenCard)
             if (checkOpenCardData && !checkOpenCardData.allOpenCard) {
                 let flag = true
-                for (let cardList1Element of checkOpenCardData.cardList) {
+                for (let cardList1Element of checkOpenCardData.cardList1) {
                     if(cardList1Element.status == 0){
                         if(flag) console.log('组1')
                         if(flag) flag = false
@@ -97,8 +98,8 @@ message = ""
             if(!$.followShop) await followShop();
             if(!$.followShop) await $.wait(1000)
             $.log("加购: " + $.addSku)
-            if(!$.addSku && guaopencard_addSku4) await addSku();
-            if(!$.addSku && guaopencard_addSku4) await $.wait(1000)
+            if(!$.addSku) await addSku();
+            if(!$.addSku) await $.wait(1000)
             await getActorUuid()
             await $.wait(1000)
             await getDrawRecordHasCoupon()
@@ -122,8 +123,8 @@ message = ""
 
 function getDrawRecordHasCoupon() {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}`
-        $.post(taskPostUrl('/dingzhi/taskact/common/getDrawRecordHasCoupon', body), async (err, resp, data) => {
+        let body = `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}`
+        $.post(taskPostUrl('/dingzhi/taskact/openCardcommon/getDrawRecordHasCoupon', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -134,8 +135,8 @@ function getDrawRecordHasCoupon() {
                     let num = 0
                     for(let i in data.data){
                         let item = data.data[i]
-                        if(item.value == '邀请好友') num++;
-                        if(item.value != '邀请好友') console.log(`${item.infoType != 10 && item.value +':' || ''}${item.infoName}`)
+                        if(item.drawId == '邀请好友') num++;
+                        if(item.drawId != '邀请好友') console.log(`${item.infoType != 10 && item.value +':' || ''}${item.infoName}`)
                     }
                     if(num > 0) console.log(`邀请好友(${num}):${num*30}京豆`)
                 }
@@ -149,8 +150,8 @@ function getDrawRecordHasCoupon() {
 }
 function getShareRecord() {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&num=0&sortSuatus=1`
-        $.post(taskPostUrl('/dingzhi/taskact/common/getShareRecord', body), async (err, resp, data) => {
+        let body = `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&num=0&sortSuatus=1`
+        $.post(taskPostUrl('/dingzhi/taskact/openCardcommon/getShareRecord', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -169,9 +170,9 @@ function getShareRecord() {
 
 function addSku() {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&taskType=2&taskValue=100022672084`
-        // https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/saveTask
-        $.post(taskPostUrl('/dingzhi/shop/league/saveTask', body), async (err, resp, data) => {
+        let body = `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&taskType=2&taskValue=100022672084`
+        // https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/saveTask
+        $.post(taskPostUrl('/dingzhi/dz/openCard/saveTask', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -198,9 +199,9 @@ function addSku() {
 }
 function followShop() {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&taskType=1&taskValue=1&shareUuid=${$.shareUuid}`
-        // https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/followShop
-        $.post(taskPostUrl('/dingzhi/shop/league/saveTask', body), async (err, resp, data) => {
+        let body = `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&taskType=1&taskValue=1&shareUuid=${$.shareUuid}`
+        // https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/followShop
+        $.post(taskPostUrl('/dingzhi/dz/openCard/saveTask', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -256,16 +257,16 @@ function shopactivityId(functionId) {
             'accept': '*/*',
             'User-Agent': $.UA,
             'content-type': 'application/x-www-form-urlencoded',
-            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
             'Cookie': cookie
         }
     }
 }
 function startDraw(type) {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&type=${type}`
-        // https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/startDraw
-        $.post(taskPostUrl('/dingzhi/shop/league/startDraw', body), async (err, resp, data) => {
+        let body = `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&actorUuid=${$.actorUuid}&pin=${encodeURIComponent($.myPingData.secretPin)}&type=${type}`
+        // https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/startDraw
+        $.post(taskPostUrl('/dingzhi/dz/openCard/startDraw', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -289,8 +290,8 @@ function startDraw(type) {
 }
 function checkOpenCard() {
     return new Promise(resolve => {
-        let body = `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}`
-        $.post(taskPostUrl('/dingzhi/shop/league/checkOpenCard', body), async (err, resp, data) => {
+        let body = `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&pin=${encodeURIComponent($.myPingData.secretPin)}&actorUuid=${$.actorUuid}&shareUuid=${$.shareUuid}`
+        $.post(taskPostUrl('/dingzhi/dz/openCard/checkOpenCard', body), async (err, resp, data) => {
             try {
                 if (err) {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
@@ -344,7 +345,7 @@ function ruhui(functionId) {
             'accept': '*/*',
             'User-Agent': $.UA,
             'content-type': 'application/x-www-form-urlencoded',
-            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
             'Cookie': cookie
         }
     }
@@ -456,7 +457,7 @@ function getHtml() {
     //await $.wait(20)
     return new Promise(resolve => {
         $.get({
-            url: `https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+            url: `https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
             headers: {
                 'User-Agent': $.UA,
                 'Host':'lzdz1-isv.isvjcloud.com',
@@ -481,10 +482,10 @@ function getHtml() {
 
 function adLog() {
     return new Promise(resolve => {
-        let pageurl = `https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`
+        let pageurl = `https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`
         $.post({
             url: `https://lzdz1-isv.isvjcloud.com/common/accessLogWithAD`,
-            body: `venderId=1000016162&code=99&pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=dz2108100001616201&pageUrl=${encodeURIComponent(pageurl)}&subType=APP&adSource=null`,
+            body: `venderId=1000016162&code=99&pin=${encodeURIComponent($.myPingData.secretPin)}&activityId=33d9ae00c1904c20bd8a4488fc5d6f33&pageUrl=${encodeURIComponent(pageurl)}&subType=APP&adSource=null`,
             headers: {
                 'User-Agent': $.UA,
                 'Host':'lzdz1-isv.isvjcloud.com',
@@ -525,12 +526,12 @@ function drawContent() {
     return new Promise(resolve => {
         $.post({
             url: `https://lzdz1-isv.isvjcloud.com/dingzhi/taskact/common/drawContent`,
-            body: `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}`,
+            body: `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&pin=${encodeURIComponent($.myPingData.secretPin)}`,
             headers: {
                 'User-Agent': $.UA,
                 'Host':'lzdz1-isv.isvjcloud.com',
                 'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
-                'Referer':`https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+                'Referer':`https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.myPingData.secretPin}; ${$.lz_jdpin_token}`,
             }
         }, async (err, resp, data) => {
@@ -559,7 +560,7 @@ function getUserInfo() {
                 'User-Agent': $.UA,
                 'Host':'lzdz1-isv.isvjcloud.com',
                 'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
-                'Referer':`https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+                'Referer':`https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.myPingData.secretPin}; ${$.lz_jdpin_token}`,
             }
         }, async (err, resp, data) => {
@@ -586,13 +587,13 @@ function getUserInfo() {
 function getActorUuid() {
     return new Promise(resolve => {
         $.post({
-            url: `https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activityContent`,
-            body: `activityId=dz2108100001616201&pin=${encodeURIComponent($.myPingData.secretPin)}&pinImg=${encodeURIComponent($.attrTouXiang)}&nick=${encodeURIComponent($.myPingData.nickname)}&cjyxPin=&cjhyPin=&shareUuid=${$.shareUuid}`,
+            url: `https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activityContent`,
+            body: `activityId=33d9ae00c1904c20bd8a4488fc5d6f33&pin=${encodeURIComponent($.myPingData.secretPin)}&pinImg=${encodeURIComponent($.attrTouXiang)}&nick=${encodeURIComponent($.myPingData.nickname)}&cjyxPin=&cjhyPin=&shareUuid=${$.shareUuid}`,
             headers: {
                 'User-Agent': $.UA,
                 'Host':'lzdz1-isv.isvjcloud.com',
                 'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
-                "Referer": `https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+                "Referer": `https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.myPingData.secretPin}; ${$.lz_jdpin_token}`,
             }
         }, async (err, resp, data) => {
@@ -629,7 +630,7 @@ function taskPostUrl(url, body) {
             "Content-Type": "application/x-www-form-urlencoded",
             "Origin": "https://lzdz1-isv.isvjcloud.com",
             "Connection": "keep-alive",
-            "Referer": `https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/activity/832865?activityId=dz2108100001616201&shareUuid=${$.shareUuid}`,
+            "Referer": `https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/832865?activityId=33d9ae00c1904c20bd8a4488fc5d6f33&shareUuid=${$.shareUuid}`,
             "User-Agent": $.UA ,
             'Cookie': `${cookie} LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.myPingData.secretPin}; ${$.lz_jdpin_token}`,
         }
