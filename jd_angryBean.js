@@ -76,6 +76,7 @@ var mode = $.isNode() ? (process.env.angryBeanMode ? process.env.angryBeanMode :
     helps.sort((i, j) => {
         return i.address > j.address ? 1 : -1
     })
+    tools1 = tools
     for (var k = 0; k < (mode == smart ? 50 : 1); k++) {
         for (let help of helps) {
             if (k != 0) {
@@ -87,6 +88,7 @@ var mode = $.isNode() ? (process.env.angryBeanMode ? process.env.angryBeanMode :
                 }
                 if (!help.notYet) break
             }
+            $.toolsIndex = 0;
             await open(help)
         }
     }
@@ -133,7 +135,11 @@ async function getTuanInfo(cookie) {
 }
 
 async function open(help) {
-    var tool = tools.pop()
+    if($.toolsIndex > tools.length){
+        return
+    }
+    var tool = tools[$.toolsIndex]
+    $.toolsIndex++
     if (!tool) {
         finished.add(help.id)
         return
@@ -154,7 +160,6 @@ async function open(help) {
             return
         } else {
             if (tool.helps.has(help.id)) { //阻止自己给自己助力
-                tools.unshift(tool)
                 open(help)
                 return
             }
@@ -163,13 +168,11 @@ async function open(help) {
     } else {
         if (tool.helps.has(help.id)) {
             tool.helps.add(help.id)
-            tools.unshift(tool)
             finished.add(help.id)
             return
         }
         if (tool.id == help.id) {
             tool.helps.add(help.id)
-            tools.unshift(tool)
             await open(help)
             return
         }
@@ -193,13 +196,11 @@ async function open(help) {
                 tool.times = maxTimes
             }
             if (tool.times < maxTimes) {
-                tools.unshift(tool)
             }
         } else {
             if (data && data.errorMessage == "用户未登录") {
                 helpToast = "用户未登录"
             } else {
-                tools.unshift(tool)
                 helpToast = "异常"
             }
         }
@@ -222,6 +223,7 @@ async function open(help) {
         await handle(data)
     } else {
         requestApi('signGroupHelp', tool.cookie, params).then(handle)
+        await open(help)
     }
 }
 
