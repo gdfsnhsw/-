@@ -90,6 +90,16 @@ message = ""
                     }
                 }
                 await $.wait(1000)
+                for (let cardList1Element of checkOpenCardData.cardList2) {
+                    if(cardList1Element.status == 0){
+                        if(flag) console.log('组2')
+                        if(flag) flag = false
+                        await join(cardList1Element.value)
+                        await $.wait(1000)
+                        await drawContent();
+                    }
+                }
+                await $.wait(1000)
                 await drawContent();
                 checkOpenCardData = await checkOpenCard();
             }
