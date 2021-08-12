@@ -288,7 +288,7 @@ function getInviteRecord() {
                                 'Content-Type': _0x32254b['xgiGb'],
                                 'Origin': _0x32254b['limOg'],
                                 'Connection': _0x32254b['lZXjC'],
-                                'Referer': referer ? referer : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=735c30216dc640638ceb6e63ff6d8b17&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
+                                'Referer': referer ? referer : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=e3c59e3f22a64507b3b023be4b016b5f&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
                                 'User-Agent': UA,
                                 'Cookie': cookie + ' LZ_TOKEN_KEY=' + $['LZ_TOKEN_KEY'] + '; LZ_TOKEN_VALUE=' + $['LZ_TOKEN_VALUE'] + '; AUTH_C_USER=' + $['myPingData']['secretPin'] + '; ' + $['lz_jdpin_token']
                             }
@@ -632,7 +632,7 @@ function ruhui2() {
         'PQkld': 'application/x-www-form-urlencoded'
     };
     return {
-        'url': 'https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body=%7B%22venderId%22%3A%2210314962%22%2C%22shopId%22%3A%2210175519%22%2C%22bindByVerifyCodeFlag%22%3A1%2C%22registerExtend%22%3A%7B%22v_sex%22%3A%22%E6%9C%AA%E7%9F%A5%22%2C%22v_birthday%22%3A%221996-11-11%22%2C%22v_name%22%3A%22yyy%22%7D%2C%22writeChildFlag%22%3A0%2C%22channel%22%3A8802%7D&client=H5&clientVersion=9.2.0&uuid=88888&jsonp=jsonp_1628345987749_66821',
+        'url': 'https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body=%7B%22venderId%22%3A%2210314962%22%2C%22shopId%22%3A%22599119%22%2C%22bindByVerifyCodeFlag%22%3A1%2C%22registerExtend%22%3A%7B%22v_sex%22%3A%22%E6%9C%AA%E7%9F%A5%22%2C%22v_birthday%22%3A%221996-11-11%22%2C%22v_name%22%3A%22yyy%22%7D%2C%22writeChildFlag%22%3A0%2C%22channel%22%3A8802%7D&client=H5&clientVersion=9.2.0&uuid=88888&jsonp=jsonp_1628345987749_66821',
         'headers': {
             'Content-Type': _0xb4ab0a['gYUFH'],
             'Origin': _0xb4ab0a['WjETB'],
@@ -640,7 +640,7 @@ function ruhui2() {
             'accept': '*/*',
             'User-Agent': _0xb4ab0a['gxKXW'],
             'content-type': _0xb4ab0a['PQkld'],
-            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=10175519&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['DQCK'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=599119&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['DQCK'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
             'Cookie': cookie
         }
     };
@@ -711,11 +711,11 @@ function getIsvObfuscatorToken() {
         'PbItg': 'body=%7B%22id%22%3A%22%22%2C%22url%22%3A%22https%3A%2F%2Fcjhydz-isv.isvjcloud.com%22%7D',
         'UFQkT': 'Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1',
         'GICJq': 'application/x-www-form-urlencoded',
-        'ewSzf': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=774de7601b5cddf9aad1ae30f3a3dfc0&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112'
+        'ewSzf': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=768a88cc4b9bd28cc8be56c2ae0d3e0w&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112'
     };
     return new Promise(_0x5a9bce => {
         $['post']({
-            'url': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=774de7601b5cddf9aad1ae30f3a3dfc0&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112',
+            'url': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=768a88cc4b9bd28cc8be56c2ae0d3e0w&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112',
             'body': _0x2893f1['PbItg'],
             'headers': {
                 'User-Agent': _0x2893f1['UFQkT'],
@@ -1172,7 +1172,7 @@ function taskPostUrl(_0x4c7a32, _0x2b8afe, _0x25a62a) {
             'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
             'Origin': 'https://cjhydz-isv.isvjcloud.com',
             'Connection': _0xcd31e3['YWiwg'],
-            'Referer': _0x25a62a ? _0x25a62a : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=735c30216dc640638ceb6e63ff6d8b17&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
+            'Referer': _0x25a62a ? _0x25a62a : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=e3c59e3f22a64507b3b023be4b016b5f&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
             'User-Agent': UA,
             'Cookie': cookie + ' LZ_TOKEN_KEY=' + $['LZ_TOKEN_KEY'] + '; LZ_TOKEN_VALUE=' + $['LZ_TOKEN_VALUE'] + '; AUTH_C_USER=' + $['myPingData']['secretPin'] + '; ' + $['lz_jdpin_token']
         }
