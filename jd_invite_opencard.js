@@ -192,7 +192,7 @@ function getActivityInfo() {
                 return _0x3a633d(_0x5d1fcc);
             }
         };
-        let _0x4d2db4 = 'activityId=cc08a3fd60fe4ddb80820c2b1fb4b300';
+        let _0x4d2db4 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f';
         $['post'](taskPostUrl(_0x3d7f6d['SAbtJ'], _0x4d2db4, _0x3d7f6d['gDzJZ']), async (_0x57f8c3, _0x2e51e4, _0x4ca4cb) => {
             var _0x153b33 = {
                 'LAtxz': function(_0xae0f3a, _0x4c1e4c) {
@@ -260,7 +260,7 @@ function getInviteRecord() {
         if (_0x58ad78['PtbrW'](_0x58ad78['uJIig'], _0x58ad78['uVMTD'])) {
             $['logErr'](e, resp);
         } else {
-            let _0x40c9a7 = 'activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&inviter=' + _0x58ad78['pAQhH'](encodeURIComponent, $['myPingData']['secretPin']) + '&pageNo=1&pageSize=15&type=0';
+            let _0x40c9a7 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + _0x58ad78['pAQhH'](encodeURIComponent, $['myPingData']['secretPin']) + '&pageNo=1&pageSize=15&type=0';
             $['post'](_0x58ad78['Ezhkj'](taskPostUrl, _0x58ad78['gUKbA'], _0x40c9a7, _0x58ad78['fDiqC']), async (_0x5ae9e6, _0xa03af0, _0x13130d) => {
                 try {
                     if (_0x5ae9e6) {
@@ -330,7 +330,7 @@ function getIsInvited() {
         if (_0x30ec6e['llVOw'](_0x30ec6e['ODrAe'], _0x30ec6e['uMmWW'])) {
             _0x30ec6e['gXzVG'](_0x69e259, data);
         } else {
-            let _0x241660 = 'activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&pin=' + _0x30ec6e['essml'](encodeURIComponent, $['myPingData']['secretPin']);
+            let _0x241660 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&pin=' + _0x30ec6e['essml'](encodeURIComponent, $['myPingData']['secretPin']);
             $['post'](_0x30ec6e['SnlZS'](taskPostUrl, _0x30ec6e['aIHxM'], _0x241660, _0x30ec6e['voukx']), async (_0x497425, _0x322ff7, _0x3d5f8c) => {
                 try {
                     if (_0x497425) {
@@ -378,7 +378,7 @@ function getAcceptInvite() {
         'KvIaZ': '/microDz/invite/activity/wx/acceptInvite'
     };
     return new Promise(_0x2b8a64 => {
-        let _0x165334 = 'activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&inviter=' + encodeURIComponent($['DQCK']) + '&inviterImg=http%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031_mid.jpg&inviterNick=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['inviterNick']) + '&invitee=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['myPingData']['secretPin']) + '&inviteeImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F21383%2F2%2F6633%2F3879%2F5c5138d8E0967ccf2%2F91da57c5e2166005.jpg&inviteeNick=' + $['UserName'];
+        let _0x165334 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + encodeURIComponent($['DQCK']) + '&inviterImg=http%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031_mid.jpg&inviterNick=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['inviterNick']) + '&invitee=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['myPingData']['secretPin']) + '&inviteeImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F21383%2F2%2F6633%2F3879%2F5c5138d8E0967ccf2%2F91da57c5e2166005.jpg&inviteeNick=' + $['UserName'];
         $['post'](_0x1c7b11['xZVRc'](taskPostUrl, _0x1c7b11['KvIaZ'], _0x165334, 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/acceptInvite'), async (_0x5cffaf, _0x31f812, _0x2f7fdc) => {
             try {
                 if (_0x1c7b11['paDfT'] !== 'zVthX') {
@@ -446,7 +446,7 @@ function getOpenCardAllStatuesNew() {
         if (_0x32c81b['sUNIy']('AQnzL', _0x32c81b['XcgnA'])) {
             _0x3e8c2b['zYuoK'](_0x887d17, data);
         } else {
-            let _0x211cef = 'activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&pin=' + _0x32c81b['pQbEN'](encodeURIComponent, $['myPingData']['secretPin']) + '&isInvited=1';
+            let _0x211cef = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&pin=' + _0x32c81b['pQbEN'](encodeURIComponent, $['myPingData']['secretPin']) + '&isInvited=1';
             $['post'](_0x32c81b['biNOh'](taskPostUrl, _0x32c81b['ONfZf'], _0x211cef, _0x32c81b['dUNAW']), async (_0x595633, _0x1df3e7, _0x3b7908) => {
                 if (_0x32c81b['Sbkbt'](_0x32c81b['rLjPY'], _0x32c81b['rLjPY'])) {
                     try {
@@ -640,7 +640,7 @@ function ruhui2() {
             'accept': '*/*',
             'User-Agent': _0xb4ab0a['gxKXW'],
             'content-type': _0xb4ab0a['PQkld'],
-            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=10175519&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&inviter=' + $['DQCK'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=10175519&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['DQCK'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
             'Cookie': cookie
         }
     };
@@ -880,11 +880,11 @@ function getHtml() {
         };
         if (_0x33b19c['MagFp'](_0x33b19c['JjnVD'], _0x33b19c['JLlBK'])) {
             $['get']({
-                'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+                'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
                 'headers': {
                     'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
                     'Host': 'cjhydz-isv.isvjcloud.com',
-                    'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0'
+                    'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0'
                 }
             }, async (_0x150d31, _0x3690a0, _0x3c6f7e) => {
                 var _0x234fa9 = {
@@ -1125,7 +1125,7 @@ function adLog() {
         };
         $['post']({
             'url': 'https://cjhydz-isv.isvjcloud.com/common/accessLog',
-            'body': 'venderId=0&code=99&pin=' + _0x447f95['FFeiv'](encodeURIComponent, $['myPingData']['secretPin']) + '&activityId=cc08a3fd60fe4ddb80820c2b1fb4b300&pageUrl=https%3A%2F%2Fcjhydz-isv.isvjcloud.com%2FmicroDz%2Finvite%2Factivity%2Fwx%2Fview%2Findex%2F2388747%3FactivityId%3Dcc08a3fd60fe4ddb80820c2b1fb4b300%26inviter%3Djzv2jbYRftpJUlB6E7%2Ff3%2FL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt%26inviterImg%3Dhttp%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031%5Fmid.jpg%26inviterNickName%3D%E4%B8%8A%E8%AF%BE%E6%97%A0%E8%81%8A%E5%90%97%26shareuserid4minipg%3D4oSXfUlJ1qzTqmn3%252Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%253D%253D%26shopid%3D599119%26lng%3D0.000000%26lat%3D0.000000%26sid%3D5fa6c7778669e4865e2e7e7ba5ea098w%26un%5Farea%3D17%5F1458%5F1463%5F43894&subType=',
+            'body': 'venderId=0&code=99&pin=' + _0x447f95['FFeiv'](encodeURIComponent, $['myPingData']['secretPin']) + '&activityId=e3c59e3f22a64507b3b023be4b016b5f&pageUrl=https%3A%2F%2Fcjhydz-isv.isvjcloud.com%2FmicroDz%2Finvite%2Factivity%2Fwx%2Fview%2Findex%2F2388747%3FactivityId%3De3c59e3f22a64507b3b023be4b016b5f%26inviter%3Djzv2jbYRftpJUlB6E7%2Ff3%2FL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt%26inviterImg%3Dhttp%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031%5Fmid.jpg%26inviterNickName%3D%E4%B8%8A%E8%AF%BE%E6%97%A0%E8%81%8A%E5%90%97%26shareuserid4minipg%3D4oSXfUlJ1qzTqmn3%252Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%253D%253D%26shopid%3D599119%26lng%3D0.000000%26lat%3D0.000000%26sid%3D5fa6c7778669e4865e2e7e7ba5ea098w%26un%5Farea%3D17%5F1458%5F1463%5F43894&subType=',
             'headers': {
                 'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1',
                 'Host': _0x447f95['vlADQ'],
