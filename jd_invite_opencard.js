@@ -192,7 +192,7 @@ function getActivityInfo() {
                 return _0x3a633d(_0x5d1fcc);
             }
         };
-        let _0x4d2db4 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f';
+        let _0x4d2db4 = 'activityId=f79b1d85cf2247a8a45f068ed2dd5107';
         $['post'](taskPostUrl(_0x3d7f6d['SAbtJ'], _0x4d2db4, _0x3d7f6d['gDzJZ']), async (_0x57f8c3, _0x2e51e4, _0x4ca4cb) => {
             var _0x153b33 = {
                 'LAtxz': function(_0xae0f3a, _0x4c1e4c) {
@@ -260,7 +260,7 @@ function getInviteRecord() {
         if (_0x58ad78['PtbrW'](_0x58ad78['uJIig'], _0x58ad78['uVMTD'])) {
             $['logErr'](e, resp);
         } else {
-            let _0x40c9a7 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + _0x58ad78['pAQhH'](encodeURIComponent, $['myPingData']['secretPin']) + '&pageNo=1&pageSize=15&type=0';
+            let _0x40c9a7 = 'activityId=f79b1d85cf2247a8a45f068ed2dd5107&inviter=' + _0x58ad78['pAQhH'](encodeURIComponent, $['myPingData']['secretPin']) + '&pageNo=1&pageSize=15&type=0';
             $['post'](_0x58ad78['Ezhkj'](taskPostUrl, _0x58ad78['gUKbA'], _0x40c9a7, _0x58ad78['fDiqC']), async (_0x5ae9e6, _0xa03af0, _0x13130d) => {
                 try {
                     if (_0x5ae9e6) {
@@ -288,7 +288,7 @@ function getInviteRecord() {
                                 'Content-Type': _0x32254b['xgiGb'],
                                 'Origin': _0x32254b['limOg'],
                                 'Connection': _0x32254b['lZXjC'],
-                                'Referer': referer ? referer : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=e3c59e3f22a64507b3b023be4b016b5f&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
+                                'Referer': referer ? referer : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=f79b1d85cf2247a8a45f068ed2dd5107&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
                                 'User-Agent': UA,
                                 'Cookie': cookie + ' LZ_TOKEN_KEY=' + $['LZ_TOKEN_KEY'] + '; LZ_TOKEN_VALUE=' + $['LZ_TOKEN_VALUE'] + '; AUTH_C_USER=' + $['myPingData']['secretPin'] + '; ' + $['lz_jdpin_token']
                             }
@@ -330,7 +330,7 @@ function getIsInvited() {
         if (_0x30ec6e['llVOw'](_0x30ec6e['ODrAe'], _0x30ec6e['uMmWW'])) {
             _0x30ec6e['gXzVG'](_0x69e259, data);
         } else {
-            let _0x241660 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&pin=' + _0x30ec6e['essml'](encodeURIComponent, $['myPingData']['secretPin']);
+            let _0x241660 = 'activityId=f79b1d85cf2247a8a45f068ed2dd5107&pin=' + _0x30ec6e['essml'](encodeURIComponent, $['myPingData']['secretPin']);
             $['post'](_0x30ec6e['SnlZS'](taskPostUrl, _0x30ec6e['aIHxM'], _0x241660, _0x30ec6e['voukx']), async (_0x497425, _0x322ff7, _0x3d5f8c) => {
                 try {
                     if (_0x497425) {
@@ -378,7 +378,7 @@ function getAcceptInvite() {
         'KvIaZ': '/microDz/invite/activity/wx/acceptInvite'
     };
     return new Promise(_0x2b8a64 => {
-        let _0x165334 = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + encodeURIComponent($['DQCK']) + '&inviterImg=http%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031_mid.jpg&inviterNick=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['inviterNick']) + '&invitee=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['myPingData']['secretPin']) + '&inviteeImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F21383%2F2%2F6633%2F3879%2F5c5138d8E0967ccf2%2F91da57c5e2166005.jpg&inviteeNick=' + $['UserName'];
+        let _0x165334 = 'activityId=f79b1d85cf2247a8a45f068ed2dd5107&inviter=' + encodeURIComponent($['DQCK']) + '&inviterImg=http%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031_mid.jpg&inviterNick=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['inviterNick']) + '&invitee=' + _0x1c7b11['KBfwb'](encodeURIComponent, $['myPingData']['secretPin']) + '&inviteeImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F21383%2F2%2F6633%2F3879%2F5c5138d8E0967ccf2%2F91da57c5e2166005.jpg&inviteeNick=' + $['UserName'];
         $['post'](_0x1c7b11['xZVRc'](taskPostUrl, _0x1c7b11['KvIaZ'], _0x165334, 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/acceptInvite'), async (_0x5cffaf, _0x31f812, _0x2f7fdc) => {
             try {
                 if (_0x1c7b11['paDfT'] !== 'zVthX') {
@@ -446,7 +446,7 @@ function getOpenCardAllStatuesNew() {
         if (_0x32c81b['sUNIy']('AQnzL', _0x32c81b['XcgnA'])) {
             _0x3e8c2b['zYuoK'](_0x887d17, data);
         } else {
-            let _0x211cef = 'activityId=e3c59e3f22a64507b3b023be4b016b5f&pin=' + _0x32c81b['pQbEN'](encodeURIComponent, $['myPingData']['secretPin']) + '&isInvited=1';
+            let _0x211cef = 'activityId=f79b1d85cf2247a8a45f068ed2dd5107&pin=' + _0x32c81b['pQbEN'](encodeURIComponent, $['myPingData']['secretPin']) + '&isInvited=1';
             $['post'](_0x32c81b['biNOh'](taskPostUrl, _0x32c81b['ONfZf'], _0x211cef, _0x32c81b['dUNAW']), async (_0x595633, _0x1df3e7, _0x3b7908) => {
                 if (_0x32c81b['Sbkbt'](_0x32c81b['rLjPY'], _0x32c81b['rLjPY'])) {
                     try {
@@ -632,7 +632,7 @@ function ruhui2() {
         'PQkld': 'application/x-www-form-urlencoded'
     };
     return {
-        'url': 'https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body=%7B%22venderId%22%3A%2210314962%22%2C%22shopId%22%3A%22599119%22%2C%22bindByVerifyCodeFlag%22%3A1%2C%22registerExtend%22%3A%7B%22v_sex%22%3A%22%E6%9C%AA%E7%9F%A5%22%2C%22v_birthday%22%3A%221996-11-11%22%2C%22v_name%22%3A%22yyy%22%7D%2C%22writeChildFlag%22%3A0%2C%22channel%22%3A8802%7D&client=H5&clientVersion=9.2.0&uuid=88888&jsonp=jsonp_1628345987749_66821',
+        'url': 'https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body=%7B%22venderId%22%3A%2210314962%22%2C%22shopId%22%3A%2210175519%22%2C%22bindByVerifyCodeFlag%22%3A1%2C%22registerExtend%22%3A%7B%22v_sex%22%3A%22%E6%9C%AA%E7%9F%A5%22%2C%22v_birthday%22%3A%221996-11-11%22%2C%22v_name%22%3A%22yyy%22%7D%2C%22writeChildFlag%22%3A0%2C%22channel%22%3A8802%7D&client=H5&clientVersion=9.2.0&uuid=88888&jsonp=jsonp_1628345987749_66821',
         'headers': {
             'Content-Type': _0xb4ab0a['gYUFH'],
             'Origin': _0xb4ab0a['WjETB'],
@@ -640,7 +640,7 @@ function ruhui2() {
             'accept': '*/*',
             'User-Agent': _0xb4ab0a['gxKXW'],
             'content-type': _0xb4ab0a['PQkld'],
-            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=599119&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['DQCK'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=10175519&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=f79b1d85cf2247a8a45f068ed2dd5107&inviter=' + $['DQCK'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
             'Cookie': cookie
         }
     };
@@ -711,11 +711,11 @@ function getIsvObfuscatorToken() {
         'PbItg': 'body=%7B%22id%22%3A%22%22%2C%22url%22%3A%22https%3A%2F%2Fcjhydz-isv.isvjcloud.com%22%7D',
         'UFQkT': 'Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1',
         'GICJq': 'application/x-www-form-urlencoded',
-        'ewSzf': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=768a88cc4b9bd28cc8be56c2ae0d3e0w&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112'
+        'ewSzf': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=774de7601b5cddf9aad1ae30f3a3dfc0&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112'
     };
     return new Promise(_0x5a9bce => {
         $['post']({
-            'url': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=768a88cc4b9bd28cc8be56c2ae0d3e0w&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112',
+            'url': 'https://api.m.jd.com/client.action?functionId=isvObfuscator&clientVersion=10.0.4&build=88641&client=android&d_brand=OPPO&d_model=PCAM00&osVersion=10&screen=2208*1080&partner=oppo&oaid=&openudid=7049442d7e415232&eid=eidAfb0d81231cs3I4yd3GgLRjqcx9qFEcJEmyOMn1BwD8wvLt/pM7ENipVIQXuRiDyQ0FYw2aud9+AhtGqo1Zhp0TsLEgoKZvAWkaXhApgim9hlEyRB&sdkVersion=29&lang=zh_CN&uuid=7049442d7e415232&aid=7049442d7e415232&area=4_48201_54794_0&networkType=wifi&wifiBssid=774de7601b5cddf9aad1ae30f3a3dfc0&uts=zrHR4oLv7fO8bj08KaWkuJrGiAm%2FG6al3p01S3QPkHjEe70KB7DMBdz3cfE%2BRhrQIyj%2B2Jj2QqzA%2BpAdyk9V1ui51eL%2FoBnDH0kFw%2FNynmvOvct2RwpCzR7s0IfLFlCdif1pPkN560QPhIQm8X6wiYfI7PKqHbiI&uemps=0-0&st=1627949552040&sign=545fe280a8a65be83421dc76b0dc0cc8&sv=112',
             'body': _0x2893f1['PbItg'],
             'headers': {
                 'User-Agent': _0x2893f1['UFQkT'],
@@ -880,11 +880,11 @@ function getHtml() {
         };
         if (_0x33b19c['MagFp'](_0x33b19c['JjnVD'], _0x33b19c['JLlBK'])) {
             $['get']({
-                'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+                'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=f79b1d85cf2247a8a45f068ed2dd5107&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
                 'headers': {
                     'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
                     'Host': 'cjhydz-isv.isvjcloud.com',
-                    'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=e3c59e3f22a64507b3b023be4b016b5f&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0'
+                    'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=f79b1d85cf2247a8a45f068ed2dd5107&inviter=' + $['inviter'] + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0'
                 }
             }, async (_0x150d31, _0x3690a0, _0x3c6f7e) => {
                 var _0x234fa9 = {
@@ -1125,7 +1125,7 @@ function adLog() {
         };
         $['post']({
             'url': 'https://cjhydz-isv.isvjcloud.com/common/accessLog',
-            'body': 'venderId=0&code=99&pin=' + _0x447f95['FFeiv'](encodeURIComponent, $['myPingData']['secretPin']) + '&activityId=e3c59e3f22a64507b3b023be4b016b5f&pageUrl=https%3A%2F%2Fcjhydz-isv.isvjcloud.com%2FmicroDz%2Finvite%2Factivity%2Fwx%2Fview%2Findex%2F2388747%3FactivityId%3De3c59e3f22a64507b3b023be4b016b5f%26inviter%3Djzv2jbYRftpJUlB6E7%2Ff3%2FL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt%26inviterImg%3Dhttp%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031%5Fmid.jpg%26inviterNickName%3D%E4%B8%8A%E8%AF%BE%E6%97%A0%E8%81%8A%E5%90%97%26shareuserid4minipg%3D4oSXfUlJ1qzTqmn3%252Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%253D%253D%26shopid%3D599119%26lng%3D0.000000%26lat%3D0.000000%26sid%3D5fa6c7778669e4865e2e7e7ba5ea098w%26un%5Farea%3D17%5F1458%5F1463%5F43894&subType=',
+            'body': 'venderId=0&code=99&pin=' + _0x447f95['FFeiv'](encodeURIComponent, $['myPingData']['secretPin']) + '&activityId=f79b1d85cf2247a8a45f068ed2dd5107&pageUrl=https%3A%2F%2Fcjhydz-isv.isvjcloud.com%2FmicroDz%2Finvite%2Factivity%2Fwx%2Fview%2Findex%2F2388747%3FactivityId%3Df79b1d85cf2247a8a45f068ed2dd5107%26inviter%3Djzv2jbYRftpJUlB6E7%2Ff3%2FL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt%26inviterImg%3Dhttp%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031%5Fmid.jpg%26inviterNickName%3D%E4%B8%8A%E8%AF%BE%E6%97%A0%E8%81%8A%E5%90%97%26shareuserid4minipg%3D4oSXfUlJ1qzTqmn3%252Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%253D%253D%26shopid%3D599119%26lng%3D0.000000%26lat%3D0.000000%26sid%3D5fa6c7778669e4865e2e7e7ba5ea098w%26un%5Farea%3D17%5F1458%5F1463%5F43894&subType=',
             'headers': {
                 'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1',
                 'Host': _0x447f95['vlADQ'],
@@ -1172,7 +1172,7 @@ function taskPostUrl(_0x4c7a32, _0x2b8afe, _0x25a62a) {
             'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
             'Origin': 'https://cjhydz-isv.isvjcloud.com',
             'Connection': _0xcd31e3['YWiwg'],
-            'Referer': _0x25a62a ? _0x25a62a : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=e3c59e3f22a64507b3b023be4b016b5f&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
+            'Referer': _0x25a62a ? _0x25a62a : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=f79b1d85cf2247a8a45f068ed2dd5107&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
             'User-Agent': UA,
             'Cookie': cookie + ' LZ_TOKEN_KEY=' + $['LZ_TOKEN_KEY'] + '; LZ_TOKEN_VALUE=' + $['LZ_TOKEN_VALUE'] + '; AUTH_C_USER=' + $['myPingData']['secretPin'] + '; ' + $['lz_jdpin_token']
         }
