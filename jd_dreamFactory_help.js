@@ -103,6 +103,7 @@ if ($.isNode()) {
 
         if(null != tuanIds1){
           //满团后 $.tuanIds无数据，所以始终取第一个
+          console.log(`\n${$.UserName} 去参加团 ${tuanIds1}`);
           await JoinTuan(tuanIds1);
           await $.wait(1000);
         }
