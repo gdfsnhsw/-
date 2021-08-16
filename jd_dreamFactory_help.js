@@ -236,20 +236,6 @@ async function helpFriends() {
 // 帮助用户,此处UA不可更换,否则助力功能会失效
 function assistFriend(sharepin) {
   return new Promise(async resolve => {
-    // const url = `/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${escape(sharepin)}&sceneval=2&g_login_type=1`
-    // const options = {
-    //   'url': `https://m.jingxi.com/dreamfactory/friend/AssistFriend?zone=dream_factory&sharepin=${escape(sharepin)}&sceneval=2&g_login_type=1`,
-    //   'headers': {
-    //     "Accept": "*/*",
-    //     "Accept-Encoding": "gzip, deflate, br",
-    //     "Accept-Language": "zh-cn",
-    //     "Connection": "keep-alive",
-    //     "Cookie": cookie,
-    //     "Host": "m.jingxi.com",
-    //     "Referer": "https://st.jingxi.com/pingou/dream_factory/index.html",
-    //     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36"
-    //   }
-    // }
     const options = taskurl('friend/AssistFriend', `sharepin=${escape(sharepin)}`, `_time,sharepin,zone`);
     $.get(options, (err, resp, data) => {
       try {
@@ -423,172 +409,7 @@ function GetCommodityDetails() {
     })
   })
 }
-// 查询已完成商品
-function GetShelvesList(pageNo = 1) {
-  return new Promise(async resolve => {
-    $.get(taskurl('userinfo/GetShelvesList', `pageNo=${pageNo}&pageSize=12`, `_time,pageNo,pageSize,zone`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data['ret'] === 0) {
-              data = data['data'];
-              const { shelvesList } = data;
-              if (shelvesList) {
-                $.shelvesList = [...$.shelvesList, ...shelvesList];
-                pageNo ++
-                GetShelvesList(pageNo);
-              }
-            } else {
-              console.log(`GetShelvesList异常：${JSON.stringify(data)}`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
 
-
-function GetUserComponent(pin = $.encryptPin, timeout = 0) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      $.get(taskurl('usermaterial/GetUserComponent', `pin=${pin}`, `_time,pin,zone`), (err, resp, data) => {
-        try {
-          if (err) {
-            console.log(`${JSON.stringify(err)}`)
-            console.log(`${$.name} API请求失败，请检查网路重试`)
-          } else {
-            if (safeGet(data)) {
-              data = JSON.parse(data);
-              if (data['ret'] === 0) {
-
-              } else {
-                console.log(`GetUserComponent失败：${JSON.stringify(data)}`)
-              }
-            }
-          }
-        } catch (e) {
-          $.logErr(e, resp)
-        } finally {
-          resolve(data);
-        }
-      })
-    }, timeout)
-  })
-}
-//收取地下随机零件电力API
-
-function PickUpComponent(index, encryptPin) {
-  return new Promise(resolve => {
-    $.get(taskurl('usermaterial/PickUpComponent', `placeId=${index}&pin=${encryptPin}`, `_time,pin,placeId,zone`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            // if (data['ret'] === 0) {
-            //   data = data['data'];
-            //   if (help) {
-            //     console.log(`收取好友[${encryptPin}]零件成功:获得${data['increaseElectric']}电力\n`);
-            //     $.pickFriendEle += data['increaseElectric'];
-            //   } else {
-            //     console.log(`收取自家零件成功:获得${data['increaseElectric']}电力\n`);
-            //     $.pickEle += data['increaseElectric'];
-            //   }
-            // } else {
-            //   if (help) {
-            //     console.log(`收好友[${encryptPin}]零件失败：${JSON.stringify(data)}`)
-            //   } else {
-            //     console.log(`收零件失败：${JSON.stringify(data)}`)
-            //   }
-            // }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-function getFriendList(sort = 0) {
-  return new Promise(async resolve => {
-    $.get(taskurl('friend/QueryFactoryManagerList', `sort=${sort}`, `_time,sort,zone`), async (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data['ret'] === 0) {
-              data = data['data'];
-              if (data.list && data.list.length <= 0) {
-                // console.log(`查询好友列表完成，共${$.friendList.length}好友，下面开始拾取好友地下的零件\n`);
-                return
-              }
-              let friendsEncryptPins = [];
-              for (let item of data.list) {
-                friendsEncryptPins.push(item);
-              }
-              $.friendList = [...$.friendList, ...friendsEncryptPins];
-              // if (!$.isNode()) return
-              await getFriendList(data.sort);
-            } else {
-              console.log(`QueryFactoryManagerList异常：${JSON.stringify(data)}`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
-function getFactoryIdByPin(pin) {
-  return new Promise((resolve, reject) => {
-    // const url = `/dreamfactory/userinfo/GetUserInfoByPin?zone=dream_factory&pin=${pin}&sceneval=2`;
-    $.get(taskurl('userinfo/GetUserInfoByPin', `pin=${pin}`), (err, resp, data) => {
-      try {
-        if (err) {
-          console.log(`${JSON.stringify(err)}`)
-          console.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data['ret'] === 0) {
-              if (data.data.factoryList) {
-                //做此判断,有时候返回factoryList为null
-                // resolve(data['data']['factoryList'][0]['factoryId'])
-                $.stealFactoryId = data['data']['factoryList'][0]['factoryId'];
-              }
-            } else {
-              console.log(`异常：${JSON.stringify(data)}`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve();
-      }
-    })
-  })
-}
 async function tuanActivity() {
   const tuanConfig = await QueryActiveConfig();
   if (tuanConfig && tuanConfig.ret === 0) {
@@ -704,6 +525,10 @@ function QueryTuan(activeId, tuanId) {
 }
 //开团API
 function CreateTuan() {
+  //不是第一个用户 并且 第一个还未全部成团
+  if($.index != 1 && $.firstSurplusOpenTuanNum > 0){
+    return
+  }
   return new Promise((resolve) => {
     const body =`activeId=${escape(tuanActiveId)}&isOpenApp=1`
     const options = taskTuanUrl(`CreateTuan`, body, '_time,activeId,isOpenApp')
