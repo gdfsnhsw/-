@@ -100,17 +100,10 @@ if ($.isNode()) {
         console.log(`\n账号${$.UserName} 内部相互进团\n`);
         let i = 1;
         let tuanIds1 = $.tuanIds.length >= 1 ? $.tuanIds[0] : null;
-        let tuanIds2 = $.tuanIds.length >= 2 ? $.tuanIds[1] : null;
 
-        if(null != tuanIds1 || null != tuanIds2){
-          if($.firstSurplusOpenTuanNum == 0 && $.firstTuanCom){
-            console.log(`\n${$.UserName} 去参加团 ${tuanIds2}`);
-            await JoinTuan(tuanIds2);
-          }else{
-            console.log(`\n${$.UserName} 去参加团 ${tuanIds1}`);
-            await JoinTuan(tuanIds1);
-          }
-
+        if(null != tuanIds1){
+          //满团后 $.tuanIds无数据，所以始终取第一个
+          await JoinTuan(tuanIds1);
           await $.wait(1000);
         }
       }
