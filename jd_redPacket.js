@@ -42,14 +42,10 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  let res = await getAuthorShareCode('https://raw.githubusercontent.com/Aaron-lv/updateTeam/master/shareCodes/jd_red.json')
-  if (!res) {
-    $.http.get({url: 'https://purge.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_red.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
-    await $.wait(1000)
-    res = await getAuthorShareCode('https://cdn.jsdelivr.net/gh/Aaron-lv/updateTeam@master/shareCodes/jd_red.json')
-  }
-  $.authorMyShareIds = [...(res || [])];
   for (let i = 0; i < cookiesArr.length; i++) {
+    if(i >= 5){
+      break
+    }
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
       $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
@@ -84,17 +80,6 @@ const JD_API_HOST = 'https://api.m.jd.com/api';
         await jinli_h5assist(item);
         if (!$.canHelp) {
           console.log(`次数已用完或活动火爆，跳出助力`)
-          break
-        }
-      }
-    }
-    if ($.canHelp) {
-      console.log(`\n\n有剩余助力机会则给作者进行助力`);
-      for (let item of $.authorMyShareIds || []) {
-        console.log(`\n账号 ${$.index} ${$.UserName} 开始给作者 ${item} 进行助力`)
-        await jinli_h5assist(item);
-        if (!$.canHelp) {
-          console.log(`次数已用完，跳出助力`)
           break
         }
       }
@@ -242,7 +227,10 @@ async function red() {
   } else if ($.h5activityIndex && $.h5activityIndex.data && $.h5activityIndex.data['biz_code'] === 20001) {
     //20001:红包活动正在进行，可拆
     const redPacketId = $.h5activityIndex['data']['result']['redpacketInfo']['id'];
-    if (redPacketId) $.redPacketId.push(redPacketId);
+    if (redPacketId){
+      console.log("助力码为：" + redPacketId)
+      $.redPacketId.push(redPacketId);
+    }
     console.log(`\n\n当前待拆红包ID:${$.h5activityIndex['data']['result']['redpacketInfo']['id']}，进度：再邀${$.h5activityIndex['data']['result']['requireAssistNum']}个好友，开第${$.hasSendNumber + 1}个红包。当前已拆红包：${$.hasSendNumber}个，剩余${$.h5activityIndex['data']['result']['remainRedpacketNumber']}个红包待开，已有${$.assistants}好友助力\n\n`)
     const waitOpenTimes = $.h5activityIndex['data']['result']['redpacketInfo']['waitOpenTimes'] || 0;
     console.log(`当前可拆红包个数：${waitOpenTimes}`)
@@ -572,39 +560,6 @@ function getCcTaskList(functionId, body, type = '1') {
         $.logErr(e, resp)
       } finally {
         resolve();
-      }
-    })
-  })
-}
-function getAuthorShareCode(url) {
-  return new Promise(resolve => {
-    const options = {
-      url: `${url}?${new Date()}`, "timeout": 10000, headers: {
-        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
-      }
-    };
-    if ($.isNode() && process.env.TG_PROXY_HOST && process.env.TG_PROXY_PORT) {
-      const tunnel = require("tunnel");
-      const agent = {
-        https: tunnel.httpsOverHttp({
-          proxy: {
-            host: process.env.TG_PROXY_HOST,
-            port: process.env.TG_PROXY_PORT * 1
-          }
-        })
-      }
-      Object.assign(options, { agent })
-    }
-    $.get(options, async (err, resp, data) => {
-      try {
-        if (err) {
-        } else {
-          if (data) data = JSON.parse(data)
-        }
-      } catch (e) {
-        // $.logErr(e, resp)
-      } finally {
-        resolve(data);
       }
     })
   })
