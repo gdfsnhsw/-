@@ -130,6 +130,7 @@ async function run(){
             await $.wait(1000)
         }
         if(checkOpenCardData && checkOpenCardData.score1 == 1) await startDraw(1)
+        if(checkOpenCardData && checkOpenCardData.score2 == 1) await startDraw(2)
         $.log("关注: " + $.followShop)
         if(!$.followShop) await followShop();
         if(!$.followShop) await $.wait(1000)
