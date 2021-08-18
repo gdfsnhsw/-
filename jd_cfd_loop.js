@@ -1,7 +1,7 @@
 /*
 京喜财富岛热气球挂机
 
-更新时间：2021-7-21
+更新时间：2021-8-10
 活动入口：京喜APP-我的-京喜财富岛
 */
 !function (t, r) { "object" == typeof exports ? module.exports = exports = r() : "function" == typeof define && define.amd ? define([], r) : t.CryptoJS = r() }(this, function () {
@@ -56,7 +56,7 @@ $.appId = 10028;
                 if (UAInfo[$.UserName]) {
                     UA = UAInfo[$.UserName]
                 } else {
-                    UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString()};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+                    UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
                 }
                 token = await getJxToken()
                 await cfd();
@@ -73,7 +73,7 @@ $.appId = 10028;
 async function cfd() {
     try {
         const beginInfo = await getUserInfo();
-        if (beginInfo.Fund.ddwFundTargTm === 0) {
+        if (beginInfo.LeadInfo.dwLeadType === 2) {
             console.log(`还未开通活动，请先开通\n`)
             return
         }
@@ -192,6 +192,9 @@ async function pickshell(body) {
                     data = JSON.parse(data);
                     let dwName
                     switch (data.Data.strFirstDesc) {
+                        case '亲爱的岛主~♥七夕快乐鸭♥':
+                            dwName = '爱心珍珠'
+                            break
                         case '捡到珍珠了，看起来很贵的样子':
                             dwName = '小珍珠'
                             break
@@ -273,16 +276,16 @@ function getUserInfo() {
                     data = JSON.parse(data);
                     const {
                         buildInfo = {},
-                        Fund = {}
+                        LeadInfo = {}
                     } = data;
                     $.info = {
                         ...$.info,
                         buildInfo,
-                        Fund
+                        LeadInfo
                     };
                     resolve({
                         buildInfo,
-                        Fund
+                        LeadInfo
                     });
                 }
             } catch (e) {
@@ -312,12 +315,12 @@ function taskUrl(function_path, body) {
         timeout: 10000
     };
 }
-function randomString() {
-    return Math.random().toString(16).slice(2, 10) +
-        Math.random().toString(16).slice(2, 10) +
-        Math.random().toString(16).slice(2, 10) +
-        Math.random().toString(16).slice(2, 10) +
-        Math.random().toString(16).slice(2, 10)
+function randomString(e) {
+    e = e || 32;
+    let t = "0123456789abcdef", a = t.length, n = "";
+    for (let i = 0; i < e; i++)
+        n += t.charAt(Math.floor(Math.random() * a));
+    return n
 }
 
 function jsonParse(str) {
