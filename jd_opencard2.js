@@ -45,8 +45,6 @@ if ($.isNode()) {
 } else {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
-let guaopencard_addSku = false
-guaopencard_addSku = $.isNode() ? (process.env.guaopencard_addSku14 ? process.env.guaopencard_addSku14 : `${guaopencard_addSku}`) : ($.getdata('guaopencard_addSku14') ? $.getdata('guaopencard_addSku14') : `${guaopencard_addSku}`);
 message = ""
 !(async () => {
     if (!cookiesArr[0]) {
@@ -151,9 +149,8 @@ async function run(){
         if(!$.sign) await saveTask('签到', 0, 1000098686);
         if(!$.sign) await $.wait(1000)
         $.log("加购: " + $.addSku)
-        if(!$.addSku && guaopencard_addSku+"" != "true") console.log('如需加购请设置环境变量[guaopencard_addSku14]为"true"');
-        if(!$.addSku && guaopencard_addSku == "true") await saveTask('加购', 21, 21);
-        if(!$.addSku && guaopencard_addSku == "true") await $.wait(1000)
+        if(!$.addSku) await saveTask('加购', 21, 21);
+        if(!$.addSku) await $.wait(1000)
         await getActorUuid()
         console.log(`共${$.score}清爽值 剩余${$.score1} ${$.score5}次游戏机会`)
         await $.wait(1000)
