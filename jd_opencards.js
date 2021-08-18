@@ -18,7 +18,7 @@ guaopencard9="true"
 若是手机用户(不是nodejs环境) 是默认直接执行脚本的
 没有适配加购变量 所以是不加购
 ————————————————
-入口：[8.11-8.15 星动七夕 纵享丝滑 (https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=02d54511202b4d1781088b66b9e07b9c&shareUuid=d87a80e864dd45909d11f098b9efb3d0)]
+入口：[8.11-8.15 星动七夕 纵享丝滑 (https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=375dbaa9e32c4c70bb8357836956ed2e&shareUuid=d87a80e864dd45909d11f098b9efb3d0)]
 ============Quantumultx===============
 [task_local]
 #8.11-8.15 星动七夕 纵享丝滑
@@ -34,7 +34,7 @@ cron "39 0,22 8-15 8 *" script-path=https://raw.githubusercontent.com/smiek2221/
 ============小火箭=========
 8.11-8.15 星动七夕 纵享丝滑 = type=cron,script-path=https://raw.githubusercontent.com/smiek2221/scripts/master/gua_opencard9.js, cronexpr="39 0,22 8-15 8 *", timeout=3600, enable=true
 */
-const $ = new Env('全民818');
+const $ = new Env('全民发一发');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -57,8 +57,8 @@ message = ""
         });
         return;
     }
-    $.shareUuid = '82befd642006474b8765735bea860f26'
-    $.activityId = '02d54511202b4d1781088b66b9e07b9c'
+    $.shareUuid = '0b91c9b58ce74a59803658090e40ea93'
+    $.activityId = '375dbaa9e32c4c70bb8357836956ed2e'
     console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
