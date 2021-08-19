@@ -155,6 +155,9 @@ function queryMissionWantedDetail(timeout = 0) {
                 try {
                     if (printDetail) console.log(data);
                     data = JSON.parse(data);
+                    if(!data || !data.resultData || !data.resultData.data || !data.resultData.data.mission){
+                        return
+                    }
                     switch (data.resultData.data.mission.status ) {
                         case -1 :
                             $.prize.addMsg += `周任务：${data.resultData.data.mission.name}`;
