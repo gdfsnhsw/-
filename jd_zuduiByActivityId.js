@@ -270,7 +270,8 @@ function accessActivity() {
                 } else {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
-                        console.log(cookies)
+                        console.log("cookies",cookies)
+                        console.log("data",data)
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
                         $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
