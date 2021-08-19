@@ -57,6 +57,8 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
                 continue
             }
 
+            getUA()
+
             activityId = activityUrl.substring(activityUrl.indexOf("activityId=") + "activityId=".length)
             activityId = activityId.substring(0,activityId.indexOf("&") == -1 ? activityId.length : activityId.indexOf("&"))
 
@@ -134,6 +136,8 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
             $.isLogin = true;
             $.nickName = '';
 
+            getUA()
+
             console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 
             $.LZ_TOKEN_KEY = "";
@@ -179,12 +183,24 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 
+function getUA(){
+    $.UA = `jdapp;iPhone;10.0.10;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/4199175193;appBuild/167741;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`
+}
+
+function randomString(e) {
+    e = e || 32;
+    let t = "abcdef0123456789", a = t.length, n = "";
+    for (i = 0; i < e; i++)
+        n += t.charAt(Math.floor(Math.random() * a));
+    return n
+}
+
 function getWxCommonInfoToken () {
     return new Promise(resolve => {
         $.post({
             url: `https://lzkjdz-isv.isvjcloud.com/wxCommonInfo/token`,
             headers: {
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded',
                 'Host':'lzkjdz-isv.isvjcloud.com',
                 'Origin':'https://lzkjdz-isv.isvjcloud.com',
@@ -224,7 +240,7 @@ function saveCaptain() {
             body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&pinImg=http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -265,7 +281,7 @@ function saveMember() {
             body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}&pinImg=${encodeURIComponent("http://storage.360buyimg.com/i.imageUpload/6a645f3437633463333562316434363231353937323838313433353232_mid.jpg")}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -302,7 +318,7 @@ function accessActivity() {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=${activityId}`,
             headers: {
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
                 'Host':'lzkjdz-isv.isvjcloud.com'
             }
@@ -338,7 +354,7 @@ function accessLogWithAD() {
             body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=46&venderId=${venderId}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -376,7 +392,7 @@ function shopInfo(type) {
             body: `activityId=${activityId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -418,7 +434,7 @@ function getActMemberInfo(item) {
             body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&venderId=${venderId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -462,7 +478,7 @@ function getSignId(type) {
             body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -502,7 +518,7 @@ function getSimpleActInfoVo() {
             body: `activityId=${activityId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -540,7 +556,7 @@ function getMyPing() {
             body: `userId=599119&token=${$.isvObfuscatorToken}&fromType=APP`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
-                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
@@ -581,7 +597,7 @@ function getIsvObfuscatorToken() {
         $.post({
             url: `https://api.m.jd.com/client.action?functionId=isvObfuscator&area=19_1601_50258_50374&body=%7B%22url%22%3A%22https%3A%5C/%5C/lzkjdz-isv.isvjcloud.com%22%2C%22id%22%3A%22%22%7D&build=167741&client=apple&clientVersion=10.0.8&d_brand=apple&d_model=iPhone13%2C2&eid=eidI2ad5812337s3ghGuVeflROmNL7t9SyzhxIIRr8y39ehVQQzh3oXWc/QdZtuYpoU84EZvJqBkJ%2BWEUsc7iuc80hh3Y5nnWIpS4d3eVHSbXWGspkRV&isBackground=N&joycious=100&lang=zh_CN&networkType=3g&networklibtype=JDNetworkBaseAF&openudid=753d213009c85f60f8ce9df3a678389ffa3fb1c5&osVersion=14.7&partner=apple&rfs=0000&scope=11&screen=1170%2A2532&sign=2ffec555b43aad6c6463a59e6c6171be&st=1627614815813&sv=110&uemps=0-0&uts=0f31TVRjBStY4dJWmgbcW8p0brUbXrZeoPCj0W437gnaYlBn4xmhsA4SI6O1KP%2Bjy8ofgHABHMZEb884H1fvzolH4z%2BqsI5NgKKljgs8iMmxPuBc9EiSzSIb/2Nvf8QPLPCnJDgvjjZ3RMgrfBQasXg8AYpNrVCvUNhXVXFz3GSSC6EQIRlil7ZW45YN60Mu3JbKwlXFJXLeSIvplU/nXw%3D%3D&uuid=hjudwgohxzVu96krv/T6Hg%3D%3D&wifiBssid=unknown`,
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1',
+                'User-Agent': $.UA,
                 'Content-Type':'application/x-www-form-urlencoded',
                 'Host':'api.m.jd.com',
                 'Referer':'',
