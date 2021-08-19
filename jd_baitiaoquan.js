@@ -62,6 +62,9 @@ let prize =
         prize[i].body =`activityId=${prize[i].id}&eid=${randomWord(false,90).toUpperCase()}&fp=${randomWord(false,32).toLowerCase()}`
     }
     for (let i = 0; i < cookiesArr.length; i++) {
+        if(i > 5){
+            continue
+        }
         cookie = cookiesArr[i];
         if (cookie) {
             $.prize = {addMsg : ``};
