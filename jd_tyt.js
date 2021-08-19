@@ -68,6 +68,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
                 continue
             } else {
                 await tythelp(tytpacketId)
+                await $.wait(2000)
             }
         }
     }
