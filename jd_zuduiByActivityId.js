@@ -70,12 +70,12 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
             console.log("signId:",$.signId)
             console.log("shopid:",venderId)
 
+            $.isvObfuscatorToken = ""
+            await getIsvObfuscatorToken();
+
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
             await accessActivity();
-
-            $.isvObfuscatorToken = ""
-            await getIsvObfuscatorToken();
 
             $.lz_jdpin_token = ""
             $.secretPin = ""
@@ -258,7 +258,7 @@ function accessActivity() {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=${activityId}`,
             headers: {
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Cookie': cookie,
+                'Cookie': `${cookie};IsvToken=${$.isvObfuscatorToken}`,
                 'Host':'lzkjdz-isv.isvjcloud.com'
             }
         }
@@ -271,7 +271,6 @@ function accessActivity() {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
                         console.log("cookies",cookies)
-                        console.log("data",data)
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
                         $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
