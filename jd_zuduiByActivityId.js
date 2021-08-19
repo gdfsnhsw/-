@@ -58,10 +58,17 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
             }
 
             activityId = activityUrl.substring(activityUrl.indexOf("activityId=") + "activityId=".length)
-            activityId = activityId.substring(0,activityId.indexOf("&"))
+            activityId = activityId.substring(0,activityId.indexOf("&") == -1 ? activityId.length : activityId.indexOf("&"))
+
+            venderId = activityUrl.substring(activityUrl.indexOf("shopid=") + "shopid=".length)
+            venderId = venderId.substring(0,venderId.indexOf("&") == -1 ? venderId.length : venderId.indexOf("&"))
 
             $.signId = activityUrl.substring(activityUrl.indexOf("signUuid=") + "signUuid=".length)
-            $.signId = $.signId.substring(0,$.signId.indexOf("&"))
+            $.signId = $.signId.substring(0,$.signId.indexOf("&") == -1 ? $.signId.length : $.signId.indexOf("&"))
+
+            console.log("activityId:",activityId)
+            console.log("signId:",$.signId)
+            console.log("shopid:",venderId)
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
@@ -248,7 +255,7 @@ function saveMember(item) {
 function accessActivity() {
     return new Promise(resolve => {
         let options = {
-            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
+            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
