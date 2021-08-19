@@ -70,24 +70,32 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
             console.log("signId:",$.signId)
             console.log("shopid:",venderId)
 
+            $.LZ_TOKEN_KEY = "";
+            $.LZ_TOKEN_VALUE = "";
+            await getWxCommonInfoToken();
+
             $.isvObfuscatorToken = ""
             await getIsvObfuscatorToken();
 
-            $.LZ_TOKEN_KEY = "";
-            $.LZ_TOKEN_VALUE = "";
-            await accessActivity();
+            if($.isvObfuscatorToken == '' || $.LZ_TOKEN_KEY == '' || $.LZ_TOKEN_VALUE == ''){
+                console.log('获取[token]失败！')
+                return
+            }
+            await getSimpleActInfoVo()
 
             $.lz_jdpin_token = ""
             $.secretPin = ""
             await getMyPing()
-
-            await $.wait(1000)
-
             if (!$.secretPin) {
                 $.log("黑号!")
                 await $.wait(5000)
                 continue
             }
+
+            await accessActivity();
+            await accessLogWithAD();
+
+            await $.wait(1000)
 
             if($.index == 1){
                 console.log("firstSecretPin:" + $.secretPin)
@@ -171,6 +179,43 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
 
+function getWxCommonInfoToken () {
+    return new Promise(resolve => {
+        $.post({
+            url: `https://lzkjdz-isv.isvjcloud.com/wxCommonInfo/token`,
+            headers: {
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded',
+                'Host':'lzkjdz-isv.isvjcloud.com',
+                'Origin':'https://lzkjdz-isv.isvjcloud.com',
+                'Referer': `https://lzkjdz-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`,
+                'Cookie': cookie,
+            }
+        }, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} wxCommonInfo API请求失败，请检查网路重试`)
+                } else {
+                    res = $.toObj(data);
+                    if(typeof res == 'object' && res.result === true){
+                        if(typeof res.data.LZ_TOKEN_KEY != 'undefined') $.LZ_TOKEN_KEY = res.data.LZ_TOKEN_KEY
+                        if(typeof res.data.LZ_TOKEN_VALUE != 'undefined') $.LZ_TOKEN_VALUE = res.data.LZ_TOKEN_VALUE
+                    }else if(typeof res == 'object' && res.errorMessage){
+                        console.log(`token ${res.errorMessage || ''}`)
+                    }else{
+                        console.log(data)
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
 function saveCaptain() {
 
     return new Promise(resolve => {
@@ -213,7 +258,7 @@ function saveCaptain() {
     })
 }
 
-function saveMember(item) {
+function saveMember() {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/saveMember`,
@@ -258,7 +303,7 @@ function accessActivity() {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=${activityId}`,
             headers: {
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
-                'Cookie': `${cookie};IsvToken=${$.isvObfuscatorToken}`,
+                'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
                 'Host':'lzkjdz-isv.isvjcloud.com'
             }
         }
@@ -285,7 +330,7 @@ function accessActivity() {
     })
 }
 
-function accessLogWithAD(item) {
+function accessLogWithAD() {
     return new Promise(resolve => {
         let pageUrl = `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/1206424?activityId=${activityId}&signUuid=${$.signId}`
         let options = {
@@ -557,38 +602,6 @@ function getIsvObfuscatorToken() {
                 $.logErr(e, resp)
             } finally {
                 resolve(data.token);
-            }
-        })
-    })
-}
-
-function getCommonInfoToken() {
-    return new Promise(resolve => {
-        let options = {
-            "url": `https://lzkjdz-isv.isvjd.com/wxAssemblePage/activity/?activityId=67dfd244aacb438893a73a03785a48c7`,
-            "headers": {
-                "Host": "lzkjdz-isv.isvjd.com",
-                "Cookie": cookie,
-                "Connection": "keep-alive",
-                "Accept": "application/json, text/plain, */*",
-                "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
-                "Accept-Language": "zh-cn",
-                "Referer": "https://lzkj-isv.isvjd.com/",
-                "Accept-Encoding": "gzip, deflate, br",
-            }
-        };
-        $.get(options, async (err, resp, data) => {
-            try {
-                if(resp.statusCode == 200){
-                    let cookies = resp.headers['set-cookie']
-                    $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
-                    $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
-
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve(data);
             }
         })
     })
