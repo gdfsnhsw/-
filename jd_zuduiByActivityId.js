@@ -261,7 +261,7 @@ function accessActivity() {
                 'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
                 'X-Requested-With':'XMLHttpRequest',
-                'Host':'lzkjdz-isv.isvjd.com',
+                'Host':'lzkjdz-isv.isvjcloud.com',
             }
         }
         $.get(options, async (err, resp, data) => {
