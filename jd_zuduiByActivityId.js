@@ -14,7 +14,7 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/4207179?activityId=bb72886887764e7d8bcb14ba05d8452b&signUuid=57593580e09b4a6a80c562e144ccab70&shareuserid4minipg=wL1GFYiFmVU3KttngoTUgGwklxRrP5C78lmKjh9Mn4avAmNuF4i+OHS9NlRdtagP&shopid=1000332227"
+let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=56fa76e74a80452b91f496d49451e7e3&signUuid=2c8f90cfa12e47d983aa33b7f9267db6&shareuserid4minipg=wL1GFYiFmVU3KttngoTUgGwklxRrP5C78lmKjh9Mn4avAmNuF4i+OHS9NlRdtagP&shopid=151148"
 let activityId = ""
 let venderId = ""
 let sid = ""
@@ -265,6 +265,7 @@ function accessActivity() {
                 } else {
                     if(resp.statusCode == 200){
                         let cookies = resp.headers['set-cookie']
+                        console.log(cookies)
                         $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
                         $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
 
