@@ -85,7 +85,8 @@ async function main() {
             console.log("已开卡，跳过")
             continue
         }
-        await join(cardList1Element.userId)
+        $.shopid = cardList1Element.userId
+        await join($.shopid)
         await $.wait(1000)
         await takePostRequest('loadUniteOpenCard');
         await $.wait(500);
@@ -184,7 +185,7 @@ async function takePostRequest(type){
             break;
         case 'loadUniteOpenCard':
             url = `https://jinggengjcq-isv.isvjcloud.com/dm/front/openCard/loadUniteOpenCard?mix_nick=${$.thisNick}`;
-            body =  {"inviteNick":$.firstThisNick,"actId":"c2a69b3596a948d8b8028b9_820","method":"/openCard/loadUniteOpenCard","userId":"10299171","buyerNick":$.thisNick};
+            body =  {"inviteNick":$.firstThisNick,"shopId":$.shopid,"actId":"c2a69b3596a948d8b8028b9_820","method":"/openCard/loadUniteOpenCard","userId":"10299171","buyerNick":$.thisNick};
             break;
         case 'shopList':
             url = `https://jinggengjcq-isv.isvjcloud.com/dm/front/openCard/shopList?mix_nick=${$.thisNick}`;
@@ -266,6 +267,7 @@ function dealReturn(type, data) {
             if(data.success && data.errorCode === '200' && data.data && data.data.status && data.data.status === 200){
                 //TODO
             }
+            break
         default:
             console.log(JSON.stringify(data));
     }
