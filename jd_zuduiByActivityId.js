@@ -14,7 +14,7 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=56fa76e74a80452b91f496d49451e7e3&signUuid=2c8f90cfa12e47d983aa33b7f9267db6&shareuserid4minipg=wL1GFYiFmVU3KttngoTUgGwklxRrP5C78lmKjh9Mn4avAmNuF4i+OHS9NlRdtagP&shopid=151148"
+let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/4805746?activityId=a5469f78cc1f41b39a8bc017c977be3c&signUuid=03da5f20f72a4f8ea5d0c57e7d572d78&shareuserid4minipg=P0CZ6sYjxiDL7YQZAjODCU7oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w==&shopid=151148"
 let activityId = ""
 let venderId = ""
 let sid = ""
@@ -297,6 +297,11 @@ function saveMember() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
+                    if(data.errorMessage.indexOf("活动仅限店铺会员参与哦") != -1){
+                        console.log("开始入会")
+                        await join(venderId)
+                        await saveMember();
+                    }
                     if(data){
                         console.log("加入队伍信息：",data.errorMessage)
                     }
@@ -311,6 +316,86 @@ function saveMember() {
             }
         })
     })
+}
+
+function getshopactivityId(venderId) {
+    return new Promise(resolve => {
+        $.get(shopactivityId(`${venderId}`), async (err, resp, data) => {
+            try {
+                data = JSON.parse(data);
+                if(data.success == true){
+                    // console.log($.toStr(data.result))
+                    // console.log(`入会:${data.result.shopMemberCardInfo.venderCardName || ''}`)
+                    $.shopactivityId = data.result.interestsRuleList && data.result.interestsRuleList[0] && data.result.interestsRuleList[0].interestsInfo && data.result.interestsRuleList[0].interestsInfo.activityId || ''
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+function shopactivityId(functionId) {
+    return {
+        url: `https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=getShopOpenCardInfo&body=%7B%22venderId%22%3A%22${functionId}%22%2C%22channel%22%3A401%7D&client=H5&clientVersion=9.2.0&uuid=88888`,
+        headers: {
+            'Content-Type': 'text/plain; Charset=UTF-8',
+            'Origin': 'https://api.m.jd.com',
+            'Host': 'api.m.jd.com',
+            'accept': '*/*',
+            'User-Agent': $.UA,
+            'content-type': 'application/x-www-form-urlencoded',
+            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`,
+            'Cookie': cookie
+        }
+    }
+}
+
+function join(venderId) {
+    return new Promise(async resolve => {
+        $.shopactivityId = ''
+        await $.wait(1000)
+        await getshopactivityId(venderId)
+        $.get(ruhui(`${venderId}`), async (err, resp, data) => {
+            try {
+                // console.log(data)
+                data = JSON.parse(data);
+                if(data.success == true){
+                    $.log(data.message)
+                    if(data.result && data.result.giftInfo){
+                        for(let i of data.result.giftInfo.giftList){
+                            console.log(`入会获得:${i.discountString}${i.prizeName}${i.secondLineDesc}`)
+                        }
+                    }
+                }else if(data.success == false){
+                    $.log(data.message)
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data);
+            }
+        })
+    })
+}
+
+function ruhui(functionId) {
+    let activityId = ``
+    if($.shopactivityId) activityId = `,"activityId":${$.shopactivityId}`
+    return {
+        url: `https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body={"venderId":"${functionId}","shopId":"${functionId}","bindByVerifyCodeFlag":1,"registerExtend":{},"writeChildFlag":0${activityId},"channel":401}&client=H5&clientVersion=9.2.0&uuid=88888`,
+        headers: {
+            'Content-Type': 'text/plain; Charset=UTF-8',
+            'Origin': 'https://api.m.jd.com',
+            'Host': 'api.m.jd.com',
+            'accept': '*/*',
+            'User-Agent': $.UA,
+            'content-type': 'application/x-www-form-urlencoded',
+            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`,
+            'Cookie': cookie
+        }
+    }
 }
 
 function accessActivity() {
