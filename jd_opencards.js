@@ -34,7 +34,7 @@ cron "39 0,22 8-15 8 *" script-path=https://raw.githubusercontent.com/smiek2221/
 ============小火箭=========
 8.11-8.15 星动七夕 纵享丝滑 = type=cron,script-path=https://raw.githubusercontent.com/smiek2221/scripts/master/gua_opencard9.js, cronexpr="39 0,22 8-15 8 *", timeout=3600, enable=true
 */
-const $ = new Env('全民发一发');
+const $ = new Env('联合开卡');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -57,8 +57,8 @@ message = ""
         });
         return;
     }
-    $.shareUuid = '0b91c9b58ce74a59803658090e40ea93'
-    $.activityId = '375dbaa9e32c4c70bb8357836956ed2e'
+    $.shareUuid = 'c0cb31c04733496c8f890b56826dae53'
+    $.activityId = '012c11d481ad42baaaf418866685b231'
     console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
