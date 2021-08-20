@@ -17,6 +17,7 @@ if ($.isNode()) {
 let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/4805746?activityId=a5469f78cc1f41b39a8bc017c977be3c&signUuid=03da5f20f72a4f8ea5d0c57e7d572d78&shareuserid4minipg=P0CZ6sYjxiDL7YQZAjODCU7oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w==&shopid=151148"
 let activityId = ""
 let venderId = ""
+let shopId = ""
 let sid = ""
 let sidUuid=""
 if(process.env.ZUDUI_ACTIVITY_URL1){
@@ -31,9 +32,12 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
         });
         return;
     }
+    activityId = activityUrl.substring(activityUrl.indexOf("activityId=") + "activityId=".length)
+    activityId = activityId.substring(0,activityId.indexOf("&"))
+
+
     $.taskList = []
     $.needDoTask = []
-    $.venderIds = new Map()
     $.signIds = new Map()
     $.firstSecretPin = ""
 
@@ -62,15 +66,16 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
             activityId = activityUrl.substring(activityUrl.indexOf("activityId=") + "activityId=".length)
             activityId = activityId.substring(0,activityId.indexOf("&") == -1 ? activityId.length : activityId.indexOf("&"))
 
-            venderId = activityUrl.substring(activityUrl.indexOf("shopid=") + "shopid=".length)
-            venderId = venderId.substring(0,venderId.indexOf("&") == -1 ? venderId.length : venderId.indexOf("&"))
+            shopId = activityUrl.substring(activityUrl.indexOf("shopid=") + "shopid=".length)
+            shopId = shopId.substring(0,shopId.indexOf("&") == -1 ? shopId.length : shopId.indexOf("&"))
 
             $.signId = activityUrl.substring(activityUrl.indexOf("signUuid=") + "signUuid=".length)
             $.signId = $.signId.substring(0,$.signId.indexOf("&") == -1 ? $.signId.length : $.signId.indexOf("&"))
 
             console.log("activityId:",activityId)
             console.log("signId:",$.signId)
-            console.log("shopid:",venderId)
+            console.log("venderId:",venderId)
+            console.log("shopid:",shopId)
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
@@ -96,6 +101,7 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
 
             await accessActivity();
             await accessLogWithAD();
+            await activityContent();
 
             await $.wait(1000)
 
@@ -108,9 +114,9 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
                 if(!sid){
                     await shopInfo("wxTeam");
                 }else {
-                    venderId = sid
+                    shopId = sid
                 }
-                if(!venderId){
+                if(!shopId){
                     await shopInfo("pool");
                 }
 
@@ -176,12 +182,56 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
 
             await getActMemberInfo();
             console.log("开始加入队伍")
+            $.times = 0;
             await saveMember();
         }
     }
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
+
+function activityContent() {
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activityContent`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signUuid}`,
+            headers: {
+                'Accept':'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': `Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1`,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With':'XMLHttpRequest',
+                'Host':'lzkjdz-isv.isvjcloud.com',
+                'Origin':'https://lzkjdz-isv.isvjcloud.com',
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxTeam/activity?activityId=${$.activityId}&signUuid=${$.signUuid}&shareuserid4minipg=${encodeURIComponent($.shareuserid4minipg)}&shopid=${$.shopid}&lng=113.260026&lat=23.175425&sid=7701253addf4a287f04f595ed441b45w&un_area=19_1601_50258_50374`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};IsvToken=${$.isvObfuscatorToken};APP_ABBR=${$.APP_ABBR}`,
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    if(resp.statusCode == 200){
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
+                    }
+                    if($.index == 1){
+                        data = JSON.parse(data);
+                        if(data.data && data.data.userId){
+                            venderId = data.data.userId
+                        }
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
 
 function getUA(){
     $.UA = `jdapp;iPhone;10.0.10;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/4199175193;appBuild/167741;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`
@@ -297,9 +347,10 @@ function saveMember() {
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
                     data = JSON.parse(data);
-                    if(data.errorMessage.indexOf("活动仅限店铺会员参与哦") != -1){
+                    if(data.errorMessage.indexOf("活动仅限店铺会员参与哦") != -1 && $.times < 2){
                         console.log("开始入会")
                         await join(venderId)
+                        $.times = $.times + 1;
                         await saveMember();
                     }
                     if(data){
@@ -357,7 +408,7 @@ function join(venderId) {
         $.shopactivityId = ''
         await $.wait(1000)
         await getshopactivityId(venderId)
-        $.get(ruhui(`${venderId}`), async (err, resp, data) => {
+        $.get(ruhui(`${venderId}`,shopId), async (err, resp, data) => {
             try {
                 // console.log(data)
                 data = JSON.parse(data);
@@ -380,11 +431,9 @@ function join(venderId) {
     })
 }
 
-function ruhui(functionId) {
-    let activityId = ``
-    if($.shopactivityId) activityId = `,"activityId":${$.shopactivityId}`
+function ruhui(functionId,shopId) {
     return {
-        url: `https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body={"venderId":"${functionId}","shopId":"${functionId}","bindByVerifyCodeFlag":1,"registerExtend":{},"writeChildFlag":0${activityId},"channel":401}&client=H5&clientVersion=9.2.0&uuid=88888`,
+        url: `https://api.m.jd.com/client.action?appid=jd_shop_member&functionId=bindWithVender&body={"venderId":"${functionId}","shopId":"${shopId}","bindByVerifyCodeFlag":1,"registerExtend":{},"writeChildFlag":0,"channel":9744}&client=H5&clientVersion=9.2.0&uuid=88888`,
         headers: {
             'Content-Type': 'text/plain; Charset=UTF-8',
             'Origin': 'https://api.m.jd.com',
@@ -392,7 +441,7 @@ function ruhui(functionId) {
             'accept': '*/*',
             'User-Agent': $.UA,
             'content-type': 'application/x-www-form-urlencoded',
-            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${functionId}&venderType=5&channel=401&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`,
+            'Referer': `https://shopmember.m.jd.com/shopcard/?venderId=${functionId}&shopId=${shopId}&venderType=5&channel=9744&returnUrl=https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${activityId}&shareUuid=${$.shareUuid}`,
             'Cookie': cookie
         }
     }
@@ -494,8 +543,8 @@ function shopInfo(type) {
                 } else {
                     data = JSON.parse(data);
                     if(data && data.data && data.data.sid){
-                        venderId = data.data.sid
-                        if(venderId && resp.statusCode == 200){
+                        shopId = data.data.sid
+                        if(shopId && resp.statusCode == 200){
                             let cookies = resp.headers['set-cookie']
                             $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
                             $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";"))
