@@ -101,12 +101,10 @@ if(process.env.SHARE_ACTIVITY_URL){
             }
 
             await accessActivity();
-            await $.wait(500)
             await accessLogWithAD();
-            await $.wait(500)
             await activityContent();
 
-            await $.wait(1000)
+            await $.wait(200)
 
             if($.index == 1){
                 console.log("firstSecretPin:" + $.secretPin)
@@ -151,24 +149,18 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             $.LZ_TOKEN_KEY = $.LZ_TOKEN_VALUE = ''
             await getWxCommonInfoToken();
-            await $.wait(500)
 
             await accessActivity();
-            await $.wait(500)
 
             $.isvObfuscatorToken = ""
             await getIsvObfuscatorToken();
-            await $.wait(500)
 
             await getSimpleActInfoVo();
-            await $.wait(500)
 
             $.lz_jdpin_token = ""
             $.AUTH_C_USER = ""
             $.secretPin = ""
             await getMyPing()
-
-            await $.wait(1000)
 
             if (!$.secretPin) {
                 $.log("黑号!")
@@ -186,9 +178,8 @@ if(process.env.SHARE_ACTIVITY_URL){
             console.log("venderId为：" + venderId)
 
             await accessLogWithAD();
-            await $.wait(500)
             await activityContent();
-            await $.wait(500)
+            await $.wait(200)
             await getActMemberInfo();
             // console.log("开始加入队伍")
             // $.times = 0;
@@ -242,7 +233,7 @@ if(process.env.SHARE_ACTIVITY_URL){
             if($.index == 1){
                 for(let drawContentVO of $.drawContentVOs){
                     await hasPrize(drawContentVO.id);
-                    await $.wait(500)
+                    await $.wait(200)
                     await getPrize(drawContentVO.id);
                 }
             }
