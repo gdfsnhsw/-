@@ -101,7 +101,9 @@ if(process.env.SHARE_ACTIVITY_URL){
             }
 
             await accessActivity();
+            await $.wait(500)
             await accessLogWithAD();
+            await $.wait(500)
             await activityContent();
 
             await $.wait(1000)
@@ -149,13 +151,17 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             $.LZ_TOKEN_KEY = $.LZ_TOKEN_VALUE = ''
             await getWxCommonInfoToken();
+            await $.wait(500)
 
             await accessActivity();
+            await $.wait(500)
 
             $.isvObfuscatorToken = ""
             await getIsvObfuscatorToken();
+            await $.wait(500)
 
             await getSimpleActInfoVo();
+            await $.wait(500)
 
             $.lz_jdpin_token = ""
             $.AUTH_C_USER = ""
@@ -180,16 +186,128 @@ if(process.env.SHARE_ACTIVITY_URL){
             console.log("venderId为：" + venderId)
 
             await accessLogWithAD();
+            await $.wait(500)
             await activityContent();
+            await $.wait(500)
             await getActMemberInfo();
             // console.log("开始加入队伍")
             // $.times = 0;
             // await saveMember();
         }
     }
+
+    console.log(`\n*****开始领取奖励*********\n`);
+    for (let i = 0; i < cookiesArr.length; i++) {
+        if(i > 0){
+            break
+        }
+        cookie = cookiesArr[i];
+        if (cookie) {
+            $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+            $.index = i + 1;
+            $.isLogin = true;
+            $.nickName = '';
+            if (!$.isLogin) {
+                $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {
+                    "open-url": "https://bean.m.jd.com/bean/signIndex.action"
+                });
+                if ($.isNode()) {
+                    await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+                }
+                continue
+            }
+
+            $.LZ_TOKEN_KEY = "";
+            $.LZ_TOKEN_VALUE = "";
+            await getWxCommonInfoToken();
+
+            $.isvObfuscatorToken = ""
+            await getIsvObfuscatorToken();
+
+            if($.isvObfuscatorToken == '' || $.LZ_TOKEN_KEY == '' || $.LZ_TOKEN_VALUE == ''){
+                console.log('获取[token]失败！')
+                return
+            }
+            await getSimpleActInfoVo()
+
+            $.lz_jdpin_token = ""
+            $.secretPin = ""
+            await getMyPing()
+            if (!$.secretPin) {
+                $.log("黑号!")
+                await $.wait(5000)
+                continue
+            }
+
+            if($.index == 1){
+                for(let drawContentVO of $.drawContentVOs){
+                    await hasPrize(drawContentVO.id);
+                    await $.wait(500)
+                    await getPrize(drawContentVO.id);
+                }
+            }
+        }
+    }
 })()
     .catch((e) => $.logErr(e))
     .finally(() => $.done())
+
+function getPrize(id){
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxShareActivity/getPrize`,
+            body:`activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&drawInfoId=${id}`,
+            headers: {
+                'User-Agent': $.UA,
+                'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
+                'Host':'lzkjdz-isv.isvjcloud.com'
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                    console.log(data.errorMessage)
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
+
+function hasPrize(id){
+    return new Promise(resolve => {
+        let options = {
+            url: `https://lzkjdz-isv.isvjcloud.com/wxActionPrizeResult/hasPrize`,
+            body:`activityId=${activityId}&drawInfoId=${id}`,
+            headers: {
+                'User-Agent': $.UA,
+                'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
+                'Host':'lzkjdz-isv.isvjcloud.com'
+            }
+        }
+        $.post(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    data = JSON.parse(data);
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve(data.data);
+            }
+        })
+    })
+}
 
 function activityContent() {
     return new Promise(resolve => {
@@ -221,6 +339,9 @@ function activityContent() {
                     if($.index == 1){
                         data = JSON.parse(data);
                         if(data.data && data.data.userId){
+                            if(data.data.drawContentVOs){
+                                $.drawContentVOs = data.data.drawContentVOs
+                            }
                             venderId = data.data.userId
                             $.friendUuid = data.data.myUuid
                         }
