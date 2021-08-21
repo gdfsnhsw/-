@@ -72,7 +72,6 @@ if(process.env.SHARE_ACTIVITY_URL){
 
 
             console.log("activityId:",activityId)
-            console.log("venderId:",venderId)
             console.log("shopid:",shopId)
 
             $.LZ_TOKEN_KEY = "";
@@ -100,6 +99,7 @@ if(process.env.SHARE_ACTIVITY_URL){
             await accessActivity();
             await accessLogWithAD();
             await activityContent();
+            console.log("venderId:",venderId)
 
             await $.wait(200)
 
