@@ -107,8 +107,6 @@ if(process.env.SHARE_ACTIVITY_URL){
                 console.log("firstSecretPin:" + $.secretPin)
                 $.firstSecretPin = $.secretPin
             }
-
-            await shopInfo("wxActionCommon");
         }
     }
     console.log(`\n******开始助力*********\n`);
@@ -148,9 +146,8 @@ if(process.env.SHARE_ACTIVITY_URL){
             console.log("venderId为：" + venderId)
 
             await accessLogWithAD();
-            await activityContent();
             await $.wait(200)
-            await getActMemberInfo();
+            await activityContent();
         }
     }
 
