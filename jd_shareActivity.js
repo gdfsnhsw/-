@@ -38,7 +38,6 @@ if(process.env.SHARE_ACTIVITY_URL){
 
     $.taskList = []
     $.needDoTask = []
-    $.signIds = new Map()
     $.firstSecretPin = ""
 
     $.friendUuid = ""
@@ -71,11 +70,8 @@ if(process.env.SHARE_ACTIVITY_URL){
             shopId = activityUrl.substring(activityUrl.indexOf("shopid=") + "shopid=".length)
             shopId = shopId.substring(0,shopId.indexOf("&") == -1 ? shopId.length : shopId.indexOf("&"))
 
-            $.signId = activityUrl.substring(activityUrl.indexOf("signUuid=") + "signUuid=".length)
-            $.signId = $.signId.substring(0,$.signId.indexOf("&") == -1 ? $.signId.length : $.signId.indexOf("&"))
 
             console.log("activityId:",activityId)
-            console.log("signId:",$.signId)
             console.log("venderId:",venderId)
             console.log("shopid:",shopId)
 
@@ -112,27 +108,7 @@ if(process.env.SHARE_ACTIVITY_URL){
                 $.firstSecretPin = $.secretPin
             }
 
-            if($.index == 1){
-                if(!sid){
-                    await shopInfo("wxActionCommon");
-                }else {
-                    shopId = sid
-                }
-                if(!shopId){
-                    await shopInfo("pool");
-                }
-
-                if(!sidUuid){
-                    await getSignId("wxShareActivity");
-                    if(!sidUuid){
-                        await getSignId("pool");
-                    }
-                    $.signIds.set(activityId,$.signId)
-                }else{
-                    $.signIds.set(activityId,sidUuid)
-                }
-                // await saveCaptain();
-            }
+            await shopInfo("wxActionCommon");
         }
     }
     console.log(`\n******开始助力*********\n`);
@@ -169,22 +145,12 @@ if(process.env.SHARE_ACTIVITY_URL){
                 continue
             }
 
-            $.signId = $.signIds.get(activityId)
-            if(!$.signId || $.signId == ""){
-                console.log("sigin为空，跳过")
-                continue
-            }
-
-            console.log("signUuid为：" + $.signId)
             console.log("venderId为：" + venderId)
 
             await accessLogWithAD();
             await activityContent();
             await $.wait(200)
             await getActMemberInfo();
-            // console.log("开始加入队伍")
-            // $.times = 0;
-            // await saveMember();
         }
     }
 
@@ -431,10 +397,10 @@ function accessActivity() {
 
 function accessLogWithAD() {
     return new Promise(resolve => {
-        let pageUrl = `https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/1206424?activityId=${activityId}&signUuid=${$.signId}`
+        let pageUrl = `https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/1206424?activityId=${activityId}&friendUuid=${$.friendUuid}`
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/common/accessLogWithAD`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=46&venderId=${venderId}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&subType=app&code=25&venderId=${venderId}&pageUrl=${encodeURIComponent(pageUrl)}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': $.UA,
@@ -442,7 +408,7 @@ function accessLogWithAD() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/1206424?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/1206424?activityId=${activityId}&friendUuid=${$.friendUuid}&shareuserid4minipg=${$.firstSecretPin}&shopid=${venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -522,7 +488,7 @@ function getActMemberInfo() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/941462?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/941462?activityId=${activityId}&friendUuid=${$.friendUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};AUTH_C_USER=${$.AUTH_C_USER};lz_jdpin_token=${$.lz_jdpin_token};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -558,7 +524,7 @@ function getSignId(type) {
     return new Promise(resolve => {
         let options = {
             url: `https://lzkjdz-isv.isvjcloud.com/${type}/activityContent`,
-            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&signUuid=${$.signId}`,
+            body: `activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&friendUuid=${$.friendUuid}`,
             headers: {
                 'Accept':'application/json, text/javascript, */*; q=0.01',
                 'User-Agent': $.UA,
@@ -566,7 +532,7 @@ function getSignId(type) {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/941462?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/941462?activityId=${activityId}&friendUuid=${$.friendUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken}`,
             }
         }
@@ -576,14 +542,7 @@ function getSignId(type) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    data = JSON.parse(data);
-                    if(!data.result && data.errorMessage){
-                        console.log(data.errorMessage)
-                        return
-                    }
-                    if(data && data.data && data.data.signUuid){
-                        $.signId = data.data.signUuid
-                    }
+
                 }
             } catch (e) {
                 $.logErr(e, resp)
@@ -606,7 +565,7 @@ function getSimpleActInfoVo() {
                 'X-Requested-With':'XMLHttpRequest',
                 'Host':'lzkjdz-isv.isvjd.com',
                 'Origin':'https://lzkjdz-isv.isvjd.com',
-                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/941462?activityId=${activityId}&signUuid=${$.signId}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
+                'Referer':`https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/941462?activityId=${activityId}&friendUuid=${$.friendUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
                 'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE};lz_wq_auth_token=${$.isvObfuscatorToken};`,
             }
         }
