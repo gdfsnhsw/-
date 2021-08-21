@@ -76,15 +76,18 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
+            console.log("getWxCommonInfoToken")
             await getWxCommonInfoToken();
 
             $.isvObfuscatorToken = ""
+            console.log("getIsvObfuscatorToken")
             await getIsvObfuscatorToken();
 
             if($.isvObfuscatorToken == '' || $.LZ_TOKEN_KEY == '' || $.LZ_TOKEN_VALUE == ''){
                 console.log('获取[token]失败！')
                 return
             }
+            console.log("getSimpleActInfoVo")
             await getSimpleActInfoVo()
 
             $.lz_jdpin_token = ""
@@ -96,8 +99,11 @@ if(process.env.SHARE_ACTIVITY_URL){
                 continue
             }
 
+            console.log("accessActivity")
             await accessActivity();
+            console.log("accessLogWithAD")
             await accessLogWithAD();
+            console.log("activityContent")
             await activityContent();
             console.log("venderId:",venderId)
 
@@ -123,18 +129,23 @@ if(process.env.SHARE_ACTIVITY_URL){
             console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 
             $.LZ_TOKEN_KEY = $.LZ_TOKEN_VALUE = ''
+            console.log("getWxCommonInfoToken")
             await getWxCommonInfoToken();
 
+            console.log("accessActivity")
             await accessActivity();
 
             $.isvObfuscatorToken = ""
+            console.log("activityContent")
             await getIsvObfuscatorToken();
 
+            console.log("getSimpleActInfoVo")
             await getSimpleActInfoVo();
 
             $.lz_jdpin_token = ""
             $.AUTH_C_USER = ""
             $.secretPin = ""
+            console.log("getMyPing")
             await getMyPing()
 
             if (!$.secretPin) {
@@ -145,8 +156,10 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             console.log("venderId为：" + venderId)
 
+            console.log("accessLogWithAD")
             await accessLogWithAD();
             await $.wait(200)
+            console.log("activityContent")
             await activityContent();
         }
     }
@@ -174,19 +187,23 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
+            console.log("getWxCommonInfoToken")
             await getWxCommonInfoToken();
 
             $.isvObfuscatorToken = ""
+            console.log("getIsvObfuscatorToken")
             await getIsvObfuscatorToken();
 
             if($.isvObfuscatorToken == '' || $.LZ_TOKEN_KEY == '' || $.LZ_TOKEN_VALUE == ''){
                 console.log('获取[token]失败！')
                 return
             }
+            console.log("getSimpleActInfoVo")
             await getSimpleActInfoVo()
 
             $.lz_jdpin_token = ""
             $.secretPin = ""
+            console.log("getMyPing")
             await getMyPing()
             if (!$.secretPin) {
                 $.log("黑号!")
