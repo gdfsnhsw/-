@@ -78,10 +78,12 @@ if(process.env.SHARE_ACTIVITY_URL){
             $.LZ_TOKEN_VALUE = "";
             console.log("getWxCommonInfoToken")
             await getWxCommonInfoToken();
+            await $.wait(1000)
 
             $.isvObfuscatorToken = ""
             console.log("getIsvObfuscatorToken")
             await getIsvObfuscatorToken();
+            await $.wait(1000)
 
             if($.isvObfuscatorToken == '' || $.LZ_TOKEN_KEY == '' || $.LZ_TOKEN_VALUE == ''){
                 console.log('获取[token]失败！')
@@ -89,6 +91,7 @@ if(process.env.SHARE_ACTIVITY_URL){
             }
             console.log("getSimpleActInfoVo")
             await getSimpleActInfoVo()
+            await $.wait(1000)
 
             $.lz_jdpin_token = ""
             $.secretPin = ""
@@ -98,16 +101,19 @@ if(process.env.SHARE_ACTIVITY_URL){
                 await $.wait(5000)
                 continue
             }
+            await $.wait(1000)
 
             console.log("accessActivity")
             await accessActivity();
+            await $.wait(1000)
             console.log("accessLogWithAD")
             await accessLogWithAD();
+            await $.wait(1000)
             console.log("activityContent")
             await activityContent();
             console.log("venderId:",venderId)
 
-            await $.wait(200)
+            await $.wait(1000)
 
             if($.index == 1){
                 console.log("firstSecretPin:" + $.secretPin)
@@ -131,22 +137,27 @@ if(process.env.SHARE_ACTIVITY_URL){
             $.LZ_TOKEN_KEY = $.LZ_TOKEN_VALUE = ''
             console.log("getWxCommonInfoToken")
             await getWxCommonInfoToken();
+            await $.wait(1000)
 
             console.log("accessActivity")
             await accessActivity();
+            await $.wait(1000)
 
             $.isvObfuscatorToken = ""
             console.log("activityContent")
             await getIsvObfuscatorToken();
+            await $.wait(1000)
 
             console.log("getSimpleActInfoVo")
             await getSimpleActInfoVo();
+            await $.wait(1000)
 
             $.lz_jdpin_token = ""
             $.AUTH_C_USER = ""
             $.secretPin = ""
             console.log("getMyPing")
             await getMyPing()
+            await $.wait(1000)
 
             if (!$.secretPin) {
                 $.log("黑号!")
@@ -158,9 +169,10 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             console.log("accessLogWithAD")
             await accessLogWithAD();
-            await $.wait(200)
+            await $.wait(1000)
             console.log("activityContent")
             await activityContent();
+            await $.wait(1000)
         }
     }
 
@@ -189,10 +201,12 @@ if(process.env.SHARE_ACTIVITY_URL){
             $.LZ_TOKEN_VALUE = "";
             console.log("getWxCommonInfoToken")
             await getWxCommonInfoToken();
+            await $.wait(1000)
 
             $.isvObfuscatorToken = ""
             console.log("getIsvObfuscatorToken")
             await getIsvObfuscatorToken();
+            await $.wait(1000)
 
             if($.isvObfuscatorToken == '' || $.LZ_TOKEN_KEY == '' || $.LZ_TOKEN_VALUE == ''){
                 console.log('获取[token]失败！')
@@ -200,11 +214,13 @@ if(process.env.SHARE_ACTIVITY_URL){
             }
             console.log("getSimpleActInfoVo")
             await getSimpleActInfoVo()
+            await $.wait(1000)
 
             $.lz_jdpin_token = ""
             $.secretPin = ""
             console.log("getMyPing")
             await getMyPing()
+            await $.wait(1000)
             if (!$.secretPin) {
                 $.log("黑号!")
                 await $.wait(5000)
@@ -214,8 +230,9 @@ if(process.env.SHARE_ACTIVITY_URL){
             if($.index == 1){
                 for(let drawContentVO of $.drawContentVOs){
                     await hasPrize(drawContentVO.id);
-                    await $.wait(200)
+                    await $.wait(1000)
                     await getPrize(drawContentVO.id);
+                    await $.wait(1000)
                 }
             }
         }
