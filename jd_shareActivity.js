@@ -182,8 +182,8 @@ if(process.env.SHARE_ACTIVITY_URL){
             await accessLogWithAD();
             await activityContent();
             await getActMemberInfo();
-            console.log("开始加入队伍")
-            $.times = 0;
+            // console.log("开始加入队伍")
+            // $.times = 0;
             // await saveMember();
         }
     }
