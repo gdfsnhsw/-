@@ -83,16 +83,16 @@ async function run(){
             await addCart();
 
         }else console.log('已加购')
-        await loadUniteOpenCard();
-        console.log(`抽盲盒次数${$.usedChance}`)
-        for(j=1;$.usedChance-- && true;j++){
-            console.log(`第${j}次`)
-            await draw()
-            await $.wait(parseInt(Math.random() * 1000 + 3000, 10))
-            if(j >= 20) console.log('抽奖太多次了，请重新执行')
-            if(j >= 20) break
-            if($.usedChance <= 0) break
-        }
+        //await loadUniteOpenCard();
+        //console.log(`抽盲盒次数${$.usedChance}`)
+        //for(j=1;$.usedChance-- && true;j++){
+        //    console.log(`第${j}次`)
+        //    await draw()
+        //    await $.wait(parseInt(Math.random() * 1000 + 3000, 10))
+        //    if(j >= 20) console.log('抽奖太多次了，请重新执行')
+        //    if(j >= 20) break
+        //    if($.usedChance <= 0) break
+        //}
         await myAward();
         await missionInviteList();
         if ($.index === 1) {
