@@ -74,15 +74,8 @@ async function run(){
                 }
             }
         }
-        if($.isFocusAward == 0){
-            console.log('未关注')
-            await followShop();
-        }else console.log('已关注')
-        if($.isCartAward == 0){
-            console.log('未加购')
-            await addCart();
-
-        }else console.log('已加购')
+        await followShop();
+        await addCart();
         //await loadUniteOpenCard();
         //console.log(`抽盲盒次数${$.usedChance}`)
         //for(j=1;$.usedChance-- && true;j++){
