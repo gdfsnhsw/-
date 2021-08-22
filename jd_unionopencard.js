@@ -23,7 +23,7 @@ message = ""
     $.appkey = '51B59BB805903DA4CE513D29EC448375'
     $.userId = '10299171'
     $.actId = 'uniteOpenCard_788'
-    $.inviteNick = '6CB3172A4762A65C3D74CA7129532122DEE2E15182F512F317EFF6ED1AE9DE2C49336DE54E26AA8F2834B248E6398CB7A755DF4FDAE585EC3E1ABE26F3DD3CFFC956D12974FF00A045D8E31A84FE84C18A8357DE96A1F617B8AC4D64BC24B689'
+    $.inviteNick = '88C6D65D0A826315870D0ABB8747E32DDE46F3879B1B2A4DB5F847D595ECFC7D444964BAA6654E6A6B1B7A78C3FC98905FC8FFF43FE734E7BC3DB412BC1E1375DDDA672BF446E2FCC0D1D6B4E52826D1'
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
         if (cookie) {
@@ -50,6 +50,7 @@ async function run(){
             return
         }
         await setMixNick();
+        console.log("助力码："+$.MixNick)
         if($.MixNick == ''){
             console.log('获取[MixNick]失败！')
             return
