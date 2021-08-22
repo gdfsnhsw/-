@@ -55,9 +55,9 @@ async function run(){
             console.log('获取[MixNick]失败！')
             return
         }
-        //await loadUniteOpenCard({"inviteNick": $.inviteNick});
-        //if($.howManyOpenCard == -1) return
-        //console.log(`开卡(${$.isOpenCard}/${$.howManyOpenCard})`)
+        await loadUniteOpenCard({"inviteNick": $.inviteNick});
+        if($.howManyOpenCard == -1) return
+        console.log(`开卡(${$.isOpenCard}/${$.howManyOpenCard})`)
         await shopList();
         if ($.OpenCardList && $.howManyOpenCard - $.isOpenCard > 0) {
             for (let card of $.OpenCardList) {
