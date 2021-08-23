@@ -69,7 +69,7 @@ async function run(){
         }
         console.log("助力码：" + $.actorUuid)
 
-        // await drawContent();
+        await drawContent();
         await $.wait(1000)
         let checkOpenCardData = await checkOpenCard();
         if (checkOpenCardData && !checkOpenCardData.allOpenCard) {
