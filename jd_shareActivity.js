@@ -14,7 +14,7 @@ if ($.isNode()) {
     cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/6167322?activityId=2e8806b6dcf4454b9b872f3dd0bd2318&friendUuid=fc04ac8c-0f1b-43b7-b354-ac7c913fee92&shareuserid4minipg=P0CZ6sYjxiDL7YQZAjODCU7oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w==&shopid=1000301853"
+let activityUrl = "https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/6904554?activityId=56be270abb874fe6a47aee350d9cc77d&friendUuid=164f3e7c-9f3b-41a8-a8da-2caa96d17c25&shareuserid4minipg=P0CZ6sYjxiDL7YQZAjODCU7oeVP9kq2pYSH90mYt4m3fwcJlClpxrfmVYaGKuquQkdK3rLBQpEQH9V4tdrrh0w==&shopid=1000301853"
 let activityId = ""
 let venderId = ""
 let shopId = ""
@@ -248,7 +248,7 @@ function getPrize(id){
             body:`activityId=${activityId}&pin=${encodeURIComponent($.secretPin)}&drawInfoId=${id}`,
             headers: {
                 'User-Agent': $.UA,
-                'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
+                'Cookie': `LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; lz_jdpin_token=${$.lz_jdpin_token}`,
                 'Host':'lzkjdz-isv.isvjcloud.com'
             }
         }
