@@ -503,6 +503,9 @@ function getTeam() {
                                             messageTitle += '队伍id: ' + $.signUuid + '\x0a';
                                             message += '【京东账号' + $.index + '】 创建队伍id: ' + $.signUuid;
                                             $.log('队伍id: ' + $.signUuid);
+                                            $.wait(1000)
+                                            $.log('加入队伍 id: ' + $.signUuid);
+                                            await joinTeam();
                                         }
                                     }
                                 }
