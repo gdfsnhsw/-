@@ -184,10 +184,10 @@ if(process.env.ZUDUI_CAPTAIN_ACTIVITY_URL){
             console.log("开始加入队伍")
             $.times = 0;
             await saveCandidate();
-            // await join(shopId)
+            await join(shopId)
             await $.wait(1000)
             // await drawContent();
-            // await saveCandidate();
+            await saveCandidate();
         }
     }
 })()
