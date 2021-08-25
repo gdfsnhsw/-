@@ -79,7 +79,7 @@ if(process.env.ZUDUI_ACTIVITY_URL1){
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
-            await getWxCommonInfoToken();
+            await accessActivity();
 
             $.isvObfuscatorToken = ""
             await getIsvObfuscatorToken();
@@ -453,7 +453,7 @@ function accessActivity() {
             url: `https://lzkjdz-isv.isvjcloud.com/wxTeam/activity2/2920625?activityId=${activityId}`,
             headers: {
                 'User-Agent': $.UA,
-                'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
+                'Cookie': `${cookie}`,
                 'Host':'lzkjdz-isv.isvjcloud.com'
             }
         }

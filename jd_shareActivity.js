@@ -76,8 +76,8 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
-            console.log("getWxCommonInfoToken")
-            await getWxCommonInfoToken();
+            console.log("accessActivity")
+            await accessActivity();
             await $.wait(1000)
 
             $.isvObfuscatorToken = ""
@@ -135,8 +135,8 @@ if(process.env.SHARE_ACTIVITY_URL){
             console.log(`\n\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
 
             $.LZ_TOKEN_KEY = $.LZ_TOKEN_VALUE = ''
-            console.log("getWxCommonInfoToken")
-            await getWxCommonInfoToken();
+            console.log("accessActivity")
+            await accessActivity();
             await $.wait(1000)
 
             console.log("accessActivity")
@@ -199,8 +199,8 @@ if(process.env.SHARE_ACTIVITY_URL){
 
             $.LZ_TOKEN_KEY = "";
             $.LZ_TOKEN_VALUE = "";
-            console.log("getWxCommonInfoToken")
-            await getWxCommonInfoToken();
+            console.log("accessActivity")
+            await accessActivity();
             await $.wait(1000)
 
             $.isvObfuscatorToken = ""
@@ -400,7 +400,7 @@ function accessActivity() {
             url: `https://lzkjdz-isv.isvjcloud.com/wxShareActivity/activity/2920625?activityId=${activityId}&friendUuid=${$.friendUuid}&shareuserid4minipg=${encodeURIComponent($.firstSecretPin)}&shopid=${venderId}`,
             headers: {
                 'User-Agent': $.UA,
-                'Cookie': `IsvToken=${$.isvObfuscatorToken}; LZ_TOKEN_KEY=${$.LZ_TOKEN_KEY}; LZ_TOKEN_VALUE=${$.LZ_TOKEN_VALUE}; AUTH_C_USER=${$.secretPin}; ${$.lz_jdpin_token}`,
+                'Cookie': `${cookie}`,
                 'Host':'lzkjdz-isv.isvjcloud.com'
             }
         }
