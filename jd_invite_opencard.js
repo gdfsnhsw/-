@@ -549,7 +549,6 @@ function taskPostUrl(url, body, referer) {
         }
     };
 };
-_0xode = 'jsjiami.com.v6';
 
 function jsonParse(str) {
     if (typeof str == "string") {
