@@ -1,40 +1,4 @@
-/*
-8.11-8.15 星动七夕 纵享丝滑 [gua_opencard9.js]
-新增开卡脚本
-一次性脚本
- 
-邀请一人20豆 被邀请也有20豆(有可能没有豆
-开2个卡 抽奖可能获得20京豆(有可能有抽到空气💨
-关注10京豆 (有可能是空气💨
-加购5京豆 (有可能是空气💨 默认不加购 如需加购请设置环境变量[guaopencard_addSku9]为"true"
-
-第一个账号助力作者 其他依次助力CK1
-第一个CK失效会退出脚本
-
-默认脚本不执行
-如需执行脚本请设置环境变量
-guaopencard9="true"
-————————————————
-若是手机用户(不是nodejs环境) 是默认直接执行脚本的
-没有适配加购变量 所以是不加购
-————————————————
-入口：[8.11-8.15 星动七夕 纵享丝滑 (https://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=375dbaa9e32c4c70bb8357836956ed2e&shareUuid=d87a80e864dd45909d11f098b9efb3d0)]
-============Quantumultx===============
-[task_local]
-#8.11-8.15 星动七夕 纵享丝滑
-39 0,22 8-15 8 * https://raw.githubusercontent.com/smiek2221/scripts/master/gua_opencard9.js, tag=8.11-8.15 星动七夕 纵享丝滑, enabled=true
-
-================Loon==============
-[Script]
-cron "39 0,22 8-15 8 *" script-path=https://raw.githubusercontent.com/smiek2221/scripts/master/gua_opencard9.js,tag=8.11-8.15 星动七夕 纵享丝滑
-
-===============Surge=================
-8.11-8.15 星动七夕 纵享丝滑 = type=cron,cronexp="39 0,22 8-15 8 *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/smiek2221/scripts/master/gua_opencard9.js
-
-============小火箭=========
-8.11-8.15 星动七夕 纵享丝滑 = type=cron,script-path=https://raw.githubusercontent.com/smiek2221/scripts/master/gua_opencard9.js, cronexpr="39 0,22 8-15 8 *", timeout=3600, enable=true
-*/
-const $ = new Env('联合开卡');
+const $ = new Env('星享咖啡每一天');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -57,8 +21,8 @@ message = ""
         });
         return;
     }
-    $.shareUuid = 'c0cb31c04733496c8f890b56826dae53'
-    $.activityId = '012c11d481ad42baaaf418866685b231'
+    $.shareUuid = '2c74c8c53ed0407dae0059af59857b82'
+    $.activityId = '4f1c5009e17a40e58c678cc106369a53'
     console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
