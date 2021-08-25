@@ -103,6 +103,14 @@ async function jrzd() {
         $.Pin = '';
     $.saveTeam = ![];
     await getCk();
+    await getToken();
+    if($.Token == ''){
+        console.log('获取[token]失败！')
+        return
+    }
+    $.AUTH_C_USER = "4oSXfUlJ1qzTqmn3/gy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w"
+
+    await getSimpleActInfoVo()
     await getshopInfo();
     if ($.sid && $.userId) {
         await getToken();
@@ -120,9 +128,75 @@ async function jrzd() {
         message += '【京东账号' + $.index + '】 未能获取活动信息\n';
     }
 }
-
+function token() {
+    return new Promise(resolve => {
+        let get = {
+            url:`https://cjhydz-isv.isvjcloud.com/wxCommonInfo/token`,
+            headers: {
+                "Cookie": `${activityCookie} ${cookie}`,
+                "Referer":`https://cjhydz-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0816eliminate/?activityId=${$.activityId}&shareUuid=${$.shareUuid}`,
+                "User-Agent": $.UA,
+            }
+        }
+        $.get(get, async(err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${$.toStr(err)}`)
+                    console.log(`${$.name} cookie API请求失败，请检查网路重试`)
+                } else {
+                    let LZ_TOKEN_KEY = ''
+                    let LZ_TOKEN_VALUE = ''
+                    let setcookies = resp['headers']['set-cookie'] || resp['headers']['Set-Cookie'] || ''
+                    let setcookie = ''
+                    if(setcookies){
+                        if(typeof setcookies != 'object'){
+                            setcookie = setcookies.split(',')
+                        }else setcookie = setcookies
+                        for (let ck of setcookie) {
+                            let name = ck.split(";")[0].trim()
+                            if(name.split("=")[1]){
+                                if(name.indexOf('LZ_TOKEN_KEY=')>-1) LZ_TOKEN_KEY = name.replace(/ /g,'')+';'
+                                if(name.indexOf('LZ_TOKEN_VALUE=')>-1) LZ_TOKEN_VALUE = name.replace(/ /g,'')+';'
+                            }
+                        }
+                    }
+                    if(LZ_TOKEN_KEY && LZ_TOKEN_VALUE) activityCookie = `${LZ_TOKEN_KEY} ${LZ_TOKEN_VALUE}`
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
 function getUA() {
     $.UA = `jdapp;iPhone;10.0.10;14.3;${randomString(40)};network/wifi;model/iPhone12,1;addressid/4199175193;appBuild/167741;jdSupportDarkMode/0;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1`
+}
+
+function getSimpleActInfoVo() {
+    return new Promise(resolve => {
+        let body = `activityId=${$.activityId}`
+        $.post(taskPostUrl('/customer/getSimpleActInfoVo',body), async(err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${$.toStr(err)}`)
+                    console.log(`${$.name} getSimpleActInfoVo API请求失败，请检查网路重试`)
+                } else {
+                    if (resp.status == 200) {
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        activityCookie = "LZ_TOKEN_KEY=" + $.LZ_TOKEN_KEY + ";LZ_TOKEN_VALUE=" + $.LZ_TOKEN_VALUE
+                    }
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve();
+            }
+        })
+    })
 }
 
 function randomString(e) {
@@ -182,9 +256,10 @@ function getCk() {
                     console.log($.name + ' cookie API请求失败，请检查网路重试');
                 } else {
                     if (resp.status == 200) {
-                        let LZ_TOKEN_KEY = JSON.stringify(resp).match(/LZ_TOKEN_KEY=[a-zA-Z0-9._-]+;/);
-                        let LZ_TOKEN_VALUE = JSON.stringify(resp).match(/LZ_TOKEN_VALUE=[\+a-zA-Z0-9._-]+/);
-                        activityCookie = "LZ_TOKEN_KEY=" + LZ_TOKEN_KEY + ";LZ_TOKEN_VALUE=" + LZ_TOKEN_VALUE
+                        let cookies = resp.headers['set-cookie']
+                        $.LZ_TOKEN_KEY = cookies[0].substring(cookies[0].indexOf("=") + 1, cookies[0].indexOf(";"))
+                        $.LZ_TOKEN_VALUE = cookies[1].substring(cookies[1].indexOf("=") + 1, cookies[1].indexOf(";")).replace("==","")
+                        activityCookie = "LZ_TOKEN_KEY=" + $.LZ_TOKEN_KEY + ";LZ_TOKEN_VALUE=" + $.LZ_TOKEN_VALUE
                     }
                 }
             } catch (e) {
@@ -208,8 +283,8 @@ function getToken() {
                     } else {
                         if (safeGet(data)) {
                             data = JSON.parse(data);
-                            if (data.code == 0 && data.Token) {
-                                $.Token = data.Token;
+                            if (data.code == 0 && data.token) {
+                                $.Token = data.token;
                             } else {
                                 console.log('异常2：' + JSON.stringify(data));
                             }
@@ -534,9 +609,11 @@ function taskPostUrl(url, body) {
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'zh-cn',
             'Connection': 'keep-alive',
+            'Host':'cjhydz-isv.isvjcloud.com',
+            'Origin':'https://cjhydz-isv.isvjcloud.com',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Referer': activityUrl + '/wxTeam/activity?activityId=' + activityId,
-            'Cookie': cookie + activityCookie,
+            'Cookie': cookie + activityCookie + ";IsvToken="+$.Token + ";AUTH_C_USER="+$.AUTH_C_USER,
             'User-Agent': $.UA
         }
     };
