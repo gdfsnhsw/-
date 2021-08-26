@@ -20,6 +20,7 @@ cron "10-20/5 12 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/s
 ============小火箭=========
 京东直播 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_live.js, cronexpr="10-20/5 12 * * *", timeout=3600, enable=true
  */
+
 const $ = new Env('京东直播');
 const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
@@ -105,20 +106,32 @@ function getTaskList() {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            for (let key of Object.keys(data.data.starLiveList)) {
-              let vo = data.data.starLiveList[key]
-              if (vo.state !== 3) {
-                let authorId = (await getauthorId(vo.extra.liveId)).data.author.authorId
-                await superTask(vo.extra.liveId, authorId)
-                await awardTask("starViewTask", vo.extra.liveId)
+            // if(data.data.recommendList){
+            //   for(task of data.data.recommendList){
+            //     console.log(`去做观看直播间任务`)
+            //     let liveId = task.data.liveId
+            //     let authorId = task.data.authorId
+            //     await superTask(liveId, authorId)
+            //     await awardTask("starViewTask", liveId)
+            //   }
+            // }
+            if(data.data.task){
+              for(task of data.data.task){
+                if(task.type == "shareTask"){
+                  if(task.state == 1){
+                    console.log(`去做分享直播间任务`)
+                    await shareTask()
+                    await awardTask()
+                  }
+                }else if(task.type == "commonViewTask"){
+                  if(task.state == 1){
+                    console.log(`去做浏览直播间任务`)
+                    await viewTask()
+                    await awardTask("commonViewTask")
+                  }
+                }
               }
             }
-            console.log(`去做分享直播间任务`)
-            await shareTask()
-            await awardTask()
-            console.log(`去做浏览直播间任务`)
-            await viewTask()
-            await awardTask("commonViewTask")
           }
         }
       } catch (e) {
@@ -327,7 +340,6 @@ function taskPostUrl(function_id, body = {}, url=null) {
       "Referer": "",
       "Cookie": cookie,
       "Origin": "https://h5.m.jd.com",
-      'Content-Type': 'application/x-www-form-urlencoded',
       "Content-Length": "996",
       "User-Agent": "JD4iPhone/167774 (iPhone; iOS 14.7.1; Scale/3.00)",
       "Accept-Language": "zh-Hans-CN;q=1",
