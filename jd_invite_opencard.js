@@ -60,6 +60,7 @@ if ($.isNode()) {
 })().catch(e => $.logErr(e)).finally(() => $.done());
 
 async function main() {
+    console.log('\n******开始【京东账号' + $.index + '】' + ($.nickName || $.UserName) + '*********\n');
     getUA()
     $.LZ_TOKEN_KEY = "";
     $.LZ_TOKEN_VALUE = "";
