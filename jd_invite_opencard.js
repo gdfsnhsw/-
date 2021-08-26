@@ -82,8 +82,10 @@ async function main() {
     for (let activityInfo of activityInfos.shopUrl) {
         $.log('入会 ' + activityInfo);
         await join(activityInfo.substring(activityInfo.indexOf("shopId=") + "shopId=".length));
+        await $.wait(500)
     }
     await join2();
+    await $.wait(500)
     await getOpenCardAllStatuesNew();
 }
 
