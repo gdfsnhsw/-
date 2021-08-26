@@ -310,12 +310,12 @@ function taskurl(function_path, body = '', stk) {
     }
   }
 }
-function randomString() {
-  return Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10)
+function randomString(e) {
+  e = e || 32;
+  let t = "0123456789abcdef", a = t.length, n = "";
+  for (let i = 0; i < e; i++)
+    n += t.charAt(Math.floor(Math.random() * a));
+  return n
 }
 
 function TotalBean() {
