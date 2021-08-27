@@ -1,4 +1,4 @@
-const $ = new Env('星享咖啡每一天');
+const $ = new Env('开学新花young');
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -21,8 +21,8 @@ message = ""
         });
         return;
     }
-    $.shareUuid = '2c74c8c53ed0407dae0059af59857b82'
-    $.activityId = '4f1c5009e17a40e58c678cc106369a53'
+    $.shareUuid = '4bf6b0cb21f1475a9e22724ed1de38b1'
+    $.activityId = '46fcab8e90e243dcb1aa76a5c7c764d2'
     console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/dz/openCard/activity/1760960?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
         cookie = cookiesArr[i];
@@ -80,15 +80,15 @@ async function run(){
                 }
             }
             await $.wait(1000)
-            for (let cardList1Element of checkOpenCardData.cardList2) {
-                if(cardList1Element.status == 0){
-                    console.log(cardList1Element.name)
-                    await join(cardList1Element.value)
-                    await $.wait(1000)
-                    await drawContent();
-                }
-            }
-            await $.wait(1000)
+            // for (let cardList1Element of checkOpenCardData.cardList2) {
+            //     if(cardList1Element.status == 0){
+            //         console.log(cardList1Element.name)
+            //         await join(cardList1Element.value)
+            //         await $.wait(1000)
+            //         await drawContent();
+            //     }
+            // }
+            // await $.wait(1000)
             await drawContent();
             checkOpenCardData = await checkOpenCard();
             await $.wait(1000)
