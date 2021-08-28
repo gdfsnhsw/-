@@ -279,7 +279,7 @@ function saveTask(title, taskId) {
                     console.log(`${$.toStr(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    // console.log(data)
+                    console.log(data)
                     let res = $.toObj(data);
                 }
             } catch (e) {
