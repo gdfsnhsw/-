@@ -444,11 +444,11 @@ function drawContent() {
                     if(!res.result){
                         console.log("抽奖：",res.errorMessage)
                     }else{
-                        if(res.data.prize){
-                            for(pri of res.data.prize){
-                                console.log(pri.remark + ":" + pri.rewardName)
-                            }
-                        }
+                        // if(res.data.prize){
+                        //     for(pri of res.data.prize){
+                        //         console.log(pri.remark + ":" + pri.rewardName)
+                        //     }
+                        // }
                     }
                 }
             } catch (e) {
