@@ -188,7 +188,7 @@ function signhb(type = 1) {
               for (let key of Object.keys(signlist)) {
                 let vo = signlist[key]
                 if (vo.istoday === 1) {
-                  if (vo.status === 1 && data.signtask.status === 1) {
+                  if (vo.status === 1 && data.todaysign === 1) {
                     console.log(`今日已签到`)
                     $.canHelp = false
                   } else {
@@ -237,7 +237,7 @@ function helpSignhb(smp = '') {
           for (let key of Object.keys(signlist)) {
             let vo = signlist[key]
             if (vo.istoday === 1) {
-              if (vo.status === 1 && data.signtask.status === 1) {
+              if (vo.status === 1 && data.todaysign === 1) {
                 // console.log(`今日已签到`)
               } else {
                 console.log(`此账号已黑`)
@@ -359,13 +359,14 @@ function taskUrl(functionId, body = '', stk) {
     }
   }
 }
-function randomString() {
-  return Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10) +
-      Math.random().toString(16).slice(2, 10)
+function randomString(e) {
+  e = e || 32;
+  let t = "0123456789abcdef", a = t.length, n = "";
+  for (let i = 0; i < e; i++)
+    n += t.charAt(Math.floor(Math.random() * a));
+  return n
 }
+
 
 function TotalBean() {
   return new Promise(async resolve => {
