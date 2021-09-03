@@ -103,7 +103,7 @@ function randomString(e) {
 
 function getActivityInfo() {
     return new Promise(resolve => {
-        let body = 'activityId=4e5901d719cb4a1ab6507dc73beb3063';
+        let body = 'activityId=19358cb4a6e049f88ff42ea513827b41';
         $.post(taskPostUrl('/microDz/invite/activity/wx/getActivityInfo', body, 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/getActivityInfo'),
             async (err, resp, data) => {
                 try {
@@ -128,7 +128,7 @@ function getActivityInfo() {
 
 function getInviteRecord() {
     return new Promise(resolve => {
-        let body = 'activityId=4e5901d719cb4a1ab6507dc73beb3063&inviter=' + encodeURIComponent($.myPingData.secretPin) + '&pageNo=1&pageSize=15&type=0';
+        let body = 'activityId=19358cb4a6e049f88ff42ea513827b41&inviter=' + encodeURIComponent($.myPingData.secretPin) + '&pageNo=1&pageSize=15&type=0';
         let options = {
             'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/inviteRecord',
             'body': body,
@@ -164,7 +164,7 @@ function getInviteRecord() {
 
 function getIsInvited() {
     return new Promise(resolve => {
-        let body = 'activityId=4e5901d719cb4a1ab6507dc73beb3063&pin=' + encodeURIComponent($.myPingData.secretPin);
+        let body = 'activityId=19358cb4a6e049f88ff42ea513827b41&pin=' + encodeURIComponent($.myPingData.secretPin);
         $.post(taskPostUrl('/microDz/invite/activity/wx/isInvited', body, 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/isInvited'),
             async (err, resp, data) => {
                 try {
@@ -184,7 +184,7 @@ function getIsInvited() {
 
 function getAcceptInvite() {
     return new Promise(resolve => {
-        let body = 'activityId=4e5901d719cb4a1ab6507dc73beb3063&inviter=' + encodeURIComponent($.DQCK) + '&inviterImg=http%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031_mid.jpg&inviterNick=' + encodeURIComponent($.inviterNick) + '&invitee=' + encodeURIComponent($.myPingData.secretPin) + '&inviteeImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F21383%2F2%2F6633%2F3879%2F5c5138d8E0967ccf2%2F91da57c5e2166005.jpg&inviteeNick=' + $.UserName;
+        let body = 'activityId=19358cb4a6e049f88ff42ea513827b41&inviter=' + encodeURIComponent($.DQCK) + '&inviterImg=http%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031_mid.jpg&inviterNick=' + encodeURIComponent($.inviterNick) + '&invitee=' + encodeURIComponent($.myPingData.secretPin) + '&inviteeImg=https%3A%2F%2Fimg10.360buyimg.com%2Fimgzone%2Fjfs%2Ft1%2F21383%2F2%2F6633%2F3879%2F5c5138d8E0967ccf2%2F91da57c5e2166005.jpg&inviteeNick=' + $.UserName;
         let options = {
             'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/acceptInvite',
             'body': body,
@@ -223,7 +223,7 @@ function getAcceptInvite() {
 
 function getOpenCardAllStatuesNew() {
     return new Promise(resolve => {
-        let body = 'activityId=4e5901d719cb4a1ab6507dc73beb3063&pin=' + encodeURIComponent($.myPingData.secretPin) + '&isInvited=1';
+        let body = 'activityId=19358cb4a6e049f88ff42ea513827b41&pin=' + encodeURIComponent($.myPingData.secretPin) + '&isInvited=1';
         $.post(taskPostUrl('/microDz/invite/activity/wx/getOpenCardAllStatuesNew', body, 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/getOpenCardAllStatuesNew'),
             async (err, resp, data) => {
                 try {
@@ -300,7 +300,7 @@ function ruhui2() {
             'accept': '*/*',
             'User-Agent': $.UA,
             'content-type': 'application/x-www-form-urlencoded',
-            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=10175519&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=4e5901d719cb4a1ab6507dc73beb3063&inviter=' + $.DQCK + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+            'Referer': 'https://shopmember.m.jd.com/shopcard/?venderId=10314962&shopId=10175519&channel=8802&returnUrl=https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=19358cb4a6e049f88ff42ea513827b41&inviter=' + $.DQCK + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
             'Cookie': cookie
         }
     };
@@ -422,11 +422,11 @@ function getMyPing() {
 function getHtml() {
     return new Promise(resolve => {
         $.get({
-            'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=4e5901d719cb4a1ab6507dc73beb3063&inviter=' + $.inviter + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
+            'url': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=19358cb4a6e049f88ff42ea513827b41&inviter=' + $.inviter + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0',
             'headers': {
                 'User-Agent': $.UA,
                 'Host': 'cjhydz-isv.isvjcloud.com',
-                'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=4e5901d719cb4a1ab6507dc73beb3063&inviter=' + $.inviter + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0'
+                'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/4438790?activityId=19358cb4a6e049f88ff42ea513827b41&inviter=' + $.inviter + '&inviterImg=http://storage.360buyimg.com/i.imageUpload/6a645f3639613631633262633231303231363238313235383234363133_mid.jpg&inviterNickName=Tsukasa%E9%B1%BC%E8%9B%8B&shareuserid4minipg=DQCK%2FksVMxxhAtP2wbQfI9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=599119&lng=113.388014&lat=22.510994&sid=09fdc8e908526b5538a4ad4a265f40dw&un_area=19_1657_52093_0'
             }
         }, async (err, resp, data) => {
             try {
@@ -453,7 +453,7 @@ function getSystemConfig() {
     return new Promise(resolve => {
         let options = {
             'url': 'https://cjhydz-isv.isvjcloud.com/wxCommonInfo/getSystemConfig',
-            'body': 'activityId=4e5901d719cb4a1ab6507dc73beb3063',
+            'body': 'activityId=19358cb4a6e049f88ff42ea513827b41',
             'headers': {
                 'Host': 'cjhydz-isv.isvjcloud.com',
                 'Accept': 'application/json',
@@ -494,7 +494,7 @@ function getSimpleActInfoVo() {
     return new Promise(resolve => {
         let options = {
             'url': 'https://cjhydz-isv.isvjcloud.com/customer/getSimpleActInfoVo',
-            'body': 'activityId=4e5901d719cb4a1ab6507dc73beb3063',
+            'body': 'activityId=19358cb4a6e049f88ff42ea513827b41',
             'headers': {
                 'Host': 'cjhydz-isv.isvjcloud.com',
                 'Accept': 'application/json',
@@ -504,7 +504,7 @@ function getSimpleActInfoVo() {
                 'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
                 'Origin': 'https://cjhydz-isv.isvjcloud.com',
                 'Connection': 'keep-alive',
-                'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/2693797?activityId=4e5901d719cb4a1ab6507dc73beb3063',
+                'Referer': 'https://cjhydz-isv.isvjcloud.com/microDz/invite/activity/wx/view/index/2693797?activityId=19358cb4a6e049f88ff42ea513827b41',
                 'User-Agent': $.UA,
                 'Cookie': ' LZ_TOKEN_KEY=' + $.LZ_TOKEN_KEY + '; LZ_TOKEN_VALUE=' + $.LZ_TOKEN_VALUE
             }
@@ -528,7 +528,7 @@ function getSimpleActInfoVo() {
 
 function shopInfo() {
     return new Promise(_0x2d04f8 => {
-        let body = 'activityId=4e5901d719cb4a1ab6507dc73beb3063';
+        let body = 'activityId=19358cb4a6e049f88ff42ea513827b41';
         $.post({
             'url': 'https://lzdz1-isv.isvjcloud.com/dingzhi/shop/league/shopInfo',
             'body': body,
@@ -559,7 +559,7 @@ function shopInfo() {
 
 function index() {
     return new Promise(resolve => {
-        let _0x15bbca = 'activityId=4e5901d719cb4a1ab6507dc73beb3063';
+        let _0x15bbca = 'activityId=19358cb4a6e049f88ff42ea513827b41';
         $.get({
             'url': 'https://h5.m.jd.com/babelDiy/Zeus/2vQWcFpeGVxMqGFiUbGAM3CzqvJS/index.html?1',
             'headers': {
@@ -592,7 +592,7 @@ function adLog() {
     return new Promise(resolve => {
         $.post({
             'url': 'https://cjhydz-isv.isvjcloud.com/common/accessLog',
-            'body': 'venderId=0&code=99&pin=' + encodeURIComponent($.myPingData.secretPin) + '&activityId=4e5901d719cb4a1ab6507dc73beb3063&pageUrl=https%3A%2F%2Fcjhydz-isv.isvjcloud.com%2FmicroDz%2Finvite%2Factivity%2Fwx%2Fview%2Findex%2F2388747%3FactivityId%3D4e5901d719cb4a1ab6507dc73beb3063%26inviter%3Djzv2jbYRftpJUlB6E7%2Ff3%2FL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt%26inviterImg%3Dhttp%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031%5Fmid.jpg%26inviterNickName%3D%E4%B8%8A%E8%AF%BE%E6%97%A0%E8%81%8A%E5%90%97%26shareuserid4minipg%3D4oSXfUlJ1qzTqmn3%252Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%253D%253D%26shopid%3D599119%26lng%3D0.000000%26lat%3D0.000000%26sid%3D5fa6c7778669e4865e2e7e7ba5ea098w%26un%5Farea%3D17%5F1458%5F1463%5F43894&subType=',
+            'body': 'venderId=0&code=99&pin=' + encodeURIComponent($.myPingData.secretPin) + '&activityId=19358cb4a6e049f88ff42ea513827b41&pageUrl=https%3A%2F%2Fcjhydz-isv.isvjcloud.com%2FmicroDz%2Finvite%2Factivity%2Fwx%2Fview%2Findex%2F2388747%3FactivityId%3D19358cb4a6e049f88ff42ea513827b41%26inviter%3Djzv2jbYRftpJUlB6E7%2Ff3%2FL7ldxmgdCpzmNX2HGi4eBuw30v%2FPoVBgxrRDHHbTlt%26inviterImg%3Dhttp%3A%2F%2Fstorage.360buyimg.com%2Fi.imageUpload%2F6a645f73495a76594b617266594d5731363237363637373836333031%5Fmid.jpg%26inviterNickName%3D%E4%B8%8A%E8%AF%BE%E6%97%A0%E8%81%8A%E5%90%97%26shareuserid4minipg%3D4oSXfUlJ1qzTqmn3%252Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%253D%253D%26shopid%3D599119%26lng%3D0.000000%26lat%3D0.000000%26sid%3D5fa6c7778669e4865e2e7e7ba5ea098w%26un%5Farea%3D17%5F1458%5F1463%5F43894&subType=',
             'headers': {
                 'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0.0; zh-cn; Mi Note 2 Build/OPR1.170623.032) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.128 Mobile Safari/537.36 XiaoMi/MiuiBrowser/10.1.1',
                 'Host': 'cjhydz-isv.isvjcloud.com',
@@ -629,7 +629,7 @@ function taskPostUrl(url, body, referer) {
             'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
             'Origin': 'https://cjhydz-isv.isvjcloud.com',
             'Connection': 'keep-alive',
-            'Referer': referer ? referer : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=4e5901d719cb4a1ab6507dc73beb3063&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
+            'Referer': referer ? referer : 'https://lzdz1-isv.isvjcloud.com/lzclient/dz/2021jan/eliminateGame/0713eliminate/?activityId=19358cb4a6e049f88ff42ea513827b41&shareUuid=' + $['shareUuid'] + '&adsource=&shareuserid4minipg=4oSXfUlJ1qzTqmn3%2Fgy2c9A1Drq3za4lh6LFLfledF1cdSiqMbCx5edEEaL3RnCSkdK3rLBQpEQH9V4tdrrh0w%3D%3D&shopid=0&lng=114.062541&lat=29.541254&sid=768a88cc4b9bd28cc8be56c2ae0d3e0w&un_area=4_48201_54794_0',
             'User-Agent': $.UA,
             'Cookie': cookie + ' LZ_TOKEN_KEY=' + $.LZ_TOKEN_KEY + '; LZ_TOKEN_VALUE=' + $.LZ_TOKEN_VALUE + ($.myPingData.secretPin ? '; AUTH_C_USER=' + $.myPingData.secretPin : "") + '; ' + $.lz_jdpin_token
         }
