@@ -113,9 +113,10 @@ if __name__ == '__main__':
                         line = f1.readline()
                         if not line:
                             break
+                        print(f"准备开始找wskey配置 export {pt_pin}=")
                         if line.find(f"export {pt_pin}=") != -1:
                             #去掉export XXX=
-                            print("找到wskey配置")
+                            print(f"找到wskey配置")
                             line = line.replace(f"export {pt_pin}=","")
                             line = line.replace("\n","")
                             if line and line != "":
@@ -123,18 +124,23 @@ if __name__ == '__main__':
                                 print("添加wskey:"+line)
                                 break
         for ckStr in JD_WSCK:
+            print("准备获取token的ck为：" + ckStr)
             ckStr = ckStr.replace('"','')
-            ck = getToken(ckStr)
-            print("ck为："+ck)
-            if ck.find(f"pt_key=fake") != -1:
-                msg += f"wskey过期，wskye内容为：{ckStr}\n"
-            else:
-                print("准备更新ck到后台")
-                msg += f"获取ck成功，准备更新到后台，ck为：{ck}\n"
-                # 更新ck到后台
-                rep = requests.get("http://127.0.0.1:8888/?" + ck)
-                print(rep.status_code)
-                msg += f"后台返回状态为：{rep.status_code}\n"
+            try:
+                ck = getToken(ckStr)
+            except:
+                continue
+            if ckStr and ckStr != "":
+                print("ck为："+ck)
+                if ck.find(f"pt_key=fake") != -1:
+                    msg += f"wskey过期，wskye内容为：{ckStr}\n"
+                else:
+                    print("准备更新ck到后台")
+                    msg += f"获取ck成功，准备更新到后台，ck为：{ck}\n"
+                    # 更新ck到后台
+                    rep = requests.get("http://127.0.0.1:8888/?" + ck)
+                    print(rep.status_code)
+                    msg += f"后台返回状态为：{rep.status_code}\n"
         try:
             tgNofity(bot['user_id'], bot['bot_token'], msg)
         except:
