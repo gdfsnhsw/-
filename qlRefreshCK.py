@@ -1,6 +1,7 @@
-import requests, re, json, os,random
+import requests, re, json, os,random,uuid
 
 signList = [{'uuid': 'tlfqkad4995a9r2l', 'st': 1630504207937, 'sv': '120', 'sign': '3acfb9084ab46fc2ad7089698f724c12'}, {'uuid': '9wv3dtgj4b9bqlaj', 'st': 1630504217523, 'sv': '120', 'sign': '3ca60d1d1932a407e49fc459da44b5d8'}, {'uuid': '8sp61sajtmrjtgep', 'st': 1630504248624, 'sv': '111', 'sign': 'efa5cfa8824f62dca0ea2de65b7dd125'}, {'uuid': 'ait94rb7em2b0rkc', 'st': 1630504282323, 'sv': '102', 'sign': '1a32e9429f991f19be9e25d1989f1b7e'}, {'uuid': 'jtpnhqoiduk3b5nv', 'st': 1630504302445, 'sv': '111', 'sign': '0e699ea61d36cab77f477ae5fd8bc82f'}, {'uuid': 'egwzdfcckd0f4m2j', 'st': 1630504351768, 'sv': '102', 'sign': '2027a503d9eeb14fbb8067cbbbf8e604'}, {'uuid': 'n2bb7ssvumkns59e', 'st': 1630504362054, 'sv': '102', 'sign': '596b37a93cc7d9ccc01d1c5330b3ccda'}, {'uuid': 'jtahcpqd3o8ko2vy', 'st': 1630504371396, 'sv': '102', 'sign': '00f27cc34ce13d6c3bec65419bf78039'}, {'uuid': 'jd416j5lxhuigfw5', 'st': 1630504380694, 'sv': '102', 'sign': '4e760a164c6cfe83baa929c990b5b5bb'}, {'uuid': 'bksk08lajww2xa8s', 'st': 1630504389311, 'sv': '120', 'sign': '85baea7837c633b335e0f190aac8c83f'}]
+code = 0
 
 def tgNofity(user_id, bot_token, text):
     TG_API_HOST = 'api.telegram.org'
@@ -25,31 +26,7 @@ def tgNofity(user_id, bot_token, text):
         print(f"telegram发送通知消息失败！！\n{error}")
 
 def getToken(ws):
-    print("准备请求panda大佬接口获取签名")
-        url = "https://api.jds.codes/gentoken"
-        body = {"url": "https://home.m.jd.com/myJd/newhome.action"}
-        headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
-            "Content-Type":"application/json"
-        }
-        r = requests.post(url, headers=headers, data=json.dumps(body))
-        r = json.loads(r.text)
-        signs = {}
-        if(r['code'] == 200):
-            print("请求panda大佬接口获取签名成功")
-            data = r["data"]["sign"].split("&")
-            jduuid = data[1]
-            clientVersion = data[3]
-            client = data[2]
-            sign = data[4] + "&" + data[5] + "&" + data[6]
-            signMap = sign.split("&")
-            signs['uuid'] = jduuid.replace("uuid=","")
-            signs['st'] = signMap.replace("st=","")
-            signs['sign'] = signMap.replace("sign=","")
-            signs['sv'] = signMap.replace("sv=","")
-        else:
-            signs = random.choice(signList)
-
+    signs = random.choice(signList)
     headers = {
         'cookie': ws,
         'User-Agent': 'okhttp/3.12.1;jdmall;android;version/10.1.2;build/89743;screen/1440x3007;os/11;network/wifi;',
@@ -73,6 +50,43 @@ def getToken(ws):
     print(res.text)
     res_json = json.loads(res.text)
     totokenKey = res_json['tokenKey']
+    return appjmp(totokenKey)
+
+def genTokenPanda(wsCookie):
+    url = "https://api.jds.codes/gentoken"
+    print("准备请求Panda大佬sign接口:" + url)
+    body = {"url": "https://home.m.jd.com/myJd/newhome.action"}
+    headers = {
+        "user-agent": "Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+        "Content-Type":"application/json"
+    }
+    r = requests.post(url, headers=headers, data=json.dumps(body))
+    r = json.loads(r.text)
+    print("Panda大佬sign接口返回参数为：")
+    print(r)
+    data=r["data"]["sign"].split("&")
+    jduuid = data[1]
+    clientVersion = data[3]
+    client = data[2]
+    sign = data[4] + "&" + data[5] + "&" + data[6]
+    url = "https://api.m.jd.com/client.action?functionId=genToken&%s&%s&%s&%s" % (clientVersion, client, jduuid, sign)
+    headers = {
+        "Host": 'api.m.jd.com',
+        "Cookie": wsCookie,
+        "accept": '*/*',
+        "referer": '',
+        'user-agent': "okhttp/3.12.1;jdmall;apple;version/9.4.0;build/88830;screen/1440x3007;os/11;network/wifi;" + str(
+            uuid.uuid4()),
+        'accept-language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
+        'content-type': 'application/x-www-form-urlencoded;',
+    }
+    print(headers)
+    res = requests.post(url, headers=headers, data="body=%7B%22to%22%3A%20%22https%3A//home.m.jd.com/myJd/newhome.action%22%2C%20%22action%22%3A%20%22to%22%7D")
+    print(res.text)
+    res_json = json.loads(res.text)
+    totokenKey = res_json['tokenKey']
+    code = res_json['code']
+    print("请求Panda大佬sign接口成功")
     return appjmp(totokenKey)
 
 def appjmp(token):
@@ -151,9 +165,17 @@ if __name__ == '__main__':
             print("准备获取token的ck为：" + ckStr)
             ckStr = ckStr.replace('"','')
             try:
-                ck = getToken(ckStr)
+                ck = genTokenPanda(ckStr)
             except:
-                continue
+                code = 1
+                if code != 0:
+                    try:
+                        print("请求Panda大佬sign接口失败，获取固定sign")
+                        ck = getToken(ckStr)
+                    except:
+                        continue
+
+
             if ckStr and ckStr != "":
                 print("ck为："+ck)
                 if ck.find(f"pt_key=fake") != -1:
