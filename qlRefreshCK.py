@@ -25,7 +25,31 @@ def tgNofity(user_id, bot_token, text):
         print(f"telegram发送通知消息失败！！\n{error}")
 
 def getToken(ws):
-    signs = random.choice(signList)
+    print("准备请求panda大佬接口获取签名")
+        url = "https://api.jds.codes/gentoken"
+        body = {"url": "https://home.m.jd.com/myJd/newhome.action"}
+        headers = {
+            "user-agent": "Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36",
+            "Content-Type":"application/json"
+        }
+        r = requests.post(url, headers=headers, data=json.dumps(body))
+        r = json.loads(r.text)
+        signs = {}
+        if(r['code'] == 200):
+            print("请求panda大佬接口获取签名成功")
+            data = r["data"]["sign"].split("&")
+            jduuid = data[1]
+            clientVersion = data[3]
+            client = data[2]
+            sign = data[4] + "&" + data[5] + "&" + data[6]
+            signMap = sign.split("&")
+            signs['uuid'] = jduuid.replace("uuid=","")
+            signs['st'] = signMap.replace("st=","")
+            signs['sign'] = signMap.replace("sign=","")
+            signs['sv'] = signMap.replace("sv=","")
+        else:
+            signs = random.choice(signList)
+
     headers = {
         'cookie': ws,
         'User-Agent': 'okhttp/3.12.1;jdmall;android;version/10.1.2;build/89743;screen/1440x3007;os/11;network/wifi;',
