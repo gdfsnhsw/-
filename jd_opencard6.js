@@ -53,11 +53,12 @@ async function run() {
             // {configCode:'601189050083447fbb6c6f33831863ae',configName:'七夕美妆联合开卡第二组'},
             // {configCode:'efe66286334f4b47a95a2c756ff637af',configName:'七夕联合开卡第五组'},
 
-            {configCode:'30ed2348398c4f4796e585b9b5240a28',configName:'第一组'},
+            {configCode:'e23a262b02fc4e279f5a0fc3a5764ac6',configName:'第一组'},
             {configCode:'85201aaf1895431e874132d9c2669afe',configName:'第2组'},
             // {configCode:'c8240993509a49da9b53645084a69e12',configName:'七夕任务组件1-2组'},
-            {configCode:'e23a262b02fc4e279f5a0fc3a5764ac6',configName:'第三组'},
-            // {configCode:'4f6dac3a61084e23bf9bcad9360987d8',configName:'七夕联合开卡第4组'},
+            {configCode:'30ed2348398c4f4796e585b9b5240a28',configName:'第三组'},
+            {configCode:'b9e7462bd7ae4f7aaa34844ce72ceb72',configName:'第4组'},
+            {configCode:'5de285e5956a4b869d982f19457dbfeb',configName:'第5组'},
             // {configCode:'af1ac7eba89c4b089c1d6976988e1013',configName:'七夕联合开卡第5组 新'},
             // {configCode:'abe6bafe2f6b4efca6ba5b429daf5f26',configName:'七夕任务组件3-5组'}
         ]
