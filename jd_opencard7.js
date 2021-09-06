@@ -21,9 +21,8 @@ message = ""
         });
         return;
     }
-    $.shareUuidArr = [];
+    // $.shareUuid = 'cde91ae9a48443048fa3fe72bf632771'
     $.shareUuid = '3ebce215ca3d4a52aaf2919e08715ec2'
-    // $.shareUuid = '3ebce215ca3d4a52aaf2919e08715ec2'
     $.activityId = 'dz2109100000119501'
     console.log(`入口:\nhttps://lzdz1-isv.isvjcloud.com/dingzhi/midautumn/jointactivity/activity/1988328?activityId=${$.activityId}&shareUuid=${$.shareUuid}`)
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -134,37 +133,15 @@ async function run(){
         $.log($.shareUuid)
         if($.actorUuid){
             $.log("邀请码为"+$.actorUuid)
-            $.shareUuidArr.push({"shareUuid":$.actorUuid,"count":$.ShareCount,'index':$.index});
         }else if($.index === 1){
             console.log('账号1获取不到[shareUuid]退出执行，请重新执行')
             return
         }
-        if($.index === 1 ) updateShareUuid($.shareUuid,0)
+        if($.index === 1 ) $.shareUuid = $.actorUuid
         if((!$.info.followShop || !checkOpenCardData.allOpenCard) && $.index !== 1) updateShareUuid($.shareUuid,1)
         await $.wait(parseInt(Math.random() * 1000 + 5000, 10))
     }catch(e){
         console.log(e)
-    }
-}
-function updateShareUuid(id,type) {
-    let index = 0
-    for(let i in $.shareUuidArr){
-        if($.shareUuidArr[i] && $.shareUuidArr[i].shareUuid == id){
-            index = i
-            break
-        }
-    }
-    if(type == 1) $.shareUuidArr[index].count++
-    if($.shareUuidArr[index].count >= 10) console.log(`已邀请${$.shareUuidArr[index].count}`)
-    if($.shareUuidArr[index].count >= 10 || type == 0){
-        for(let i in $.shareUuidArr){
-            if($.shareUuidArr[i] && $.shareUuidArr[i].count < 10){
-                $.shareUuid = $.shareUuidArr[i].shareUuid
-                console.log(`更新助力码[${$.shareUuid}] 账号${$.shareUuidArr[i].index} 已邀请${$.shareUuidArr[i].count}`)
-                break
-            }
-        }
-
     }
 }
 function getDrawRecordHasCoupon() {
